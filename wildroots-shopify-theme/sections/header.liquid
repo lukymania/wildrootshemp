@@ -1,0 +1,74 @@
+{% comment %}
+  Wild Roots Hemp - Header Section
+  Navigation with logo, menu links, and cart icon
+{% endcomment %}
+
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="header-logo" aria-label="{{ shop.name }} - Home">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="160" height="auto" loading="eager">
+      {%- else -%}
+        <span class="header-brand-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+      <ul class="nav-list">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="nav-item{% if link.active %} nav-item-active{% endif %}">
+            <a href="{{ link.url }}" class="nav-link"{% if link.active %} aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/cart" class="cart-toggle" onclick="WildRoots.cart.open(); return false;" aria-label="Cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <ul class="mobile-nav-list">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <li class="mobile-nav-item">
+          <a href="{{ link.url }}" class="mobile-nav-link">{{ link.title }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_mobile",
+      "label": "Mobile logo"
+    }
+  ]
+}
+{% endschema %}

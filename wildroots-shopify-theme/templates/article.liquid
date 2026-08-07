@@ -1,0 +1,1174 @@
+{% comment %}
+  Wild Roots Hemp - Article Template
+  Single blog post with content, author, date, navigation, and related articles
+{% endcomment %}
+
+{% assign number_of_comments = article.comments_count %}
+
+<!-- ====== ARTICLE HERO ====== -->
+<section class="article-hero">
+  <div class="article-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="{{ blog.url }}">
+        {% if blog.handle == 'root-journal' or blog.handle == 'news' %}
+          The Root Journal
+        {% else %}
+          {{ blog.title }}
+        {% endif %}
+      </a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{ article.title | truncate: 40 }}</span>
+    </nav>
+
+    <!-- Article Tags -->
+    {% if article.tags.size > 0 %}
+      <div class="article-tags">
+        {% for tag in article.tags limit: 3 %}
+          <span class="article-tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <h1 class="article-hero-title">{{ article.title }}</h1>
+
+    <!-- Article Meta -->
+    <div class="article-hero-meta">
+      {% if article.user.image %}
+        <img src="{{ article.user.image | img_url: 'thumb' }}" alt="{{ article.author }}" class="author-avatar">
+      {% else %}
+        <div class="author-avatar-placeholder">
+          {{ article.author | slice: 0 | upcase }}
+        </div>
+      {% endif %}
+      <div class="meta-details">
+        <span class="author-name">{{ article.author }}</span>
+        <span class="meta-sep">&middot;</span>
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{ article.published_at | date: '%B %d, %Y' }}
+        </time>
+        <span class="meta-sep">&middot;</span>
+        <span class="read-time">
+          {% assign word_count = article.content | strip_html | split: ' ' | size %}
+          {% assign read_time = word_count | divided_by: 200 | plus: 1 %}
+          {{ read_time }} min read
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Featured Image -->
+  {% if article.image %}
+    <div class="article-hero-image">
+      <img src="{{ article.image | img_url: 'master' }}" alt="{{ article.image.alt | escape }}" loading="eager">
+    </div>
+  {% endif %}
+</section>
+
+<!-- ====== ARTICLE CONTENT ====== -->
+<section class="article-content-section">
+  <div class="article-content-inner">
+    <article class="article-body" itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="headline" content="{{ article.title | escape }}">
+      <meta itemprop="author" content="{{ article.author | escape }}">
+      <meta itemprop="datePublished" content="{{ article.published_at | date: '%Y-%m-%d' }}">
+      <meta itemprop="publisher" content="{{ shop.name | escape }}">
+
+      <div class="article-body-content" itemprop="articleBody">
+        {{ article.content }}
+      </div>
+    </article>
+
+    <!-- Article Footer: Share & Tags -->
+    <div class="article-footer">
+      <div class="article-share">
+        <span class="share-label">Share this article:</span>
+        <div class="share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url | url_encode }}" target="_blank" rel="noopener" class="share-btn" aria-label="Share on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://twitter.com/intent/tweet?text={{ article.title | url_encode }}&url={{ shop.url | append: article.url | url_encode }}" target="_blank" rel="noopener" class="share-btn" aria-label="Share on X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: article.url | url_encode }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener" class="share-btn" aria-label="Pin on Pinterest">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 00-4.37 23.17c-.1-.94-.2-2.4.04-3.44l1.48-6.28s-.37-.75-.37-1.85c0-1.74 1.01-3.04 2.26-3.04 1.07 0 1.58.8 1.58 1.76 0 1.08-.69 2.69-1.04 4.18-.3 1.25.63 2.27 1.87 2.27 2.25 0 3.98-2.37 3.98-5.8 0-3.03-2.18-5.15-5.28-5.15-3.6 0-5.71 2.7-5.71 5.49 0 1.09.42 2.25.94 2.88.1.13.12.24.09.37l-.35 1.42c-.06.22-.18.27-.42.16-1.57-.73-2.55-3.02-2.55-4.86 0-3.96 2.88-7.59 8.3-7.59 4.36 0 7.75 3.11 7.75 7.26 0 4.33-2.73 7.82-6.52 7.82-1.27 0-2.47-.66-2.88-1.45l-.78 2.98c-.28 1.1-1.05 2.48-1.57 3.32A12 12 0 1012 0z"/></svg>
+          </a>
+          <a href="mailto:?subject={{ article.title | url_encode }}&body={{ shop.url | append: article.url | url_encode }}" class="share-btn" aria-label="Share via email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      {% if article.tags.size > 0 %}
+        <div class="article-tags-footer">
+          <span class="tags-label">Tags:</span>
+          {% for tag in article.tags %}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag-link">{{ tag }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ====== ARTICLE NAVIGATION ====== -->
+<section class="article-navigation">
+  <div class="article-nav-inner">
+    {% if blog.previous_article %}
+      <a href="{{ blog.previous_article }}" class="article-nav-prev">
+        <span class="nav-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Previous Article
+        </span>
+        <span class="nav-title">{{ blog.previous_article.title | default: 'Previous Article' }}</span>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+
+    <a href="{{ blog.url }}" class="article-nav-all">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      All Articles
+    </a>
+
+    {% if blog.next_article %}
+      <a href="{{ blog.next_article }}" class="article-nav-next">
+        <span class="nav-label">
+          Next Article
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+        <span class="nav-title">{{ blog.next_article.title | default: 'Next Article' }}</span>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== RELATED ARTICLES ====== -->
+<section class="related-articles">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Continue Reading</p>
+      <h2 class="section-title">Related Articles</h2>
+    </div>
+
+    <div class="related-articles-grid">
+      {% assign related_count = 0 %}
+
+      <!-- First try: articles with matching tags -->
+      {% for related_article in blog.articles %}
+        {% if related_article.handle != article.handle and related_count < 3 %}
+          {% for tag in article.tags %}
+            {% if related_article.tags contains tag and related_count < 3 %}
+              {% assign related_count = related_count | plus: 1 %}
+              <article class="related-article-card">
+                <a href="{{ related_article.url }}" class="related-article-link">
+                  <div class="related-article-img">
+                    {% if related_article.image %}
+                      <img src="{{ related_article.image | img_url: 'medium' }}" alt="{{ related_article.image.alt | escape }}" loading="lazy">
+                    {% else %}
+                      <div class="related-article-img-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                          <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="related-article-content">
+                    <time datetime="{{ related_article.published_at | date: '%Y-%m-%d' }}" class="related-article-date">
+                      {{ related_article.published_at | date: '%B %d, %Y' }}
+                    </time>
+                    <h3 class="related-article-title">{{ related_article.title }}</h3>
+                    {% if related_article.excerpt != blank %}
+                      <p class="related-article-excerpt">{{ related_article.excerpt | strip_html | truncate: 100 }}</p>
+                    {% else %}
+                      <p class="related-article-excerpt">{{ related_article.content | strip_html | truncate: 100 }}</p>
+                    {% endif %}
+                  </div>
+                </a>
+              </article>
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+
+      <!-- Fallback: latest articles -->
+      {% if related_count == 0 %}
+        {% for related_article in blog.articles limit: 3 %}
+          {% if related_article.handle != article.handle and related_count < 3 %}
+            {% assign related_count = related_count | plus: 1 %}
+            <article class="related-article-card">
+              <a href="{{ related_article.url }}" class="related-article-link">
+                <div class="related-article-img">
+                  {% if related_article.image %}
+                    <img src="{{ related_article.image | img_url: 'medium' }}" alt="{{ related_article.image.alt | escape }}" loading="lazy">
+                  {% else %}
+                    <div class="related-article-img-placeholder">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                      </svg>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="related-article-content">
+                  <time datetime="{{ related_article.published_at | date: '%Y-%m-%d' }}" class="related-article-date">
+                    {{ related_article.published_at | date: '%B %d, %Y' }}
+                  </time>
+                  <h3 class="related-article-title">{{ related_article.title }}</h3>
+                  {% if related_article.excerpt != blank %}
+                    <p class="related-article-excerpt">{{ related_article.excerpt | strip_html | truncate: 100 }}</p>
+                  {% else %}
+                    <p class="related-article-excerpt">{{ related_article.content | strip_html | truncate: 100 }}</p>
+                  {% endif %}
+                </div>
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ====== COMMENTS SECTION ====== -->
+{% if blog.comments_enabled? %}
+<section class="article-comments" id="comments">
+  <div class="comments-inner">
+    <h2 class="comments-title">
+      Comments
+      {% if number_of_comments > 0 %}
+        <span class="comments-count">({{ number_of_comments }})</span>
+      {% endif %}
+    </h2>
+
+    {% if number_of_comments > 0 %}
+      <div class="comments-list">
+        {% paginate article.comments by 5 %}
+          {% for comment in article.comments %}
+            <div class="comment-item" id="comment-{{ comment.id }}">
+              <div class="comment-header">
+                <div class="comment-author-avatar">
+                  {{ comment.author | slice: 0 | upcase }}
+                </div>
+                <div class="comment-meta">
+                  <span class="comment-author">{{ comment.author }}</span>
+                  <time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}" class="comment-date">
+                    {{ comment.created_at | date: '%B %d, %Y at %I:%M %p' }}
+                  </time>
+                </div>
+              </div>
+              <div class="comment-body">
+                {{ comment.content }}
+              </div>
+            </div>
+          {% endfor %}
+
+          {% if paginate.pages > 1 %}
+            <div class="comments-pagination">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+    {% endif %}
+
+    <!-- Comment Form -->
+    <div class="comment-form-wrapper">
+      <h3 class="comment-form-title">Leave a Comment</h3>
+      {% form 'new_comment', article %}
+        {% if form.posted_successfully? %}
+          <div class="comment-success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            Your comment has been posted successfully!
+          </div>
+        {% endif %}
+
+        {% if form.errors %}
+          <div class="comment-errors">
+            {{ form.errors | default_errors }}
+          </div>
+        {% endif %}
+
+        <div class="comment-fields">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="comment-author" class="form-label">Name *</label>
+              <input
+                type="text"
+                id="comment-author"
+                name="comment[author]"
+                value="{{ form.author }}"
+                class="form-input"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label for="comment-email" class="form-label">Email *</label>
+              <input
+                type="email"
+                id="comment-email"
+                name="comment[email]"
+                value="{{ form.email }}"
+                class="form-input"
+                required
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="comment-body" class="form-label">Comment *</label>
+            <textarea
+              id="comment-body"
+              name="comment[body]"
+              class="form-textarea"
+              rows="5"
+              required
+            >{{ form.body }}</textarea>
+          </div>
+          <button type="submit" class="btn-submit-comment">Post Comment</button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ====== SCHEMA.ORG JSON-LD ====== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "image": {{ article.image | img_url: '1024x1024' | prepend: 'https:' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ 'logo.png' | asset_url | prepend: 'https:' | json }}
+    }
+  },
+  "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  "dateModified": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  "description": {{ article.excerpt | strip_html | default: article.content | strip_html | truncate: 300 | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: article.url | json }}
+  }
+}
+</script>
+
+<!-- ====== STYLES ====== -->
+<style>
+  /* ===== Article Hero ===== */
+  .article-hero {
+    padding-top: 80px;
+    background: linear-gradient(135deg, var(--cream, #f5f0e8) 0%, var(--warm-white, #fdfcf9) 100%);
+  }
+
+  .article-hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px 40px;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb a {
+    color: var(--stone, #8a8278);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .breadcrumb-sep {
+    opacity: 0.4;
+  }
+
+  .breadcrumb-current {
+    color: var(--forest, #1a3a2f);
+    font-weight: 500;
+  }
+
+  .article-tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .article-tag {
+    padding: 4px 14px;
+    background: var(--lavender-light, #e8e0f0);
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .article-hero-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+
+  .article-hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-light, #f0ece5);
+  }
+
+  .author-avatar-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .meta-details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--stone, #8a8278);
+    flex-wrap: wrap;
+  }
+
+  .author-name {
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+  }
+
+  .meta-sep {
+    opacity: 0.4;
+  }
+
+  .article-hero-image {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .article-hero-image img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg, 0 8px 40px rgba(0,0,0,0.08));
+  }
+
+  /* ===== Article Content ===== */
+  .article-content-section {
+    padding: 60px 0 80px;
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .article-content-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .article-body-content {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--charcoal, #2c2c2c);
+  }
+
+  .article-body-content h2 {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin: 48px 0 20px;
+    line-height: 1.2;
+  }
+
+  .article-body-content h3 {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin: 36px 0 16px;
+    line-height: 1.2;
+  }
+
+  .article-body-content p {
+    margin-bottom: 20px;
+  }
+
+  .article-body-content img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-md, 0 4px 20px rgba(0,0,0,0.06));
+  }
+
+  .article-body-content blockquote {
+    border-left: 4px solid var(--evening-accent, #9b8db0);
+    padding: 16px 24px;
+    margin: 32px 0;
+    background: var(--linen, #faf8f3);
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: var(--charcoal-light, #4a4a4a);
+  }
+
+  .article-body-content ul,
+  .article-body-content ol {
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+
+  .article-body-content li {
+    margin-bottom: 8px;
+  }
+
+  .article-body-content a {
+    color: var(--evening-accent, #9b8db0);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-body-content a:hover {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .article-body-content strong {
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+  }
+
+  /* ===== Article Footer ===== */
+  .article-footer {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .article-share {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .share-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--charcoal-light, #4a4a4a);
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .share-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--linen, #faf8f3);
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 10px;
+    color: var(--charcoal-light, #4a4a4a);
+    transition: all 0.3s ease;
+  }
+
+  .share-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .share-btn:hover {
+    background: var(--forest, #1a3a2f);
+    border-color: var(--forest, #1a3a2f);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .article-tags-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tags-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--charcoal-light, #4a4a4a);
+  }
+
+  .article-tag-link {
+    padding: 4px 12px;
+    background: var(--cream, #f5f0e8);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--stone, #8a8278);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .article-tag-link:hover {
+    background: var(--lavender-light, #e8e0f0);
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  /* ===== Article Navigation ===== */
+  .article-navigation {
+    padding: 32px 0;
+    background: var(--cream, #f5f0e8);
+    border-top: 1px solid var(--border-light, #f0ece5);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .article-nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .article-nav-prev,
+  .article-nav-next {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+
+  .article-nav-prev:hover,
+  .article-nav-next:hover {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .article-nav-next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .nav-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--evening-accent, #9b8db0);
+    margin-bottom: 6px;
+  }
+
+  .nav-label svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .nav-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    line-height: 1.3;
+  }
+
+  .article-nav-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--charcoal, #2c2c2c);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .article-nav-all svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .article-nav-all:hover {
+    background: var(--forest, #1a3a2f);
+    border-color: var(--forest, #1a3a2f);
+    color: white;
+  }
+
+  /* ===== Related Articles ===== */
+  .related-articles {
+    padding: 80px 0;
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--evening-accent, #9b8db0);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.2;
+  }
+
+  .related-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .related-article-card {
+    background: var(--linen, #faf8f3);
+    border-radius: 16px;
+    border: 1px solid var(--border-light, #f0ece5);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .related-article-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+  }
+
+  .related-article-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .related-article-img {
+    height: 180px;
+    background: var(--cream, #f5f0e8);
+    overflow: hidden;
+  }
+
+  .related-article-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .related-article-card:hover .related-article-img img {
+    transform: scale(1.05);
+  }
+
+  .related-article-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .related-article-img-placeholder svg {
+    width: 36px;
+    height: 36px;
+    stroke: var(--border, #e5e0d8);
+  }
+
+  .related-article-content {
+    padding: 24px;
+  }
+
+  .related-article-date {
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .related-article-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .related-article-card:hover .related-article-title {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .related-article-excerpt {
+    font-size: 0.875rem;
+    color: var(--stone, #8a8278);
+    line-height: 1.6;
+  }
+
+  /* ===== Comments ===== */
+  .article-comments {
+    padding: 80px 0;
+    background: var(--cream, #f5f0e8);
+  }
+
+  .comments-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .comments-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 32px;
+  }
+
+  .comments-count {
+    font-size: 1rem;
+    color: var(--stone, #8a8278);
+    font-weight: 400;
+  }
+
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .comment-item {
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .comment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .comment-author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .comment-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comment-author {
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    font-size: 0.9375rem;
+  }
+
+  .comment-date {
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+  }
+
+  .comment-body {
+    font-size: 0.9375rem;
+    color: var(--charcoal-light, #4a4a4a);
+    line-height: 1.65;
+  }
+
+  .comments-pagination {
+    margin-top: 24px;
+  }
+
+  .comments-pagination .pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .comments-pagination .pagination a,
+  .comments-pagination .pagination .current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    text-decoration: none;
+  }
+
+  .comments-pagination .pagination a {
+    color: var(--charcoal, #2c2c2c);
+    border: 1px solid var(--border, #e5e0d8);
+    background: white;
+  }
+
+  .comments-pagination .pagination .current {
+    background: var(--forest, #1a3a2f);
+    color: white;
+  }
+
+  /* ===== Comment Form ===== */
+  .comment-form-wrapper {
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .comment-form-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 24px;
+  }
+
+  .comment-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--charcoal-light, #4a4a4a);
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 12px 16px;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 10px;
+    background: white;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.9375rem;
+    color: var(--charcoal, #2c2c2c);
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    border-color: var(--evening-accent, #9b8db0);
+    box-shadow: 0 0 0 3px rgba(155, 141, 176, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .btn-submit-comment {
+    align-self: flex-start;
+    padding: 14px 32px;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit-comment:hover {
+    background: var(--forest-light, #2d5a48);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(26, 58, 47, 0.25);
+  }
+
+  .comment-success {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: rgba(156, 175, 136, 0.15);
+    border: 1px solid rgba(156, 175, 136, 0.3);
+    border-radius: 12px;
+    color: var(--sage-mist, #8b9a7d);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .comment-success svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--sage-mist, #8b9a7d);
+    flex-shrink: 0;
+  }
+
+  .comment-errors {
+    padding: 16px 20px;
+    background: rgba(193, 124, 91, 0.1);
+    border: 1px solid rgba(193, 124, 91, 0.2);
+    border-radius: 12px;
+    color: var(--terra-cotta, #c17c5b);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .related-articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article-hero-inner {
+      padding: 40px 20px;
+    }
+    .article-hero-image {
+      padding: 0 20px;
+    }
+    .article-content-inner {
+      padding: 0 20px;
+    }
+    .article-nav-inner {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .article-nav-prev,
+    .article-nav-next {
+      text-align: center;
+      align-items: center;
+    }
+    .article-nav-all {
+      order: -1;
+      justify-self: center;
+    }
+    .related-articles .section-inner {
+      padding: 0 20px;
+    }
+    .related-articles-grid {
+      grid-template-columns: 1fr;
+    }
+    .comments-inner {
+      padding: 0 20px;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    .article-body-content {
+      font-size: 1rem;
+    }
+    .article-body-content h2 {
+      font-size: 1.5rem;
+    }
+    .article-body-content h3 {
+      font-size: 1.25rem;
+    }
+  }
+</style>

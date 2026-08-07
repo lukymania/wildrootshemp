@@ -1,0 +1,288 @@
+{% comment %}
+  Hero Banner Section
+  - Full-width hero with background image/video option
+  - Heading, subtitle, CTA button with section settings
+{% endcomment %}
+
+{%- style -%}
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-top: var(--header-height, 80px);
+}
+
+.hero-banner__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-banner__media img,
+.hero-banner__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-banner__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(45, 74, 62, 0.88) 0%, rgba(45, 74, 62, 0.4) 50%, rgba(45, 74, 62, 0.15) 100%);
+  z-index: 2;
+}
+
+.hero-banner__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--max-width, 1200px);
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.hero-banner__headline {
+  font-family: var(--font-headline);
+  font-weight: 900;
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  color: #fff;
+  margin-bottom: 1rem;
+  max-width: 700px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  line-height: 1.1;
+}
+
+.hero-banner__subhead {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 550px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.hero-banner__cta {
+  margin-bottom: 2.5rem;
+}
+
+.hero-banner__trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.hero-banner__trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-banner__trust-badge svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--sage-mist, #9CAF88);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-banner__content {
+    padding-bottom: 5rem;
+  }
+}
+{%- endstyle -%}
+
+<section class="hero-banner" id="hero" aria-label="Hero banner" {{ section.shopify_attributes }}>
+  <div class="hero-banner__media">
+    {%- if section.settings.video_url != blank -%}
+      <video
+        autoplay
+        muted
+        playsinline
+        loop
+        poster="{%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 1920 }}{%- endif -%}"
+        aria-hidden="true"
+      >
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
+    {%- elsif section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1920 | image_tag:
+        loading: 'eager',
+        alt: section.settings.image_alt | default: 'Wild Roots Hemp hero background',
+        class: 'hero-banner__image'
+      }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+    {%- endif -%}
+  </div>
+
+  <div class="hero-banner__overlay" aria-hidden="true"></div>
+
+  <div class="hero-banner__content">
+    <h1 class="hero-banner__headline reveal">
+      {{ section.settings.heading | default: 'Rooted in Nature. Powered by Science.' }}
+    </h1>
+    <p class="hero-banner__subhead reveal reveal-delay-1">
+      {{ section.settings.subheading | default: 'Premium nano-enhanced hemp wellness for the whole family, from heartland roots to your home.' }}
+    </p>
+    <div class="hero-banner__cta reveal reveal-delay-2">
+      <a
+        href="{{ section.settings.cta_link | default: '/collections/all' }}"
+        class="btn btn-primary"
+      >
+        {{ section.settings.cta_text | default: 'Shop the Collection' }}
+      </a>
+    </div>
+
+    {%- if section.settings.show_trust_badges -%}
+      <div class="hero-banner__trust-badges reveal reveal-delay-3">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust_badge' -%}
+            <span class="hero-banner__trust-badge" {{ block.shopify_attributes }}>
+              {%- case block.settings.icon -%}
+                {%- when 'check' -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+                {%- when 'gluten_free' -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>
+                {%- when 'heart' -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                {%- when 'clock' -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+              {%- endcase -%}
+              {{ block.settings.text }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "hero-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image",
+      "info": "Recommended size: 1920x1080px"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Serene nature landscape representing Wild Roots Hemp"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Background video URL",
+      "info": "Upload video to Files and paste URL here. Leave empty to use image only."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rooted in Nature. Powered by Science."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium nano-enhanced hemp wellness for the whole family, from heartland roots to your home."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show trust badges",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Checkmark" },
+            { "value": "gluten_free", "label": "Gluten Free" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "shield", "label": "Shield" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "default": "No THC"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "category": "Hero",
+      "blocks": {
+        "trust_badge-0": { "type": "trust_badge", "settings": { "icon": "check", "text": "No THC" } },
+        "trust_badge-1": { "type": "trust_badge", "settings": { "icon": "gluten_free", "text": "Gluten Free" } },
+        "trust_badge-2": { "type": "trust_badge", "settings": { "icon": "heart", "text": "Cruelty Free" } },
+        "trust_badge-3": { "type": "trust_badge", "settings": { "icon": "clock", "text": "Non GMO" } },
+        "trust_badge-4": { "type": "trust_badge", "settings": { "icon": "shield", "text": "Made in USA" } }
+      }
+    }
+  ]
+}
+{% endschema %}

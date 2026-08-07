@@ -1,0 +1,315 @@
+{% comment %}
+  Account Dashboard Template
+  - Order history
+  - Account details
+  - Address book link
+{% endcomment %}
+
+{%- style -%}
+.account-page {
+  padding: 8rem 0 5rem;
+  min-height: 60vh;
+}
+
+.account-page__header {
+  margin-bottom: 3rem;
+}
+
+.account-page__header h1 {
+  color: var(--forest-deep, #0f241c);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.account-page__greeting {
+  color: rgba(61, 43, 31, 0.6);
+  font-size: 1.05rem;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.account-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(45, 74, 62, 0.08);
+  border: 1px solid rgba(196, 168, 130, 0.2);
+}
+
+.account-card__title {
+  font-family: var(--font-headline);
+  font-size: 1.35rem;
+  color: var(--forest-deep, #0f241c);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(196, 168, 130, 0.3);
+}
+
+.account-card__empty {
+  color: rgba(61, 43, 31, 0.5);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Order Table */
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table thead {
+  display: none;
+}
+
+.order-table th {
+  text-align: left;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(61, 43, 31, 0.6);
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(196, 168, 130, 0.3);
+}
+
+.order-table td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid rgba(196, 168, 130, 0.15);
+  font-size: 0.95rem;
+  color: var(--dark-brown, #3D2B1F);
+}
+
+.order-table tr:last-child td {
+  border-bottom: none;
+}
+
+.order-table__mobile-label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(61, 43, 31, 0.5);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.order-table__number a {
+  color: var(--terra-cotta, #C17A5F);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.order-table__number a:hover {
+  color: var(--raw-umber, #6B4226);
+}
+
+.order-table__total {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  color: var(--raw-umber, #6B4226);
+}
+
+.order-status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-status--fulfilled {
+  background-color: rgba(156, 175, 136, 0.2);
+  color: #2d5a1e;
+}
+
+.order-status--unfulfilled {
+  background-color: rgba(193, 122, 95, 0.15);
+  color: #8b3a2a;
+}
+
+.order-status--partial {
+  background-color: rgba(200, 145, 58, 0.15);
+  color: #7a5a1a;
+}
+
+/* Account Details */
+.account-details__item {
+  margin-bottom: 1.25rem;
+}
+
+.account-details__label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(61, 43, 31, 0.5);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.account-details__value {
+  color: var(--dark-brown, #3D2B1F);
+  font-size: 0.95rem;
+}
+
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(196, 168, 130, 0.3);
+}
+
+.account-actions .btn {
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem;
+  font-size: 0.85rem;
+}
+
+.account-logout {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.account-logout a {
+  color: rgba(61, 43, 31, 0.5);
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+.account-logout a:hover {
+  color: var(--terra-cotta, #C17A5F);
+}
+
+@media (min-width: 768px) {
+  .account-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .order-table thead {
+    display: table-header-group;
+  }
+
+  .order-table__mobile-label {
+    display: none;
+  }
+
+  .account-page {
+    padding: 10rem 0 6rem;
+  }
+}
+{%- endstyle -%}
+
+<div class="account-page">
+  <div class="container">
+    <div class="account-page__header">
+      <h1>My Account</h1>
+      <p class="account-page__greeting">
+        Welcome back, {{ customer.first_name | default: customer.email }}!
+      </p>
+    </div>
+
+    <div class="account-grid">
+      <div class="account-orders">
+        <div class="account-card">
+          <h2 class="account-card__title">Order History</h2>
+
+          {%- if customer.orders.size > 0 -%}
+            <div style="overflow-x:auto;">
+              <table class="order-table">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td>
+                        <span class="order-table__mobile-label">Order</span>
+                        <span class="order-table__number">
+                          <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="order-table__mobile-label">Date</span>
+                        {{ order.created_at | date: '%B %d, %Y' }}
+                      </td>
+                      <td>
+                        <span class="order-table__mobile-label">Status</span>
+                        {%- if order.fulfillment_status == 'fulfilled' -%}
+                          <span class="order-status order-status--fulfilled">Fulfilled</span>
+                        {%- elsif order.fulfillment_status == 'partial' -%}
+                          <span class="order-status order-status--partial">Partial</span>
+                        {%- else -%}
+                          <span class="order-status order-status--unfulfilled">Processing</span>
+                        {%- endif -%}
+                      </td>
+                      <td>
+                        <span class="order-table__mobile-label">Total</span>
+                        <span class="order-table__total">{{ order.total_price | money }}</span>
+                      </td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+          {%- else -%}
+            <p class="account-card__empty">You haven't placed any orders yet.</p>
+            <div style="text-align:center;margin-top:1rem;">
+              <a href="/collections/all" class="btn btn-primary">Start Shopping</a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="account-sidebar">
+        <div class="account-card">
+          <h2 class="account-card__title">Account Details</h2>
+
+          <div class="account-details">
+            <div class="account-details__item">
+              <span class="account-details__label">Name</span>
+              <span class="account-details__value">{{ customer.name }}</span>
+            </div>
+
+            <div class="account-details__item">
+              <span class="account-details__label">Email</span>
+              <span class="account-details__value">{{ customer.email }}</span>
+            </div>
+
+            {%- if customer.default_address != blank -%}
+              <div class="account-details__item">
+                <span class="account-details__label">Default Address</span>
+                <span class="account-details__value">
+                  {{ customer.default_address | format_address }}
+                </span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="account-actions">
+            <a href="/account/addresses" class="btn btn-secondary">Manage Addresses</a>
+            <a href="/collections/all" class="btn btn-primary">Shop Now</a>
+          </div>
+        </div>
+
+        <div class="account-logout">
+          <a href="/account/logout">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

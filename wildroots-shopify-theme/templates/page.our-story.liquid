@@ -1,0 +1,448 @@
+{% comment %}
+  WILD ROOTS HEMP - OUR STORY PAGE TEMPLATE
+  ==========================================
+  This template renders the Our Story page with:
+  - Hero banner with background image
+  - Founders story section with float-based inline images
+  - Values section using section blocks
+  - Midwest roots section
+  - Science/Technology partner section
+  - Family members grid
+  - Promise/Commitment section
+{% endcomment %}
+
+{% assign section = section | default: page %}
+
+<!-- ==================== PAGE HERO ==================== -->
+<section class="page-hero" aria-label="Our Story page hero">
+  <img
+    src="{{ 'hero-landscape.jpg' | asset_url }}"
+    alt="Serene Midwest landscape with rolling fields and open skies"
+    class="page-hero-bg"
+    loading="eager"
+  >
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <h1 class="page-hero-title reveal">{{ page.title | default: 'Our Story' }}</h1>
+    <p class="page-hero-subtitle reveal reveal-delay-1">Rooted in family. Grounded in science. Grown with love.</p>
+  </div>
+</section>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main id="main-content" itemscope itemtype="https://schema.org/Article" itemprop="articleBody">
+
+  <!-- ==================== SECTION 1: THE FOUNDERS ==================== -->
+  <section class="founders-section section-padding" aria-labelledby="founders-heading">
+    <div class="container">
+      <div class="founders-grid">
+        <div class="founders-text reveal">
+          <span class="section-label">How It All Began</span>
+          <h2 id="founders-heading">It Started With Family</h2>
+          <div class="divider divider-left"></div>
+
+          <p class="lead">When a Midwest-born husband and wife couldn't find hemp wellness products they trusted for their three kids and their dog, they packed up their roots and headed west, building the brand they were searching for where the Pacific meets the sand.</p>
+
+          <p>Nick and Lucy's story starts where the cornfields stretch to the horizon. They grew up in the heartland, surrounded by endless farmland and wide-open skies. They learned early on that the best things in life come from hard work, honest intentions, and a deep connection to the land. Summers spent running through cornfields, evenings watching the sun set over amber waves of grain, these weren't just childhood memories. They became the values that would one day define a company.</p>
+
+          <div class="founders-inline-img family-img reveal reveal-delay-2">
+            <span class="founders-image-frame">
+              <img src="{{ 'family-cartoon-group.jpg' | asset_url }}" alt="Illustration of the Wild Roots Hemp family, Nick, Lucy, their three children, and their dog">
+            </span>
+          </div>
+
+          <p>After starting a family of their own, three kids, one very good dog, and a whole lot of love, they felt the pull of something wilder. The Midwest had given them roots: honesty, hard work, and the knowledge that quality matters. But the coast was calling. So they did what any family with true wild roots would do, they packed up, headed west, and planted themselves where the ocean meets the shore.</p>
+
+          <p><strong>Trading cornfields for coastlines didn't change who they were. It just gave those roots room to grow wild.</strong></p>
+
+          <p>Out on the West Coast, surrounded by the natural beauty of the Pacific, Nick and Lucy found themselves asking the same question they'd always asked back home: <strong>Is this truly good enough for our family?</strong> They discovered hemp wellness, but the products on the market left them disappointed. Inconsistent quality. Confusing labels. Companies more interested in trendy marketing than actual transparency. Nothing met the standard they held for their own home.</p>
+
+          <p>Nick brought a background in science and business, always asking the tough questions about formulation, absorption, and efficacy. Lucy brought her passion for health and wellness, along with the uncompromising instinct of a mother who knows that "good enough" is never good enough when it comes to family.</p>
+
+          <div class="founders-inline-img lab-img reveal reveal-delay-3">
+            <span class="founders-image-frame">
+              <img src="{{ 'nick-lab-partners.png' | asset_url }}" alt="Nick working alongside Ivy League PhD scientists in a lab, developing proprietary nano fragmentation technology">
+            </span>
+          </div>
+
+          <p>Together, they made a decision: if they couldn't find a brand they trusted, they would build one. And they wouldn't do it alone. They partnered with <strong>our West Coast biotech partner</strong>, a team of Ivy League PhD scientists who had developed a breakthrough <strong>proprietary nano fragmentation technology</strong>, creating hemp particles smaller than 100 nanometers for dramatically better absorption.</p>
+
+          <p>The result was Wild Roots Hemp: a family-founded company born from heartland values and coastal freedom. Every product is formulated with the same question Nick and Lucy ask themselves before anything goes to market.</p>
+
+          <div class="founders-quote">
+            <p>"We started with roots in the Midwest and found our wild on the West Coast. We built the brand we'd want our own children to use, because at the end of the day, we're not just founders, we're parents. And that changes everything."</p>
+            <cite>- Nick &amp; Lucy, Founders</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2: OUR VALUES ==================== -->
+  {% if section.blocks.size > 0 %}
+    <section class="values-section section-padding" aria-labelledby="values-heading">
+      <div class="container">
+        <span class="section-label reveal">What We Stand For</span>
+        <h2 id="values-heading" class="reveal">Our Values</h2>
+        <p class="values-intro reveal">Four principles guide every decision we make. They're not just words on a page, they're the standards we live by in our home, and the standards we bring to every bottle we create.</p>
+
+        <div class="values-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'value_card' %}
+              <div class="value-card reveal reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+                <div class="value-icon">
+                  {{ block.settings.icon_svg | default: '' }}
+                </div>
+                <h3>{{ block.settings.title }}</h3>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% comment %} Fallback: if no blocks configured, render default 4 value cards {% endcomment %}
+          {% if section.blocks == empty or section.blocks.size == 0 %}
+            <!-- Family First -->
+            <div class="value-card reveal reveal-delay-1">
+              <div class="value-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Family First</h3>
+              <p>Every decision we make starts with one question: Is this good enough for our own family? Because if it isn't, it isn't good enough for yours.</p>
+            </div>
+
+            <!-- Science Backed -->
+            <div class="value-card reveal reveal-delay-2">
+              <div class="value-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 2v7.31" stroke-linecap="round"/>
+                  <path d="M14 2v7.31" stroke-linecap="round"/>
+                  <path d="M8.5 2h7" stroke-linecap="round"/>
+                  <path d="M14 9.3a6.5 6.5 0 1 1-4 0" stroke-linecap="round"/>
+                  <path d="M12 18.4V22" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Science Backed</h3>
+              <p>Our proprietary nano fragmentation technology was developed by PhD researchers. Particles under 100 nanometers mean 3-8x better absorption than traditional hemp products.</p>
+            </div>
+
+            <!-- Nature Rooted -->
+            <div class="value-card reveal reveal-delay-3">
+              <div class="value-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 22V8" stroke-linecap="round"/>
+                  <path d="M5 12c0-4.5 3-8 7-8s7 3.5 7 8" stroke-linecap="round"/>
+                  <path d="M12 8c-2-2-5-2-7 0" stroke-linecap="round"/>
+                  <path d="M12 12c2-2 5-2 7 0" stroke-linecap="round"/>
+                  <path d="M8 22h8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Nature Rooted</h3>
+              <p>We source responsibly, package in amber glass to protect potency, and never use unnecessary fillers. Just four simple ingredients.</p>
+            </div>
+
+            <!-- Heartland Honest -->
+            <div class="value-card reveal reveal-delay-4">
+              <div class="value-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Heartland Honest</h3>
+              <p>No flashy marketing claims. No mysterious proprietary blends hiding inferior ingredients. Just transparent, quality nano-hemp, from our family to yours.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- ==================== SECTION 3: THE MIDWEST CONNECTION ==================== -->
+  <section class="midwest-section section-padding" aria-labelledby="midwest-heading">
+    <div class="container">
+      <div class="midwest-content reveal">
+        <span class="section-label">Where We're From, Where We Are</span>
+        <h2 id="midwest-heading">From Heartland Roots to Coastline Wild</h2>
+        <div class="divider"></div>
+
+        <p>There's something about the Midwest that gets into your bones. The way the horizon stretches out forever in every direction. The way neighbors still help neighbors. The understanding that the land rewards those who respect it. Nick and Lucy grew up with these values, hard work, honesty, and showing up every day ready to earn your keep.</p>
+
+        <p>But roots are meant to grow. After starting their family in the heartland, they felt the pull of the Pacific. So they packed up three kids, one loyal dog, and a lifetime of Midwest values, and headed west. They traded cornfields for coastlines, open plains for ocean breezes, and amber grain for golden sunsets over the Pacific.</p>
+
+        <p>That's the thing about wild roots, they go deep, but they grow wherever you plant them. The same honest values that built character in the Midwest now fuel a brand on the coast. When we say we're transparent about our ingredients, that's heartland honesty. When we say we never cut corners, that's Midwest work ethic. When we say we care about family, that's the spirit of looking out for one another, whether your neighbor is across the fence or across the cul-de-sac.</p>
+
+        <p><strong>We didn't just found a company. We planted our wild roots where the land meets the sea, and built a brand our family could be proud of.</strong></p>
+      </div>
+
+      <div class="midwest-image reveal reveal-delay-1">
+        <img src="{{ 'hero-landscape.jpg' | asset_url }}" alt="From Midwest heartland to West Coast coastline, the journey of Wild Roots Hemp">
+      </div>
+      <p class="midwest-caption reveal reveal-delay-2">Heartland roots. West Coast wild.</p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4: OUR TECHNOLOGY PARTNER ==================== -->
+  <section class="arkos-section section-padding" aria-labelledby="arkos-heading">
+    <div class="container">
+      <div class="arkos-grid">
+        <div class="arkos-text reveal">
+          <span class="section-label">The Science Behind the Brand</span>
+          <h2 id="arkos-heading">Powered by Science</h2>
+          <div class="divider divider-left"></div>
+
+          <p>Behind every Wild Roots Hemp product is a story of scientific innovation. Our sister company, <strong>our West Coast biotech partner</strong>, brings together Ivy League PhD researchers who have dedicated their careers to unlocking the potential of nano-technology for natural wellness.</p>
+
+          <p>our West Coast biotech partner isn't a faceless lab, it's a team of scientists who believe that cutting-edge research should serve real families, not just exist in academic journals. Their mission is simple: take the most advanced nano-technology available and make it accessible, safe, and effective for everyday people.</p>
+
+          <p>Their breakthrough came in the form of <strong>proprietary nano fragmentation technology</strong>. This process breaks down hemp particles to sizes smaller than 100 nanometers, so tiny that they can pass directly through cellular membranes. The result? Absorption rates that are 3-8x better than traditional hemp products. Faster onset. More efficient delivery. Better results.</p>
+
+          <p>While our biotech partner handles the science, Wild Roots handles the heart. We take their revolutionary technology and craft it into products families can trust, with clean ingredients, transparent labeling, and the kind of quality assurance that comes from founders who use these products in their own homes every single day.</p>
+
+          <div class="arkos-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>our West Coast biotech partner, Sister Company &amp; Research Partner</span>
+          </div>
+        </div>
+
+        <div class="arkos-visual reveal reveal-delay-2">
+          <img src="{{ 'nano-science-illustration.jpg' | asset_url }}" alt="Illustration of proprietary nano fragmentation technology creating ultra-small particles for enhanced absorption">
+          <div class="arkos-highlight">
+            <div class="arkos-stat">
+              <span class="arkos-stat-number">&lt;100nm</span>
+              <span class="arkos-stat-label">Particle Size</span>
+            </div>
+            <div class="arkos-stat">
+              <span class="arkos-stat-number">3-8x</span>
+              <span class="arkos-stat-label">Better Absorption</span>
+            </div>
+            <div class="arkos-stat">
+              <span class="arkos-stat-number">PhD</span>
+              <span class="arkos-stat-label">Developed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5: MEET THE FAMILY ==================== -->
+  <section class="family-section section-padding" aria-labelledby="family-heading">
+    <div class="container">
+      <div class="family-header reveal">
+        <span class="section-label">The People Behind the Products</span>
+        <h2 id="family-heading">The Faces Behind Wild Roots</h2>
+        <p>Every bottle that leaves our facility carries a piece of this family with it. Here's who's really running the show.</p>
+      </div>
+
+      <div class="family-image-wrap reveal reveal-delay-1">
+        <img src="{{ 'family-cartoon-group.jpg' | asset_url }}" alt="Cartoon illustration of the Wild Roots Hemp family team">
+      </div>
+
+      <div class="family-bios">
+        <!-- Nick -->
+        <div class="bio-card reveal">
+          <div class="bio-card-header">
+            <div class="bio-avatar" style="background-color: #5B7B6F;">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="bio-title">
+              <h4>Nick</h4>
+              <span>Dad / Co-Founder</span>
+            </div>
+          </div>
+          <p><em>"The scientist and strategist with sand in his shoes."</em> Nick's background in science and business means nothing gets past him without hard data. He's the one poring over lab reports at midnight, but you'll also find him at dawn, surfboard in one hand, dog leash in the other, three kids trying to keep up behind him.</p>
+        </div>
+
+        <!-- Lucy -->
+        <div class="bio-card reveal reveal-delay-1">
+          <div class="bio-card-header">
+            <div class="bio-avatar" style="background-color: #C17A5F;">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="bio-title">
+              <h4>Lucy</h4>
+              <span>Mom / Co-Founder</span>
+            </div>
+          </div>
+          <p><em>"The heart of the brand, powered by beach sun and Midwest grit."</em> Lucy's background in health and wellness, combined with her mama-bear instincts, sets the quality bar for everything we do. She's the final checkpoint between our products and your family, and the one making sure everyone has sunscreen on before they head out to the waves.</p>
+        </div>
+
+        <!-- The Kids -->
+        <div class="bio-card reveal reveal-delay-2">
+          <div class="bio-card-header">
+            <div class="bio-avatar" style="background-color: #9CAF88;">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="bio-title">
+              <h4>The Kids</h4>
+              <span>Chief Inspiration Officers</span>
+            </div>
+          </div>
+          <p><em>"Our toughest critics and biggest inspiration. They keep us honest."</em> The reason we started this whole thing. If a product doesn't meet the standards we'd want for them, it doesn't meet the standards for your family either.</p>
+        </div>
+
+        <!-- The Dog -->
+        <div class="bio-card reveal reveal-delay-3">
+          <div class="bio-card-header">
+            <div class="bio-avatar" style="background-color: #C4A882;">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 10h.01" stroke-width="3" stroke-linecap="round"/>
+                <path d="M15 10h.01" stroke-width="3" stroke-linecap="round"/>
+                <path d="M9.5 15a3.5 3.5 0 0 0 5 0" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="bio-title">
+              <h4>The Dog</h4>
+              <span>Chief Wellness Officer</span>
+            </div>
+          </div>
+          <p><em>"Approves every product with tail wags."</em> Also the primary taste-tester for our Paw &amp; Root Pet Drops. Unpaid, but compensated generously in belly rubs and treats.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6: OUR PROMISE ==================== -->
+  <section class="promise-section section-padding" aria-labelledby="promise-heading">
+    <div class="container">
+      <div class="promise-header reveal">
+        <span class="section-label">Our Commitment to You</span>
+        <h2 id="promise-heading">The Wild Roots Promise</h2>
+        <p>When you choose Wild Roots Hemp, you're not just buying a product, you're joining our extended family. And family deserves our very best.</p>
+      </div>
+
+      <div class="promise-grid">
+        <!-- Promise 1 -->
+        <div class="promise-item reveal reveal-delay-1">
+          <div class="promise-check">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Always Transparent</h4>
+            <p>Every ingredient is clearly listed. No proprietary blends hiding what's really inside.</p>
+          </div>
+        </div>
+
+        <!-- Promise 2 -->
+        <div class="promise-item reveal reveal-delay-2">
+          <div class="promise-check">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Always Lab Tested</h4>
+            <p>Every batch is third-party lab tested for purity, potency, and peace of mind.</p>
+          </div>
+        </div>
+
+        <!-- Promise 3 -->
+        <div class="promise-item reveal reveal-delay-3">
+          <div class="promise-check">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Always Family-Friendly</h4>
+            <p>Formulations safe enough for our own family, because they are the same ones our family uses.</p>
+          </div>
+        </div>
+
+        <!-- Promise 4 -->
+        <div class="promise-item reveal reveal-delay-4">
+          <div class="promise-check">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Rooted in Nature, Powered by Science</h4>
+            <p>The perfect balance of botanical purity and cutting-edge nano-technology.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="promise-cta reveal reveal-delay-2">
+        <a href="/collections/all" class="btn btn-primary">Shop the Collection &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{% schema %}
+{
+  "name": "Our Story Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image",
+      "info": "Recommended: 1920x1080px landscape image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Our Story"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Rooted in family. Grounded in science. Grown with love."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_card",
+      "name": "Value Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Value Title",
+          "default": "Family First"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Value Description",
+          "default": "Every decision we make starts with family."
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG",
+          "info": "Paste SVG markup for the value icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Story Page",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

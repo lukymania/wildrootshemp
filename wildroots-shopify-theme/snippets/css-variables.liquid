@@ -1,0 +1,30 @@
+{% style %}
+  :root {
+    --deep-forest: #2D4A3E;
+    --sage-mist: #9CAF88;
+    --raw-umber: #6B4226;
+    --terra-cotta: #C17A5F;
+    --cream: #F5F0E8;
+    --dark-brown: #3D2B1F;
+    --light-sage: #C5D4B8;
+    --kraft-brown: #C4A882;
+    --forest-deep: #0f241c;
+
+    --font-headline: 'Playfair Display', serif;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Lato', sans-serif;
+    --font-accent: 'Cormorant Garamond', serif;
+
+    --max-width: 1200px;
+    --header-height: 80px;
+    --transition: all 0.3s ease;
+    --shadow-sm: 0 2px 8px rgba(45, 74, 62, 0.08);
+    --shadow-md: 0 8px 24px rgba(45, 74, 62, 0.12);
+    --shadow-lg: 0 16px 48px rgba(45, 74, 62, 0.16);
+
+    --color-primary: {{ settings.colors_primary | default: '#2D4A3E' }};
+    --color-accent: {{ settings.colors_accent | default: '#C17A5F' }};
+    --color-background: {{ settings.colors_background | default: '#F5F0E8' }};
+    --color-text: {{ settings.colors_text | default: '#3D2B1F' }};
+  }
+{% endstyle %}

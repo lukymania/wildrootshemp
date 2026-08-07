@@ -1,0 +1,296 @@
+{% comment %}
+  Search Results Template
+  - Shows product and article results
+  - Responsive grid layout
+{% endcomment %}
+
+{%- style -%}
+.search-page {
+  padding: 8rem 0 5rem;
+  min-height: 60vh;
+}
+
+.search-page__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.search-page__header h1 {
+  color: var(--forest-deep, #0f241c);
+  margin-bottom: 1.5rem;
+}
+
+.search-form {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  display: flex;
+  gap: 0;
+  border: 2px solid rgba(45, 74, 62, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-form__input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: none;
+  background-color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--dark-brown, #3D2B1F);
+  outline: none;
+}
+
+.search-form__input::placeholder {
+  color: rgba(61, 43, 31, 0.5);
+}
+
+.search-form__btn {
+  padding: 1rem 2rem;
+  background-color: var(--terra-cotta, #C17A5F);
+  color: #fff;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-form__btn:hover {
+  background-color: var(--raw-umber, #6B4226);
+}
+
+.search-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.search-tab {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid var(--forest-deep, #0f241c);
+  color: var(--forest-deep, #0f241c);
+  background-color: transparent;
+}
+
+.search-tab:hover,
+.search-tab--active {
+  background-color: var(--forest-deep, #0f241c);
+  color: var(--cream, #F5F0E8);
+}
+
+.search-results__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.search-result-item {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(45, 74, 62, 0.08);
+  border: 1px solid rgba(196, 168, 130, 0.2);
+  transition: all 0.3s ease;
+}
+
+.search-result-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(45, 74, 62, 0.12);
+}
+
+.search-result-item__image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: var(--light-sage, #C5D4B8);
+  overflow: hidden;
+}
+
+.search-result-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search-result-item__content {
+  padding: 1.5rem;
+}
+
+.search-result-item__type {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--terra-cotta, #C17A5F);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.search-result-item__title {
+  font-family: var(--font-headline);
+  font-size: 1.2rem;
+  color: var(--forest-deep, #0f241c);
+  margin-bottom: 0.5rem;
+}
+
+.search-result-item__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.search-result-item__title a:hover {
+  color: var(--terra-cotta, #C17A5F);
+}
+
+.search-result-item__price {
+  font-family: var(--font-headline);
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--raw-umber, #6B4226);
+}
+
+.search-result-item__excerpt {
+  font-size: 0.9rem;
+  color: rgba(61, 43, 31, 0.7);
+  line-height: 1.6;
+}
+
+.search-no-results {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.search-no-results p {
+  color: rgba(61, 43, 31, 0.6);
+  font-size: 1.1rem;
+}
+
+@media (min-width: 640px) {
+  .search-results__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .search-results__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .search-page {
+    padding: 10rem 0 6rem;
+  }
+}
+{%- endstyle -%}
+
+<div class="search-page">
+  <div class="container">
+    <div class="search-page__header">
+      <h1>{{ 'general.search.title' | t | default: 'Search Results' }}</h1>
+    </div>
+
+    <form action="/search" method="get" class="search-form" role="search">
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.placeholder' | t | default: 'Search products, articles...' }}"
+        class="search-form__input"
+        aria-label="{{ 'general.search.placeholder' | t }}"
+      >
+      <button type="submit" class="search-form__btn">{{ 'general.search.submit' | t | default: 'Search' }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      <div class="search-tabs">
+        <a href="/search?q={{ search.terms | url_encode }}&type=product" class="search-tab {% if search.types contains 'product' %}search-tab--active{% endif %}">
+          {{ 'general.search.products' | t | default: 'Products' }}
+          {%- if search.types == blank or search.types contains 'product' -%}
+            <span>({{ search.results | where: 'object_type', 'product' | size }})</span>
+          {%- endif -%}
+        </a>
+        <a href="/search?q={{ search.terms | url_encode }}&type=article" class="search-tab {% if search.types contains 'article' %}search-tab--active{% endif %}">
+          {{ 'general.search.articles' | t | default: 'Articles' }}
+          {%- if search.types contains 'article' -%}
+            <span>({{ search.results | where: 'object_type', 'article' | size }})</span>
+          {%- endif -%}
+        </a>
+        <a href="/search?q={{ search.terms | url_encode }}&type=product,article" class="search-tab {% if search.types contains 'product' and search.types contains 'article' %}search-tab--active{% endif %}">
+          {{ 'general.search.all' | t | default: 'All' }}
+          <span>({{ search.results_count }})</span>
+        </a>
+      </div>
+
+      {%- if search.results_count > 0 -%}
+        <div class="search-results__grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- assign product = item -%}
+              <article class="search-result-item reveal reveal-delay-{{ forloop.index | modulo: 3 | plus: 1 }}">
+                <div class="search-result-item__image">
+                  {%- if product.featured_image != blank -%}
+                    {{ product.featured_image | image_url: width: 500 | image_tag:
+                      loading: 'lazy',
+                      alt: product.title
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+                  {%- endif -%}
+                </div>
+                <div class="search-result-item__content">
+                  <span class="search-result-item__type">Product</span>
+                  <h3 class="search-result-item__title">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h3>
+                  <p class="search-result-item__price">{{ product.price | money }}</p>
+                </div>
+              </article>
+            {%- elsif item.object_type == 'article' -%}
+              {%- assign article = item -%}
+              <article class="search-result-item reveal reveal-delay-{{ forloop.index | modulo: 3 | plus: 1 }}">
+                <div class="search-result-item__image">
+                  {%- if article.image != blank -%}
+                    {{ article.image | image_url: width: 500 | image_tag:
+                      loading: 'lazy',
+                      alt: article.title
+                    }}
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+                  {%- endif -%}
+                </div>
+                <div class="search-result-item__content">
+                  <span class="search-result-item__type">Article</span>
+                  <h3 class="search-result-item__title">
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                  </h3>
+                  <p class="search-result-item__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 15 }}</p>
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="pagination" style="margin-top:3rem;text-align:center;">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="search-no-results">
+          <p>{{ 'general.search.no_results' | t | default: 'No results found for' }} "{{ search.terms | escape }}". {{ 'general.search.try_again' | t | default: 'Try a different search term.' }}</p>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>

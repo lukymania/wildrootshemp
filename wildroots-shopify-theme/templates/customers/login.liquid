@@ -1,0 +1,256 @@
+{% comment %}
+  Login Page Template
+  - Customer login form
+  - Password recovery link
+  - Guest checkout option
+{% endcomment %}
+
+{%- style -%}
+.customer-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 3rem;
+  background: linear-gradient(135deg, var(--cream, #F5F0E8) 0%, #ede8df 100%);
+}
+
+.customer-auth__card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 24px rgba(45, 74, 62, 0.12);
+  border: 1px solid rgba(196, 168, 130, 0.2);
+}
+
+.customer-auth__logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.customer-auth__logo img {
+  max-height: 60px;
+  width: auto;
+}
+
+.customer-auth__heading {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--forest-deep, #0f241c);
+  font-size: 1.75rem;
+}
+
+.customer-auth__subtext {
+  text-align: center;
+  color: rgba(61, 43, 31, 0.6);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.customer-form__group {
+  margin-bottom: 1.25rem;
+}
+
+.customer-form__label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--forest-deep, #0f241c);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.customer-form__input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid rgba(45, 74, 62, 0.15);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--dark-brown, #3D2B1F);
+  background-color: #fff;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.customer-form__input:focus {
+  border-color: var(--terra-cotta, #C17A5F);
+  box-shadow: 0 0 0 3px rgba(193, 122, 95, 0.1);
+}
+
+.customer-form__input::placeholder {
+  color: rgba(61, 43, 31, 0.4);
+}
+
+.customer-form__error {
+  background-color: rgba(193, 122, 95, 0.1);
+  border: 1px solid rgba(193, 122, 95, 0.3);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: #8b3a2a;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.customer-form__btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.customer-form__links {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(196, 168, 130, 0.3);
+}
+
+.customer-form__links p {
+  font-size: 0.9rem;
+  color: rgba(61, 43, 31, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.customer-form__links a {
+  color: var(--terra-cotta, #C17A5F);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.customer-form__links a:hover {
+  color: var(--raw-umber, #6B4226);
+}
+
+.customer-form__recovery {
+  display: none;
+}
+
+.customer-form__recovery:target {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .customer-auth__card {
+    padding: 3rem;
+  }
+}
+{%- endstyle -%}
+
+<div class="customer-auth">
+  <div class="customer-auth__card">
+    <div class="customer-auth__logo">
+      <a href="/">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 200 | image_tag: alt: shop.name, class: 'customer-auth__logo-img' }}
+        {%- else -%}
+          <h2 style="font-family:var(--font-headline);color:var(--forest-deep);">{{ shop.name }}</h2>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <h1 class="customer-auth__heading">Welcome Back</h1>
+    <p class="customer-auth__subtext">Sign in to your Wild Roots account</p>
+
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <div class="customer-form__error">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="customer-form__group">
+        <label for="CustomerEmail" class="customer-form__label">Email</label>
+        <input
+          type="email"
+          id="CustomerEmail"
+          name="customer[email]"
+          class="customer-form__input"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+          {%- if form.errors contains 'form' -%}
+            aria-invalid="true"
+          {%- endif -%}
+        >
+      </div>
+
+      <div class="customer-form__group">
+        <label for="CustomerPassword" class="customer-form__label">Password</label>
+        <input
+          type="password"
+          id="CustomerPassword"
+          name="customer[password]"
+          class="customer-form__input"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+          {%- if form.errors contains 'form' -%}
+            aria-invalid="true"
+          {%- endif -%}
+        >
+      </div>
+
+      <button type="submit" class="btn btn-primary customer-form__btn">Sign In</button>
+
+      <div class="customer-form__links">
+        <p>
+          <a href="#recover" onclick="document.getElementById('recover').style.display='block';document.getElementById('login').style.display='none';return false;">Forgot your password?</a>
+        </p>
+        <p>
+          Don't have an account? <a href="/account/register">Create one</a>
+        </p>
+        <p style="margin-top:1rem;">
+          <a href="/" style="font-weight:400;">← Back to shop</a>
+        </p>
+      </div>
+    {%- endform -%}
+
+    {%- comment -%}Password Recovery Form{%- endcomment -%}
+    <div id="recover" class="customer-form__recovery" style="display:none;">
+      <h2 class="customer-auth__heading">Reset Password</h2>
+      <p class="customer-auth__subtext">We'll send you an email to reset your password.</p>
+
+      {%- form 'recover_customer_password' -%}
+        {%- if form.errors -%}
+          <div class="customer-form__error">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+          <div style="background-color:rgba(156,175,136,0.15);border:1px solid rgba(156,175,136,0.3);border-radius:4px;padding:0.75rem 1rem;color:var(--forest-deep);font-size:0.9rem;margin-bottom:1rem;">
+            Check your email for a link to reset your password.
+          </div>
+        {%- endif -%}
+
+        <div class="customer-form__group">
+          <label for="RecoverEmail" class="customer-form__label">Email</label>
+          <input
+            type="email"
+            id="RecoverEmail"
+            name="email"
+            class="customer-form__input"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary customer-form__btn">Send Reset Link</button>
+
+        <div class="customer-form__links">
+          <p>
+            <a href="#" onclick="document.getElementById('recover').style.display='none';document.getElementById('login').style.display='block';return false;">← Back to login</a>
+          </p>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>

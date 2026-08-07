@@ -1,0 +1,163 @@
+
+================================================================================
+     HEMP TOPICAL PRODUCTS PRICING RESEARCH - ROLL-ONS AND SPRAYS
+================================================================================
+
+Research Date: July 2025
+Analyst: Market Research Team
+Focus: Hemp topical roll-ons and sprays comparable to Wild Roots products
+
+================================================================================
+                           ROLL-ON PRODUCTS
+================================================================================
+
+| Brand               | Product Name                             | MG   | Price  | Price/MG | Nano? | Source                  |
+|---------------------|------------------------------------------|------|--------|----------|-------|-------------------------|
+| Wild Roots          | Root Relief Roll-On (Nano-Enhanced)      | 100  | $45.00 | $0.4500  | Y     | wildrootshemp.com       |
+| Weston Apothecary   | Hemp Pain Relief Roll-On                 | 100  | $19.95 | $0.1995  | N     | vermontcountrystore.com |
+| Uncle Bud's         | Hemp Roll-On Pain Reliever               | 120  | $21.99 | $0.1832  | N     | unclebudshemp.com       |
+| Omax Health         | CryoFreeze Hemp Roll-On (Regular)        | 150  | $39.95 | $0.2663  | N     | omaxhealth.com          |
+| Dakota Hemp         | Nano Hemp Roll-On Freeze Gel (1oz)       | 250  | $19.99 | $0.0800  | Y     | dakotahempcbd.com       |
+| Swanson/CBD Living  | CBD Freeze Roll-On                       | 300  | $24.99 | $0.0833  | Y     | swansonvitamins.com     |
+| Kozo                | Nano Hemp Roll-On                        | 300  | $42.50 | $0.1417  | Y     | Amazon                  |
+| Tranquil Earth      | Rapid Relief Nano Hemp Roll-On           | 500  | $44.99 | $0.0900  | Y     | tranquilearthcbd.com    |
+| CBD Living          | CBD Roll-On Freeze                       | 500  | $35.00 | $0.0700  | Y     | cbdliving.com           |
+| PlusCBD             | Cooling Topical Roll-On                  | 500  | $49.99 | $0.1000  | N     | pluscbdoil.com          |
+| Treadwell Farms     | Relief Hemp Body Oil Roll-On             | 600  | $21.00 | $0.0350  | N     | treadwellfarms.com      |
+| Dakota Hemp         | Nano Hemp Roll-On Freeze Gel (3oz)       | 750  | $34.99 | $0.0467  | Y     | dakotahempcbd.com       |
+| Green Roads         | Cool Relief Hemp Roll-On                 | 750  | $39.99 | $0.0533  | N     | greenroads.com          |
+| Physicians Natural  | Nano Optimized Pain Relief Roll-On       | 1000 | $75.00 | $0.0750  | Y     | physicians-natural.com  |
+| Medterra            | Pain Relief Roll-On (THC-Free)           | 1000 | $64.99 | $0.0650  | N     | medterracbd.com         |
+| CBDistillery        | Relief Stick (Oooh Distilled)            | 1000 | $50.00 | $0.0500  | N     | thecbdistillery.com     |
+| ReThink Hemp        | Muscle & Joint Roll-On                   | 1000 | $69.99 | $0.0700  | N     | cbdrethink.com          |
+| Green Roads         | Advanced Pain Relief Roll-On             | 1500 | $39.99 | $0.0267  | N     | greenroads.com          |
+| True Stopper        | Topical Roll-On for Pain                 | 1800 | $64.99 | $0.0361  | N     | truestopper.com         |
+| PlusCBD             | Cooling Topical Roll-On Extra Strength   | 2000 | $59.99 | $0.0300  | N     | pluscbdoil.com          |
+| HMP                 | Neuro Roll-On (w/ Menthol & Arnica)      | 2000 | $31.50 | $0.0158  | N     | Amazon                  |
+
+================================================================================
+                           SPRAY PRODUCTS
+================================================================================
+
+| Brand                   | Product Name                           | MG    | Price  | Price/MG | Nano? | Source                  |
+|-------------------------|----------------------------------------|-------|--------|----------|-------|-------------------------|
+| Nu Bloom                | Stress Relief Nano Hemp Oral Spray     | 50    | $23.99 | $0.4798  | Y     | Amazon                  |
+| CBD Daily (Earthly Body)| Active Spray Original Mint             | 60    | $25.99 | $0.4332  | N     | shop.earthlybody.com    |
+| Earthly Body (Lavender) | Ultimate Strength Active Spray         | 60    | $27.99 | $0.4665  | N     | Amazon                  |
+| Basic Jane              | Relieve CBD Pain Relief Spray          | 130   | $25.00 | $0.1923  | N     | basicjane.com           |
+| Basic Jane              | Relax CBD Spray                        | 130   | $25.00 | $0.1923  | N     | basicjane.com           |
+| Wild Roots              | Wild Relief Botanical Spray (Nano)     | 300   | $60.00 | $0.2000  | Y     | wildrootshemp.com       |
+| Real Flex Hemp          | FlexHEMP Topical Spray                 | 2000  | $44.99 | $0.0225  | N     | realflexhemp.com        |
+| Premium Hemp Spray      | Max Strength Hemp Oil Infused Spray    | 10000 | $42.99 | $0.0043  | N     | Amazon                  |
+
+================================================================================
+                        SUMMARY STATISTICS
+================================================================================
+
+ROLL-ONS (21 products):
+  - MG Range: 100 - 2,000 MG
+  - Price Range: $19.95 - $75.00
+  - Average Price/MG: $0.1032
+  - Median Price/MG: $0.0700
+  - Nano-Enhanced: 8 of 21 (38%)
+
+SPRAYS (8 products):
+  - MG Range: 50 - 10,000 MG
+  - Price Range: $23.99 - $60.00
+  - Average Price/MG: $0.2489
+  - Median Price/MG: $0.1961
+  - Nano-Enhanced: 2 of 8 (25%)
+
+================================================================================
+                    WILD ROOTS COMPETITIVE ANALYSIS
+================================================================================
+
+TARGET PRODUCT #1: Root Relief Roll-On (100MG @ $45.00 = $0.4500/MG)
+
+  Market Position: PREMIUM / Ultra-Premium
+
+  Comparable products at ~100MG:
+  - Weston Apothecary: 100MG @ $19.95 ($0.1995/MG) - 56% LESS expensive
+  - Uncle Bud's: 120MG @ $21.99 ($0.1832/MG) - 59% LESS expensive
+
+  Nano-enhanced alternatives:
+  - Dakota Hemp: 250MG @ $19.99 ($0.0800/MG) - 2.5x MORE MG, 56% LESS cost
+  - Tranquil Earth: 500MG @ $44.99 ($0.0900/MG) - 5x MORE MG for same price
+  - CBD Living: 500MG @ $35.00 ($0.0700/MG) - 5x MORE MG, 22% LESS cost
+
+  KEY INSIGHT: Wild Roots Root Relief Roll-On is priced 2.3x to 6.4x HIGHER 
+  per MG than the market median. The nano-enhancement technology is the 
+  primary differentiator justifying the premium.
+
+--------------------------------------------------------------------------------
+
+TARGET PRODUCT #2: Wild Relief Botanical Spray (300MG @ $60.00 = $0.2000/MG)
+
+  Market Position: PREMIUM
+
+  Comparable lower-MG sprays:
+  - Basic Jane (Relieve/Relax): 130MG @ $25.00 ($0.1923/MG) - Similar $/MG
+  - CBD Daily: 60MG @ $25.99 ($0.4332/MG) - Higher $/MG, lower total cost
+
+  High-MG alternatives:
+  - Real Flex Hemp: 2000MG @ $44.99 ($0.0225/MG) - 6.7x MORE MG, $15 LESS
+
+  KEY INSIGHT: Wild Roots spray is competitively priced on a per-MG basis 
+  versus premium smaller sprays (Basic Jane), but offers far less value than 
+  high-MG alternatives like Real Flex Hemp. Nano-enhancement is the key 
+  selling point.
+
+================================================================================
+                          KEY FINDINGS
+================================================================================
+
+1. NANO-ENHANCED PREMIUM: Products claiming nano-enhancement command a 
+   significant price premium, typically $0.0700-$0.4500/MG vs. $0.0158-
+   $0.1000/MG for non-nano products.
+
+2. ROLL-ON VALUE LEADERS: Best value roll-ons by Price/MG:
+   - HMP Neuro Roll-On: $0.0158/MG (2000MG)
+   - Green Roads Advanced: $0.0267/MG (1500MG)  
+   - PlusCBD Extra Strength: $0.0300/MG (2000MG)
+   - Treadwell Farms: $0.0350/MG (600MG)
+
+3. SPRAY VALUE LEADERS: Best value sprays by Price/MG:
+   - Real Flex Hemp: $0.0225/MG (2000MG)
+   - Basic Jane: $0.1923/MG (130MG)
+   - Wild Roots: $0.2000/MG (300MG)
+
+4. WILD ROOTS POSITIONING: Wild Roots occupies an ultra-premium niche 
+   with nano-enhanced products priced 2-6x above market median. This 
+   positioning is defensible if nano-absorption claims are substantiated 
+   and communicated effectively to consumers.
+
+5. NOTABLE BRANDS FOUND: Green Roads, Medterra, CBDistillery, PlusCBD, 
+   CBD Living, Charlotte's Web, Lazarus Naturals, Uncle Bud's, Dakota 
+   Hemp, Earthly Body/CBD Daily, Basic Jane, Real Flex Hemp, Treadwell 
+   Farms, Tranquil Earth.
+
+================================================================================
+                          DATA SOURCES
+================================================================================
+
+Searched queries:
+- "site:amazon.com hemp roll on topical"
+- "site:amazon.com hemp spray topical relief"  
+- "hemp roll on pain relief price"
+- "hemp body spray topical 300mg"
+- "nano hemp topical roll on"
+- "hemp topical spray compare price"
+- "Medterra hemp roll on price mg"
+- "CBDistillery hemp roll on topical price"
+- "PlusCBD hemp roll on spray topical price"
+- "hemp topical spray 300mg 500mg price Amazon"
+- "Real Flex hemp topical spray price"
+
+Websites visited: Amazon.com, wildrootshemp.com, greenroads.com, 
+medterracbd.com, thecbdistillery.com, pluscbdoil.com, cbdliving.com, 
+dakotahempcbd.com, basicjane.com, realflexhemp.com, unclebudshemp.com, 
+treadwellfarms.com, shop.earthlybody.com, tranquilearthcbd.com, 
+physicians-natural.com, omaxhealth.com, vermontcountrystore.com, 
+cbdrethink.com, truestopper.com
+
+================================================================================

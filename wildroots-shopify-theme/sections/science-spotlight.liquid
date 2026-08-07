@@ -1,0 +1,417 @@
+{% comment %}
+  Science Spotlight Section
+  - "What Makes Nano-Hemp Different?" section
+  - Stats cards (<100nm, 3-8x, Fast onset)
+  - Comparison cards (Traditional vs Nano)
+  - Link to science page
+{% endcomment %}
+
+{%- style -%}
+.science-spotlight {
+  background: linear-gradient(135deg, var(--forest-deep, #0f241c) 0%, #1e362d 100%);
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.science-spotlight__header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.science-spotlight__header h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.science-spotlight__header p {
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+.science-spotlight__comparison {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.science-card {
+  background-color: rgba(45, 74, 62, 0.85);
+  border: 1px solid rgba(156, 175, 136, 0.25);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.science-card:hover {
+  background-color: rgba(45, 74, 62, 0.95);
+  border-color: rgba(156, 175, 136, 0.4);
+  transform: translateY(-4px);
+}
+
+.science-card--highlight {
+  background-color: rgba(45, 74, 62, 0.9);
+  border-color: var(--terra-cotta, #C17A5F);
+  box-shadow: 0 0 30px rgba(193, 122, 95, 0.15);
+}
+
+.science-card__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background-color: rgba(156, 175, 136, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.science-card__icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--sage-mist, #9CAF88);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.science-card h3 {
+  color: #fff;
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.science-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.science-spotlight__arrow {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.science-spotlight__arrow svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--terra-cotta, #C17A5F);
+  fill: none;
+  stroke-width: 2;
+}
+
+.science-spotlight__stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-card {
+  background-color: rgba(45, 74, 62, 0.8);
+  border: 1px solid rgba(156, 175, 136, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-card__number {
+  font-family: var(--font-headline);
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: var(--sage-mist, #9CAF88);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card__label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.science-spotlight__cta {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.science-spotlight__image {
+  margin: 2.5rem auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.science-spotlight__image img {
+  max-width: 900px;
+  width: 95%;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.science-spotlight__caption {
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+}
+
+.science-spotlight__visual {
+  margin: 3rem auto 0;
+  max-width: 900px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  border: 1px solid rgba(156,175,136,0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.science-spotlight__visual img {
+  width: 100%;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .science-spotlight__comparison {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .science-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .science-spotlight__arrow {
+    display: flex;
+  }
+
+  .science-spotlight__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-card__number {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .science-spotlight {
+    padding: 6rem 0;
+  }
+}
+{%- endstyle -%}
+
+<section class="science-spotlight" id="science" aria-labelledby="science-heading" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="science-spotlight__header reveal">
+      <span class="section-label">{{ section.settings.label | default: 'The Science' }}</span>
+      <h2 id="science-heading">{{ section.settings.heading | default: 'What Makes Nano-Hemp Different?' }}</h2>
+      <p>{{ section.settings.description | default: 'Nano-hemp uses proprietary technology to break hemp particles to under 100 nanometers and encapsulate them for stability. Unlike traditional hemp with 5,000+ nanometer particles, nano-hemp achieves 3-8x better absorption. Your body uses more of the active compounds, delivering faster, more consistent wellness results with every serving.' }}</p>
+    </div>
+
+    {%- if section.settings.process_image != blank -%}
+      <div class="science-spotlight__image reveal">
+        {{ section.settings.process_image | image_url: width: 900 | image_tag:
+          loading: 'lazy',
+          alt: 'The nano-fragmentation process: particle dispersion, ultrasonic energy fragmentation, and stable nano-particle formation'
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="science-spotlight__comparison">
+      <div class="science-card reveal reveal-delay-1">
+        <div class="science-card__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10" stroke-dasharray="4 4"/></svg>
+        </div>
+        <h3>{{ section.settings.traditional_title | default: 'Traditional Hemp' }}</h3>
+        <p>{{ section.settings.traditional_text | default: 'Standard hemp particles are large (5,000+ nanometers), limiting how much your body can absorb. Most passes through unused.' }}</p>
+      </div>
+
+      <div class="science-spotlight__arrow reveal reveal-delay-2" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <div class="science-card science-card--highlight reveal reveal-delay-3">
+        <div class="science-card__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6" stroke-dasharray="2 2"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
+        </div>
+        <h3>{{ section.settings.nano_title | default: 'Nano-Hemp' }}</h3>
+        <p>{{ section.settings.nano_text | default: 'Our particles are under 100 nanometers, small enough to absorb efficiently. Experience faster onset and fuller benefits.' }}</p>
+      </div>
+    </div>
+
+    <div class="science-spotlight__stats">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'stat' -%}
+          <div class="stat-card reveal reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            <span class="stat-card__number">{{ block.settings.number }}</span>
+            <span class="stat-card__label">{{ block.settings.label }}</span>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="stat-card reveal reveal-delay-1">
+          <span class="stat-card__number">3-8x</span>
+          <span class="stat-card__label">Better Absorption</span>
+        </div>
+        <div class="stat-card reveal reveal-delay-2">
+          <span class="stat-card__number">&lt;100<span style="font-size:1.2rem">nm</span></span>
+          <span class="stat-card__label">Particle Size</span>
+        </div>
+        <div class="stat-card reveal reveal-delay-3">
+          <span class="stat-card__number">Fast</span>
+          <span class="stat-card__label">Onset &amp; Duration</span>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.skin_barrier_image != blank -%}
+      <div class="science-spotlight__visual reveal">
+        {{ section.settings.skin_barrier_image | image_url: width: 900 | image_tag:
+          loading: 'lazy',
+          alt: 'Traditional hemp particles blocked by skin barrier versus nano-hemp particles that pass through'
+        }}
+      </div>
+      <p class="science-spotlight__caption">Traditional hemp particles (~2,000nm) are blocked. Nano-hemp (&lt;100nm) passes through.</p>
+    {%- endif -%}
+
+    <div class="science-spotlight__cta reveal">
+      <a href="{{ section.settings.cta_link | default: '/pages/the-science' }}" class="btn btn-ghost">
+        {{ section.settings.cta_text | default: 'Learn the Science →' }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Science Spotlight",
+  "tag": "section",
+  "class": "science-spotlight-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section label",
+      "default": "The Science"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Makes Nano-Hemp Different?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Nano-hemp uses proprietary technology to break hemp particles to under 100 nanometers and encapsulate them for stability. Unlike traditional hemp with 5,000+ nanometer particles, nano-hemp achieves 3-8x better absorption. Your body uses more of the active compounds, delivering faster, more consistent wellness results with every serving."
+    },
+    {
+      "type": "image_picker",
+      "id": "process_image",
+      "label": "Nano fragmentation process image",
+      "info": "Optional: illustration of the nano process"
+    },
+    {
+      "type": "header",
+      "content": "Comparison Cards"
+    },
+    {
+      "type": "text",
+      "id": "traditional_title",
+      "label": "Traditional card title",
+      "default": "Traditional Hemp"
+    },
+    {
+      "type": "textarea",
+      "id": "traditional_text",
+      "label": "Traditional card text",
+      "default": "Standard hemp particles are large (5,000+ nanometers), limiting how much your body can absorb. Most passes through unused."
+    },
+    {
+      "type": "text",
+      "id": "nano_title",
+      "label": "Nano card title",
+      "default": "Nano-Hemp"
+    },
+    {
+      "type": "textarea",
+      "id": "nano_text",
+      "label": "Nano card text",
+      "default": "Our particles are under 100 nanometers, small enough to absorb efficiently. Experience faster onset and fuller benefits."
+    },
+    {
+      "type": "image_picker",
+      "id": "skin_barrier_image",
+      "label": "Skin barrier visual",
+      "info": "Optional: comparison showing particle absorption"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Learn the Science →"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "default": "/pages/the-science"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat Card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Stat number",
+          "default": "3-8x"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Stat label",
+          "default": "Better Absorption"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Science Spotlight",
+      "category": "Content",
+      "blocks": {
+        "stat-0": { "type": "stat", "settings": { "number": "3-8x", "label": "Better Absorption" } },
+        "stat-1": { "type": "stat", "settings": { "number": "<100nm", "label": "Particle Size" } },
+        "stat-2": { "type": "stat", "settings": { "number": "Fast", "label": "Onset & Duration" } }
+      }
+    }
+  ]
+}
+{% endschema %}

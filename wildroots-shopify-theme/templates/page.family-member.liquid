@@ -1,0 +1,96 @@
+{% comment %}
+  Wild Roots Hemp - Family Member Profile Page Template
+  Used for: Nick (dad), Lucy (mom), Cole (son), Mia (dancer1), Ava (dancer2), Rocket (dog)
+{% endcomment %}
+
+<section class="page-hero family-member-hero" style="{% if page.metafields.custom.hero_image %}background-image: url({{ page.metafields.custom.hero_image | image_url }});{% else %}background: linear-gradient(135deg, var(--deep-forest) 0%, var(--sage-mist) 100%);{% endif %} background-size: cover; background-position: center;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="section-label" style="color: var(--terra-cotta);">{{ page.metafields.custom.role | default: 'Family Member' }}</span>
+    <h1 class="hero-title">{{ page.title }}</h1>
+    <p class="hero-subtitle">{{ page.metafields.custom.tagline | default: shop.name }}</p>
+  </div>
+</section>
+
+<main class="page-section family-member-profile" itemscope itemtype="https://schema.org/Person">
+  <div class="profile-layout">
+    <div class="profile-media">
+      {%- if page.metafields.custom.profile_image -%}
+        <img src="{{ page.metafields.custom.profile_image | image_url: width: 600 }}"
+             alt="{{ page.title }}" class="profile-img" loading="lazy"
+             width="500" height="600" itemprop="image">
+      {%- endif -%}
+    </div>
+
+    <div class="profile-content">
+      <div class="profile-intro">
+        <h2>{{ page.metafields.custom.intro_heading | default: 'Meet ' | append: page.title }}</h2>
+        <div class="profile-body" itemprop="description">
+          {{ page.content }}
+        </div>
+      </div>
+
+      {%- if page.metafields.custom.favorite_product -%}
+        <div class="profile-favorite-product">
+          <h3>Favorite Product</h3>
+          {% assign fav_handle = page.metafields.custom.favorite_product %}
+          {% assign fav_product = all_products[fav_handle] %}
+          {%- if fav_product != blank -%}
+            <a href="{{ fav_product.url }}" class="product-card-mini">
+              <img src="{{ fav_product.featured_image | image_url: width: 120 }}" alt="{{ fav_product.title }}" width="80" height="80">
+              <div>
+                <p class="mini-title">{{ fav_product.title }}</p>
+                <p class="mini-price">{{ fav_product.price | money }}</p>
+              </div>
+            </a>
+          {%- else -%}
+            <p>{{ page.metafields.custom.favorite_product }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if page.metafields.custom.quote -%}
+        <blockquote class="profile-quote">
+          <p>"{{ page.metafields.custom.quote }}"</p>
+        </blockquote>
+      {%- endif -%}
+
+      <div class="profile-nav">
+        <a href="/pages/family" class="btn btn-outline">&larr; Back to Family</a>
+        <a href="/collections/all" class="btn btn-primary">Shop Products</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Family Member Profile",
+  "settings": []
+}
+{% endschema %}
+
+<style>
+.family-member-hero { min-height: 50vh; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero-overlay { position: absolute; inset: 0; background: rgba(15,36,28,0.6); }
+.family-member-hero .hero-content { position: relative; z-index: 1; }
+.profile-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; max-width: var(--max-width); margin: 0 auto; }
+.profile-media { position: sticky; top: 100px; align-self: start; }
+.profile-img { width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.profile-content h2 { font-family: var(--font-headline); font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--deep-forest); margin-bottom: 1.5rem; }
+.profile-body { font-size: 1.05rem; line-height: 1.8; }
+.profile-body p { margin-bottom: 1.25rem; }
+.profile-favorite-product { margin: 2rem 0; padding: 1.5rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+.profile-favorite-product h3 { font-family: var(--font-headline); font-size: 1.25rem; margin-bottom: 1rem; }
+.product-card-mini { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit; }
+.product-card-mini img { border-radius: 8px; }
+.mini-title { font-weight: 600; color: var(--deep-forest); }
+.mini-price { color: var(--terra-cotta); font-weight: 700; }
+.profile-quote { margin: 2rem 0; padding: 1.5rem 2rem; border-left: 4px solid var(--sage-mist); background: rgba(156,175,136,0.08); border-radius: 0 8px 8px 0; }
+.profile-quote p { font-family: var(--font-accent); font-style: italic; font-size: 1.2rem; color: var(--deep-forest); margin: 0; }
+.profile-nav { display: flex; gap: 1rem; margin-top: 2rem; }
+@media (max-width: 768px) {
+  .profile-layout { grid-template-columns: 1fr; }
+  .profile-media { position: relative; top: 0; max-width: 300px; margin: 0 auto; }
+}
+</style>

@@ -1,0 +1,95 @@
+{% comment %}
+  Wild Roots Hemp - Footer Section
+{% endcomment %}
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        {%- if settings.footer_logo != blank -%}
+          <img class="footer-brand-logo" src="{{ settings.footer_logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" loading="lazy">
+        {%- elsif settings.logo != blank -%}
+          <img class="footer-brand-logo" src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" loading="lazy">
+        {%- else -%}
+          <div class="footer-brand-name">{{ shop.name }}</div>
+        {%- endif -%}
+        <p class="footer-brand-desc">{{ shop.description }}</p>
+        <div class="footer-socials">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}
+            <a href="{{ settings.social_twitter_link }}" aria-label="Twitter" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Shop</h4>
+        <ul>
+          {%- for link in linklists[section.settings.shop_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Company</h4>
+        <ul>
+          {%- for link in linklists[section.settings.company_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Support</h4>
+        <ul>
+          {%- for link in linklists[section.settings.support_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <p class="footer-disclaimer">These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "default": "footer-shop",
+      "label": "Shop Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "company_menu",
+      "default": "footer-company",
+      "label": "Company Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "support_menu",
+      "default": "footer-support",
+      "label": "Support Menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,509 @@
+{% comment %}
+  WILD ROOTS HEMP - THE SCIENCE PAGE TEMPLATE
+  ============================================
+  This template renders the Science page with:
+  - Video hero banner
+  - What Is Nano-Hemp definition section
+  - 4-step process cards (Raw Hemp → Fragmentation → Encapsulation → Suspension)
+  - Comparison table (traditional vs nano-hemp)
+  - Four Ingredients section
+  - Third-party testing section
+  - FAQ accordion
+{% endcomment %}
+
+<!-- ==================== HERO BANNER ==================== -->
+<section class="hero" aria-label="The Science of Nano-Hemp Hero">
+  <video class="hero-video" autoplay muted playsinline preload="auto" aria-hidden="true"
+    {% if section.settings.hero_video %}
+      poster="{{ section.settings.hero_video | img_url: 'master' }}"
+    {% endif %}>
+    {% if section.settings.hero_video_url != blank %}
+      <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+    {% else %}
+      <source src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/assets/videos/hero-science-lab.mp4" type="video/mp4">
+    {% endif %}
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-label">Proprietary Technology</span>
+    <h1 class="hero-title">The Science of Nano-Hemp</h1>
+    <p class="hero-subtitle">Why smaller particles make a bigger difference.</p>
+  </div>
+  <a href="#what-is-nano-hemp" class="hero-scroll" aria-label="Scroll to content">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7" /></svg>
+  </a>
+</section>
+
+<!-- ==================== MAIN ARTICLE CONTENT ==================== -->
+<main itemscope itemtype="https://schema.org/Article">
+
+  <!-- ==================== SECTION 1: WHAT IS NANO-HEMP? ==================== -->
+  <section id="what-is-nano-hemp" class="intro-section section-padding" aria-labelledby="nano-hemp-heading">
+    <div class="container">
+      <div class="intro-layout">
+        <div class="intro-content fade-in" itemprop="articleBody">
+          <span class="section-label">Understanding the Technology</span>
+          <h2 id="nano-hemp-heading" class="section-title">What Is Nano-Hemp?</h2>
+          <p><strong>Nano-hemp is hemp that has been processed using proprietary nano fragmentation technology</strong>, an advanced method that breaks hemp particles down to under 100 nanometers. This dramatic size reduction enables 3-8x better absorption than traditional hemp, allowing nano-particles to pass efficiently through biological membranes for faster, more effective wellness support.</p>
+        </div>
+        <div class="intro-image fade-in">
+          <img src="{{ 'science-intro-illustration.jpg' | asset_url }}" alt="Elegant botanical illustration showing hemp leaves with nano-particles flowing from large to nano-size" loading="lazy" style="width: 100%; display: block;">
+          <div class="intro-image-caption">Proprietary nano fragmentation reduces hemp particles to under 100nm</div>
+        </div>
+      </div>
+
+      <div class="intro-content fade-in" style="margin-top: 2.5rem;">
+        <p>The process breaks down hemp particles to <strong>under 100 nanometers</strong> in size. To put that into perspective, a single human hair is approximately 80,000 nanometers wide. That means our nano-hemp particles are roughly 800 times smaller than the width of a human hair, small enough to pass through biological membranes with remarkable efficiency.</p>
+        <p>These nano-sized particles are small enough to be absorbed directly through the mucous membranes in your mouth and digestive tract, bypassing many of the barriers that limit traditional hemp absorption. This means dramatically better absorption, faster onset of effects, and more consistent results with every use.</p>
+
+        <!-- Bioavailability Visual -->
+        <div class="science-visual fade-in" style="margin: 2.5rem 0; max-width: 900px; margin-left: auto; margin-right: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15);">
+          <img src="{{ 'science-skin-barrier-v2.jpg' | asset_url }}" alt="Traditional hemp particles (~2,000nm) blocked by skin barrier vs nano-hemp particles (&lt;100nm) passing through" loading="lazy" style="width: 100%; display: block;">
+        </div>
+
+        <p>Traditional hemp products contain particles measuring between <strong>5,000 and 10,000 nanometers</strong>, far too large for efficient absorption by the human body. Because the body struggles to process these oversized particles, much of the active compounds pass through without being utilized. Our proprietary nano fragmentation technology, developed by <strong>Ivy League PhD scientists</strong>, solves this problem by reducing particle size by 50-100x.</p>
+
+        <p>The result? <strong>3-8x better bioavailability</strong> compared to traditional hemp products. More of what you take actually reaches your system, which means you need less to achieve the desired effect. It's not just more efficient, it's smarter.</p>
+
+        <div class="intro-highlight">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
+          50-100x smaller particles than traditional hemp
+        </div>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar fade-in">
+        <div class="stat-item">
+          <div class="stat-number">&lt;100nm</div>
+          <div class="stat-label">Particle Size</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3-8x</div>
+          <div class="stat-label">Better Absorption</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Clean Ingredients</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2: PROCESS STAGES ==================== -->
+  <section id="three-stages" class="stages-section section-padding" aria-labelledby="stages-heading">
+    <div class="root-deco" style="bottom:-50px;left:-80px;"><img src="{{ 'root-illustration.jpg' | asset_url }}" alt="" aria-hidden="true" loading="lazy"></div>
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">The Process</span>
+        <h2 id="stages-heading" class="section-title">From Plant to Nano-Particle</h2>
+        <p class="section-subtitle">Four precise stages transform premium hemp into stable, encapsulated nano-hemp with maximum bioavailability.</p>
+      </div>
+      <div class="stages-grid">
+        <!-- Stage 1 -->
+        <article class="stage-card fade-in">
+          <div class="stage-number">1</div>
+          <h3 class="stage-title">Raw Hemp</h3>
+          <p class="stage-desc">We start with premium hemp, carefully selected for quality, purity, and potency. Every batch is traced from source to finished product.</p>
+        </article>
+        <!-- Stage 2 -->
+        <article class="stage-card fade-in">
+          <div class="stage-number">2</div>
+          <h3 class="stage-title">Proprietary Nano Fragmentation</h3>
+          <p class="stage-desc">Our breakthrough technology gently breaks down hemp particles to nano-size using a proprietary process developed by Ivy League PhD scientists.</p>
+        </article>
+        <!-- Stage 3 -->
+        <article class="stage-card fade-in">
+          <div class="stage-number">3</div>
+          <h3 class="stage-title">Nano-Encapsulation</h3>
+          <p class="stage-desc">Each nano-particle is individually coated with a protective layer using our clean carrier base. This encapsulation prevents particles from reassembling into large clusters, locking them at nano-size for maximum stability and absorption.</p>
+        </article>
+        <!-- Stage 4 -->
+        <article class="stage-card fade-in">
+          <div class="stage-number">4</div>
+          <h3 class="stage-title">Stable Suspension</h3>
+          <p class="stage-desc">The result is a uniform, water-compatible suspension of individually encapsulated nano-particles that remain stable over time. No shaking, no separation, just consistent potency in every drop.</p>
+        </article>
+      </div>
+      <!-- Process Visuals -->
+      <div style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <div class="science-visual fade-in" style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15); margin-bottom: 1.25rem;">
+          <img src="{{ 'nano-fragmentation-encapsulation-process.jpg' | asset_url }}" alt="Four-step process: large hemp clusters are fragmented into nano-particles, then individually encapsulated to prevent reassembly, resulting in stable nano-particles" loading="lazy" style="width: 100%; display: block;">
+        </div>
+        <div class="science-visual fade-in" style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15); margin-bottom: 1.25rem;">
+          <img src="{{ 'nano-encapsulation-warm.jpg' | asset_url }}" alt="Without encapsulation, nano-particles reassemble into large clusters. With encapsulation, each particle stays coated and stable at nano-size." loading="lazy" style="width: 100%; display: block;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3: COMPARISON TABLE ==================== -->
+  <section id="comparison" class="compare-section section-padding" aria-labelledby="comparison-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">By The Numbers</span>
+        <h2 id="comparison-heading" class="section-title">Why Size Matters: The Numbers</h2>
+        <p class="section-subtitle">See how nano-hemp stacks up against traditional hemp products across every key metric.</p>
+      </div>
+
+      <!-- Desktop Table -->
+      <div class="compare-table-wrapper fade-in">
+        <table class="compare-table" role="table" aria-label="Comparison of Traditional Hemp vs Nano-Hemp">
+          <thead>
+            <tr>
+              <th scope="col">Factor</th>
+              <th scope="col">Traditional Hemp</th>
+              <th scope="col">Wild Roots Nano-Hemp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Particle Size</td>
+              <td>5,000-10,000 nm</td>
+              <td>Under 100 nm <span class="highlight">50-100x smaller</span></td>
+            </tr>
+            <tr>
+              <td>Absorption Rate</td>
+              <td>6-10%</td>
+              <td>30-80% <span class="highlight">3-8x higher</span></td>
+            </tr>
+            <tr>
+              <td>Onset Time</td>
+              <td>45-90 minutes</td>
+              <td>15-30 minutes <span class="highlight">Faster</span></td>
+            </tr>
+            <tr>
+              <td>Duration</td>
+              <td>2-4 hours</td>
+              <td>4-6 hours <span class="highlight">Longer lasting</span></td>
+            </tr>
+            <tr>
+              <td>Bioavailability</td>
+              <td>Low</td>
+              <td><strong>3-8x higher</strong></td>
+            </tr>
+            <tr>
+              <td>Ingredient Count</td>
+              <td>Often 10+</td>
+              <td><strong>Just 4</strong> <span class="highlight">Clean</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="table-cards fade-in" role="region" aria-label="Mobile comparison cards">
+        <div class="table-card">
+          <div class="table-card-header">Particle Size</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">5,000-10,000 nm</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">Under 100 nm</span></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">Absorption Rate</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">6-10%</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">30-80%</span></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">Onset Time</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">45-90 min</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">15-30 min</span></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">Duration</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">2-4 hours</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">4-6 hours</span></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">Bioavailability</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">Low</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">3-8x Higher</span></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">Ingredient Count</div>
+          <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">10+ ingredients</span></div>
+          <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">Just 4</span></div>
+        </div>
+      </div>
+
+      <!-- Nanometer Scale Visual -->
+      <div class="science-visual fade-in" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15);">
+        <img src="{{ 'science-nanometer-scale.jpg' | asset_url }}" alt="Nanometer scale comparison showing nano-hemp particles at ~60nm are smaller than skin barrier pores, enabling direct passage into the body" loading="lazy" style="width: 100%; display: block;">
+      </div>
+      <p class="science-visual-caption" style="text-align: center; color: var(--science-muted); font-size: 0.85rem; margin-top: 1rem; font-style: italic;">At ~60nm, our nano-hemp particles are smaller than skin barrier pores (55-100nm), enabling direct passage into the body.</p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4: FOUR INGREDIENTS ==================== -->
+  <section id="ingredients" class="ingredients-section section-padding" aria-labelledby="ingredients-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Transparency</span>
+        <h2 id="ingredients-heading" class="section-title">Just Four Ingredients. Nothing Hidden.</h2>
+        <p class="section-subtitle">Every ingredient serves a purpose. No fillers, no artificial flavors, no preservatives.</p>
+      </div>
+
+      <div class="ingredients-grid">
+        <!-- Ingredient 1 -->
+        <article class="ingredient-card fade-in">
+          <div class="ingredient-icon" aria-hidden="true">&#127807;</div>
+          <div class="ingredient-info">
+            <h3>Nano-Hemp</h3>
+            <p>Our star ingredient. Premium hemp processed with proprietary nano fragmentation technology for maximum absorption and bioavailability.</p>
+          </div>
+        </article>
+        <!-- Ingredient 2 -->
+        <article class="ingredient-card fade-in">
+          <div class="ingredient-icon" aria-hidden="true">&#127793;</div>
+          <div class="ingredient-info">
+            <h3>Propylene Glycol</h3>
+            <p>A plant-derived compound that helps carry nano-particles and ensures consistent dispersion throughout every drop.</p>
+          </div>
+        </article>
+        <!-- Ingredient 3 -->
+        <article class="ingredient-card fade-in">
+          <div class="ingredient-icon" aria-hidden="true">&#127810;</div>
+          <div class="ingredient-info">
+            <h3>Vegetable Glycerin</h3>
+            <p>A natural, plant-based sweetener and carrier that gives our tinctures their smooth, pleasant texture.</p>
+          </div>
+        </article>
+        <!-- Ingredient 4 -->
+        <article class="ingredient-card fade-in">
+          <div class="ingredient-icon" aria-hidden="true">&#128167;</div>
+          <div class="ingredient-info">
+            <h3>Distilled Water</h3>
+            <p>Pure, clean water. No additives, no contaminants, just the highest quality H&#8322;O as a clean base.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="ingredients-cta fade-in">
+        <p>"Most hemp products contain 10+ ingredients with fillers, artificial flavors, and preservatives you can't pronounce. We chose simplicity because clean ingredients and advanced technology speak for themselves."</p>
+      </div>
+      <p class="ingredients-cta-note fade-in">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+        <strong>Note:</strong> Our Deep Rest Evening Formula also contains CBN Isolate, the only exception to our four-ingredient standard, specifically chosen to support restful sleep.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5: THIRD-PARTY TESTING ==================== -->
+  <section id="testing" class="testing-section section-padding" aria-labelledby="testing-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Quality Assurance</span>
+        <h2 id="testing-heading" class="section-title">Verified. Tested. Trusted.</h2>
+        <p class="section-subtitle">Every batch undergoes rigorous independent testing. No exceptions, no shortcuts.</p>
+      </div>
+
+      <div class="testing-grid">
+        <!-- Test 1 -->
+        <article class="testing-card fade-in">
+          <div class="testing-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>
+          </div>
+          <h3>Potency Verification</h3>
+          <p>Independent labs confirm the exact concentration of hemp compounds in every batch.</p>
+        </article>
+        <!-- Test 2 -->
+        <article class="testing-card fade-in">
+          <div class="testing-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <h3>Purity Screening</h3>
+          <p>Comprehensive screening ensures every product is free from contaminants and unwanted compounds.</p>
+        </article>
+        <!-- Test 3 -->
+        <article class="testing-card fade-in">
+          <div class="testing-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" /></svg>
+          </div>
+          <h3>Heavy Metals</h3>
+          <p>Rigorous testing for lead, arsenic, mercury, and cadmium at parts-per-billion sensitivity.</p>
+        </article>
+        <!-- Test 4 -->
+        <article class="testing-card fade-in">
+          <div class="testing-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+          </div>
+          <h3>Pesticides &amp; Microbials</h3>
+          <p>Full screening for pesticide residues, mold, bacteria, and other microbial contaminants.</p>
+        </article>
+      </div>
+
+      <div class="testing-cta fade-in">
+        <div>
+          <div class="testing-cta-text">We publish our results.</div>
+          <div class="testing-cta-sub">Because families deserve transparency. View Certificates of Analysis.</div>
+        </div>
+        <a href="/pages/contact" class="testing-cta-btn">Request COA<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6: FAQ ==================== -->
+  <section id="faq-science" class="faq-section section-padding" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Common Questions</span>
+        <h2 id="faq-heading" class="section-title">Science FAQ</h2>
+        <p class="section-subtitle">Everything you wanted to know about nano-hemp technology.</p>
+      </div>
+
+      <div class="faq-container">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_item' %}
+            <article class="faq-item fade-in" {{ block.shopify_attributes }}>
+              <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+              </button>
+              <div class="faq-answer">
+                <p>{{ block.settings.answer }}</p>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+
+        {% comment %} Fallback: if no blocks configured, render default FAQ {% endcomment %}
+        {% if section.blocks == empty or section.blocks.size == 0 %}
+          <!-- FAQ 1 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>How does nano-technology improve absorption?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Nano-technology reduces hemp particle size to under 100 nanometers, allowing them to pass efficiently through biological membranes in the mouth and digestive tract. Traditional hemp particles measure 5,000-10,000nm, too large for efficient absorption. Our nano-hemp achieves 30-80% absorption rates compared to just 6-10% for traditional products, meaning your body actually uses more of what you take.</p>
+            </div>
+          </article>
+          <!-- FAQ 2 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>What does "proprietary nano fragmentation" mean?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Proprietary nano fragmentation is our breakthrough technology, developed by Ivy League PhD scientists at a powerful West Coast biotech company, that gently breaks down hemp particles to nano-size. This proprietary process is exclusive to our products and represents a significant advancement in hemp delivery technology, achieving particle sizes under 100nm without compromising compound integrity.</p>
+            </div>
+          </article>
+          <!-- FAQ 3 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>Are your products third-party tested?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, every batch is independently lab tested for potency verification, purity screening, heavy metals, pesticides, and microbial contaminants. We manufacture in a GMP-certified facility and publish Certificates of Analysis (COAs) because we believe families deserve complete transparency about what they're putting in their bodies.</p>
+            </div>
+          </article>
+          <!-- FAQ 4 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>Why only four ingredients?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>We believe simplicity equals quality. Most hemp products contain 10+ ingredients with fillers, artificial flavors, and preservatives you can't pronounce. We chose four clean ingredients, Nano-Hemp, Propylene Glycol, Vegetable Glycerin, and Distilled Water, because our nano-fragmentation technology is so effective that nothing else is needed. Every ingredient serves a clear purpose.</p>
+            </div>
+          </article>
+          <!-- FAQ 5 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>What is CBN and why is it in the Deep Rest formula?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>CBN (cannabinol) is a hemp-derived compound known for its calming and sleep-supporting properties. Our Deep Rest Evening Formula is our only product that includes CBN Isolate, specifically chosen to support evening relaxation and restful sleep. It's the single exception to our four-ingredient standard, included because it meaningfully enhances the formula's purpose.</p>
+            </div>
+          </article>
+          <!-- FAQ 6 -->
+          <article class="faq-item fade-in">
+            <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+              <span>How should I store nano-hemp products?</span>
+              <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>Store in a cool, dry place away from direct sunlight. Avoid extreme heat or freezing temperatures. The nano-encapsulation helps maintain stability, but proper storage ensures maximum potency throughout the product's shelf life. Always check the expiration date on your bottle.</p>
+            </div>
+          </article>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// FAQ Accordion Toggle
+window.toggleFaq = function(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('active');
+  // Close all other items
+  document.querySelectorAll('.faq-item.active').forEach(function(openItem) {
+    openItem.classList.remove('active');
+    openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+  });
+  // Toggle current item
+  if (!isOpen) {
+    item.classList.add('active');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+};
+</script>
+
+{% schema %}
+{
+  "name": "The Science Page",
+  "settings": [
+    {
+      "type": "url",
+      "id": "hero_video_url",
+      "label": "Hero Video URL",
+      "info": "Direct URL to MP4 video file. Leave blank to use default."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_video_poster",
+      "label": "Hero Video Poster Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "The Science of Nano-Hemp"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Why smaller particles make a bigger difference."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does nano-technology improve absorption?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Nano-technology reduces hemp particle size to under 100 nanometers for dramatically improved absorption rates.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Science Page",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

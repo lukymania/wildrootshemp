@@ -1,0 +1,1366 @@
+{% comment %}
+  Wild Roots Hemp - Cart Page Template
+  Full cart functionality with quantity adjusters, remove items, subtotal, checkout
+{% endcomment %}
+
+<!-- ====== CART HERO ====== -->
+<section class="cart-hero">
+  <div class="cart-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Shopping Cart</span>
+    </nav>
+    <h1 class="cart-title">Your Cart</h1>
+    {% if cart.item_count > 0 %}
+      <p class="cart-subtitle">{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %} in your cart</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== CART CONTENT ====== -->
+<section class="cart-content">
+  <div class="cart-inner">
+    {% if cart.item_count > 0 %}
+      {% form 'cart', cart, id: 'cart-form' %}
+        <div class="cart-layout">
+          <!-- Cart Items Column -->
+          <div class="cart-items-col">
+            <!-- Cart Header -->
+            <div class="cart-items-header">
+              <span class="header-product">Product</span>
+              <span class="header-qty">Quantity</span>
+              <span class="header-total">Total</span>
+            </div>
+
+            <!-- Cart Item List -->
+            <div class="cart-item-list">
+              {% for item in cart.items %}
+                <div class="cart-item" data-line="{{ forloop.index }}" data-variant-id="{{ item.variant.id }}">
+                  <!-- Product Info -->
+                  <div class="cart-item-product">
+                    <a href="{{ item.url }}" class="cart-item-img-link">
+                      {% if item.image %}
+                        <img
+                          src="{{ item.image | img_url: 'small' }}"
+                          alt="{{ item.image.alt | escape }}"
+                          class="cart-item-img"
+                          loading="lazy"
+                        >
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'cart-item-img cart-item-img-placeholder' }}
+                      {% endif %}
+                    </a>
+                    <div class="cart-item-details">
+                      <a href="{{ item.url }}" class="cart-item-name">{{ item.product.title }}</a>
+
+                      <!-- Variant Info -->
+                      {% unless item.variant.title == 'Default Title' %}
+                        <span class="cart-item-variant">{{ item.variant.title }}</span>
+                      {% endunless %}
+
+                      <!-- Variant Options -->
+                      {% if item.variant.options.size > 0 %}
+                        <div class="cart-item-options">
+                          {% for option in item.variant.options %}
+                            <span class="option-pill">{{ option }}</span>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+
+                      <!-- Item Properties -->
+                      {% for p in item.properties %}
+                        {% unless p.last == blank %}
+                          <span class="cart-item-property">{{ p.first }}: {{ p.last }}</span>
+                        {% endunless %}
+                      {% endfor %}
+
+                      <!-- Unit Price -->
+                      <span class="cart-item-unit-price">{{ item.original_price | money }} each</span>
+
+                      <!-- Mobile: Remove Button -->
+                      <button
+                        type="button"
+                        class="cart-item-remove-mobile"
+                        onclick="removeCartItem({{ forloop.index }})"
+                        aria-label="Remove {{ item.product.title | escape }}"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                          <line x1="10" y1="11" x2="10" y2="17"/>
+                          <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Quantity Controls -->
+                  <div class="cart-item-quantity">
+                    <div class="qty-selector">
+                      <button
+                        type="button"
+                        class="qty-btn qty-decrease"
+                        onclick="updateQuantity({{ forloop.index }}, {{ item.quantity | minus: 1 }})"
+                        aria-label="Decrease quantity"
+                        {% if item.quantity <= 1 %}disabled{% endif %}
+                      >
+                        &minus;
+                      </button>
+                      <input
+                        type="number"
+                        name="updates[]"
+                        value="{{ item.quantity }}"
+                        min="0"
+                        max="99"
+                        class="qty-input"
+                        data-line="{{ forloop.index }}"
+                        onchange="updateQuantity({{ forloop.index }}, this.value)"
+                        aria-label="Quantity for {{ item.product.title | escape }}"
+                      >
+                      <button
+                        type="button"
+                        class="qty-btn qty-increase"
+                        onclick="updateQuantity({{ forloop.index }}, {{ item.quantity | plus: 1 }})"
+                        aria-label="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Line Total -->
+                  <div class="cart-item-total">
+                    {% if item.original_line_price != item.final_line_price %}
+                      <s class="line-price-original">{{ item.original_line_price | money }}</s>
+                      <span class="line-price-final">{{ item.final_line_price | money }}</span>
+                    {% else %}
+                      <span class="line-price">{{ item.final_line_price | money }}</span>
+                    {% endif %}
+                  </div>
+
+                  <!-- Desktop: Remove Button -->
+                  <button
+                    type="button"
+                    class="cart-item-remove"
+                    onclick="removeCartItem({{ forloop.index }})"
+                    aria-label="Remove {{ item.product.title | escape }}"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                    </svg>
+                  </button>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Cart Footer Actions -->
+            <div class="cart-items-footer">
+              <a href="/collections/all" class="btn-continue-shopping">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Continue Shopping
+              </a>
+              <button type="submit" name="update" class="btn-update-cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"/>
+                  <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+                </svg>
+                Update Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- Cart Summary Column -->
+          <div class="cart-summary-col">
+            <div class="cart-summary-card">
+              <h2 class="summary-title">Order Summary</h2>
+
+              <!-- Subtotal -->
+              <div class="summary-row">
+                <span class="summary-label">Subtotal</span>
+                <span class="summary-value" id="cartSubtotal">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+
+              <!-- Shipping Estimate -->
+              <div class="summary-row">
+                <span class="summary-label">Shipping</span>
+                <span class="summary-value shipping-value">
+                  {% if cart.total_price >= 7500 %}
+                    <span class="shipping-free">Free</span>
+                  {% else %}
+                    Calculated at checkout
+                  {% endif %}
+                </span>
+              </div>
+
+              <!-- Discounts -->
+              {% if cart.cart_level_discount_applications.size > 0 %}
+                <div class="summary-discounts">
+                  {% for discount_application in cart.cart_level_discount_applications %}
+                    <div class="summary-row summary-discount">
+                      <span class="summary-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                        </svg>
+                        {{ discount_application.title }}
+                      </span>
+                      <span class="summary-value discount-value">-{{ discount_application.total_allocated_amount | money }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- Divider -->
+              <div class="summary-divider"></div>
+
+              <!-- Total -->
+              <div class="summary-row summary-total">
+                <span class="summary-label">Total</span>
+                <span class="summary-value" id="cartTotal">{{ cart.total_price | money }}</span>
+              </div>
+
+              <!-- Tax Note -->
+              <p class="summary-tax-note">Taxes calculated at checkout. Shipping calculated at checkout.</p>
+
+              <!-- Free Shipping Progress -->
+              {% assign free_shipping_threshold = 7500 %}
+              {% assign amount_remaining = free_shipping_threshold | minus: cart.total_price %}
+              {% if amount_remaining > 0 %}
+                <div class="free-shipping-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ cart.total_price | times: 100 | divided_by: free_shipping_threshold }}%"></div>
+                  </div>
+                  <p class="progress-text">
+                    Add <strong>{{ amount_remaining | money }}</strong> more for free US shipping!
+                  </p>
+                </div>
+              {% else %}
+                <div class="free-shipping-unlocked">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  You qualify for free US shipping!
+                </div>
+              {% endif %}
+
+              <!-- Cart Note -->
+              <div class="cart-note-wrapper">
+                <label for="cartNote" class="note-label">Order Note (optional)</label>
+                <textarea
+                  id="cartNote"
+                  name="note"
+                  class="note-textarea"
+                  rows="3"
+                  placeholder="Special instructions for your order..."
+                >{{ cart.note }}</textarea>
+              </div>
+
+              <!-- Checkout Button -->
+              <button type="submit" name="checkout" class="btn-checkout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                Proceed to Checkout
+              </button>
+
+              <!-- Payment Icons -->
+              <div class="payment-icons">
+                {% for type in shop.enabled_payment_types %}
+                  {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+                {% endfor %}
+              </div>
+
+              <!-- Guarantee -->
+              <div class="cart-guarantee">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                30-Day Satisfaction Guarantee
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endform %}
+
+    {% else %}
+      <!-- Empty Cart State -->
+      <div class="cart-empty">
+        <div class="empty-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+            <path d="M6 6h15l-1.5 9h-12z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+            <path d="M6 6L5 3H2"/>
+          </svg>
+        </div>
+        <h2 class="empty-title">Your cart is empty</h2>
+        <p class="empty-desc">Looks like you haven't added anything to your cart yet. Explore our nano-enhanced hemp products and find what's right for you.</p>
+        <a href="/collections/all" class="btn-shop-now">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Shop Our Products
+        </a>
+
+        <!-- Featured Collections for Empty Cart -->
+        <div class="empty-cart-collections">
+          <h3 class="collections-title">Popular Collections</h3>
+          <div class="collections-grid">
+            {% for collection in collections limit: 3 %}
+              <a href="{{ collection.url }}" class="collection-card-mini">
+                {% if collection.image %}
+                  <img src="{{ collection.image | img_url: 'medium' }}" alt="{{ collection.title | escape }}" loading="lazy">
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                {% endif %}
+                <span class="collection-card-name">{{ collection.title }}</span>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== RECOMMENDED PRODUCTS (when cart has items) ====== -->
+{% if cart.item_count > 0 %}
+<section class="cart-recommendations">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Complete Your Routine</p>
+      <h2 class="section-title">You Might Also Love</h2>
+    </div>
+    <div class="recommendations-grid">
+      {% for product in collections.all.products limit: 3 %}
+        {% assign in_cart = false %}
+        {% for item in cart.items %}
+          {% if item.product.id == product.id %}
+            {% assign in_cart = true %}
+          {% endif %}
+        {% endfor %}
+        {% unless in_cart %}
+          <a href="{{ product.url }}" class="recommendation-card">
+            <div class="rec-card-img">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            <div class="rec-card-content">
+              {% if product.type != blank %}
+                <span class="rec-card-type">{{ product.type }}</span>
+              {% endif %}
+              <h3 class="rec-card-title">{{ product.title }}</h3>
+              <span class="rec-card-price">{{ product.price | money }}</span>
+            </div>
+          </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ====== STYLES ====== -->
+<style>
+  /* ===== Cart Hero ===== */
+  .cart-hero {
+    padding-top: 80px;
+    background: linear-gradient(135deg, var(--cream, #f5f0e8) 0%, var(--warm-white, #fdfcf9) 100%);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .cart-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb a {
+    color: var(--stone, #8a8278);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .breadcrumb-sep {
+    opacity: 0.4;
+  }
+
+  .breadcrumb-current {
+    color: var(--forest, #1a3a2f);
+    font-weight: 500;
+  }
+
+  .cart-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .cart-subtitle {
+    font-size: 1.0625rem;
+    color: var(--stone, #8a8278);
+  }
+
+  /* ===== Cart Content ===== */
+  .cart-content {
+    padding: 48px 0 80px;
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .cart-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .cart-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* ===== Cart Items Column ===== */
+  .cart-items-col {
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .cart-items-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 40px;
+    gap: 16px;
+    padding: 16px 24px;
+    background: var(--linen, #faf8f3);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone, #8a8278);
+  }
+
+  .header-qty {
+    text-align: center;
+  }
+
+  .header-total {
+    text-align: right;
+  }
+
+  .cart-item-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 40px;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+    transition: background 0.3s ease;
+  }
+
+  .cart-item:hover {
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Product Info */
+  .cart-item-product {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cart-item-img-link {
+    flex-shrink: 0;
+  }
+
+  .cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: var(--cream, #f5f0e8);
+    border: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .cart-item-img-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+  }
+
+  .cart-item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cart-item-name {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    text-decoration: none;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  .cart-item-name:hover {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .cart-item-variant {
+    font-size: 0.8125rem;
+    color: var(--stone, #8a8278);
+  }
+
+  .cart-item-options {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .option-pill {
+    padding: 2px 8px;
+    background: var(--lavender-light, #e8e0f0);
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .cart-item-property {
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+  }
+
+  .cart-item-unit-price {
+    font-size: 0.8125rem;
+    color: var(--charcoal-light, #4a4a4a);
+    font-weight: 500;
+  }
+
+  .cart-item-remove-mobile {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--terra-cotta, #c17c5b);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 4px;
+  }
+
+  .cart-item-remove-mobile svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Quantity Controls */
+  .cart-item-quantity {
+    display: flex;
+    justify-content: center;
+  }
+
+  .qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+  }
+
+  .qty-btn {
+    width: 36px;
+    height: 40px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--charcoal, #2c2c2c);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .qty-btn:hover:not(:disabled) {
+    background: var(--cream, #f5f0e8);
+  }
+
+  .qty-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .qty-input {
+    width: 44px;
+    height: 40px;
+    border: none;
+    border-left: 1px solid var(--border, #e5e0d8);
+    border-right: 1px solid var(--border, #e5e0d8);
+    text-align: center;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--charcoal, #2c2c2c);
+    -moz-appearance: textfield;
+  }
+
+  .qty-input::-webkit-inner-spin-button,
+  .qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Line Total */
+  .cart-item-total {
+    text-align: right;
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+  }
+
+  .line-price-original {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--stone, #8a8278);
+    font-weight: 400;
+  }
+
+  .line-price-final {
+    color: var(--terra-cotta, #c17c5b);
+  }
+
+  /* Remove Button (Desktop) */
+  .cart-item-remove {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--stone, #8a8278);
+    transition: all 0.3s ease;
+  }
+
+  .cart-item-remove svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cart-item-remove:hover {
+    background: var(--terra-cotta, #c17c5b);
+    border-color: var(--terra-cotta, #c17c5b);
+    color: white;
+  }
+
+  /* Cart Items Footer */
+  .cart-items-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--linen, #faf8f3);
+    border-top: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .btn-continue-shopping {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--forest, #1a3a2f);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .btn-continue-shopping svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-continue-shopping:hover {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .btn-continue-shopping:hover svg {
+    transform: translateX(-4px);
+  }
+
+  .btn-update-cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 8px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--charcoal, #2c2c2c);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-update-cart svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn-update-cart:hover {
+    border-color: var(--forest, #1a3a2f);
+    color: var(--forest, #1a3a2f);
+  }
+
+  /* ===== Cart Summary Column ===== */
+  .cart-summary-col {
+    position: sticky;
+    top: 100px;
+  }
+
+  .cart-summary-card {
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .summary-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 24px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 0.9375rem;
+  }
+
+  .summary-label {
+    color: var(--stone, #8a8278);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .summary-label svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .summary-value {
+    font-weight: 500;
+    color: var(--charcoal, #2c2c2c);
+  }
+
+  .shipping-free {
+    color: var(--sage-mist, #8b9a7d);
+    font-weight: 600;
+  }
+
+  .summary-discounts {
+    margin-top: 4px;
+  }
+
+  .summary-discount .summary-label {
+    color: var(--sage-mist, #8b9a7d);
+  }
+
+  .discount-value {
+    color: var(--sage-mist, #8b9a7d);
+    font-weight: 600;
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: var(--border-light, #f0ece5);
+    margin: 16px 0;
+  }
+
+  .summary-total {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .summary-total .summary-value {
+    color: var(--forest, #1a3a2f);
+    font-size: 1.375rem;
+  }
+
+  .summary-tax-note {
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    margin: 12px 0 20px;
+  }
+
+  /* Free Shipping Progress */
+  .free-shipping-progress {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--cream, #f5f0e8);
+    border-radius: 12px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border-light, #f0ece5);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage-mist, #8b9a7d), var(--forest-light, #2d5a48));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .progress-text {
+    font-size: 0.8125rem;
+    color: var(--stone, #8a8278);
+    text-align: center;
+    margin: 0;
+  }
+
+  .progress-text strong {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .free-shipping-unlocked {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 14px;
+    background: rgba(156, 175, 136, 0.12);
+    border: 1px solid rgba(156, 175, 136, 0.2);
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--sage-mist, #8b9a7d);
+  }
+
+  .free-shipping-unlocked svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--sage-mist, #8b9a7d);
+  }
+
+  /* Cart Note */
+  .cart-note-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .note-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--charcoal-light, #4a4a4a);
+    margin-bottom: 8px;
+  }
+
+  .note-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 10px;
+    background: white;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    color: var(--charcoal, #2c2c2c);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .note-textarea:focus {
+    border-color: var(--evening-accent, #9b8db0);
+  }
+
+  .note-textarea::placeholder {
+    color: var(--stone, #8a8278);
+  }
+
+  /* Checkout Button */
+  .btn-checkout {
+    width: 100%;
+    padding: 16px;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-checkout svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-checkout:hover {
+    background: var(--forest-light, #2d5a48);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(26, 58, 47, 0.25);
+  }
+
+  /* Payment Icons */
+  .payment-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .payment-icon {
+    width: 36px;
+    height: 24px;
+  }
+
+  /* Guarantee */
+  .cart-guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+  }
+
+  .cart-guarantee svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--sage-mist, #8b9a7d);
+  }
+
+  /* ===== Empty Cart State ===== */
+  .cart-empty {
+    text-align: center;
+    padding: 60px 24px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .empty-icon-wrapper {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px;
+    background: var(--cream, #f5f0e8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .empty-icon {
+    width: 40px;
+    height: 40px;
+    stroke: var(--stone, #8a8278);
+  }
+
+  .empty-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 12px;
+  }
+
+  .empty-desc {
+    font-size: 1rem;
+    color: var(--stone, #8a8278);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .btn-shop-now {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-shop-now svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-shop-now:hover {
+    background: var(--forest-light, #2d5a48);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(26, 58, 47, 0.25);
+  }
+
+  /* Empty Cart Collections */
+  .empty-cart-collections {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .collections-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 24px;
+  }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .collection-card-mini {
+    display: block;
+    background: var(--linen, #faf8f3);
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .collection-card-mini:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md, 0 4px 20px rgba(0,0,0,0.06));
+  }
+
+  .collection-card-mini img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+
+  .collection-card-mini svg {
+    width: 100%;
+    height: 140px;
+  }
+
+  .collection-card-name {
+    display: block;
+    padding: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+  }
+
+  /* ===== Recommendations ===== */
+  .cart-recommendations {
+    padding: 60px 0 80px;
+    background: var(--cream, #f5f0e8);
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--evening-accent, #9b8db0);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.2;
+  }
+
+  .recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .recommendation-card {
+    display: block;
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .recommendation-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.06);
+  }
+
+  .rec-card-img {
+    height: 180px;
+    background: var(--cream, #f5f0e8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .rec-card-img img {
+    max-height: 160px;
+    width: auto;
+    transition: transform 0.5s ease;
+  }
+
+  .recommendation-card:hover .rec-card-img img {
+    transform: scale(1.05);
+  }
+
+  .rec-card-content {
+    padding: 20px;
+  }
+
+  .rec-card-type {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--evening-accent, #9b8db0);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .rec-card-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .rec-card-price {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .cart-layout {
+      grid-template-columns: 1fr;
+    }
+    .cart-summary-col {
+      position: static;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .recommendations-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .collections-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cart-hero-inner {
+      padding: 40px 20px;
+    }
+    .cart-inner {
+      padding: 0 20px;
+    }
+    .cart-items-header {
+      display: none;
+    }
+    .cart-item {
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px;
+    }
+    .cart-item-product {
+      grid-column: 1 / -1;
+    }
+    .cart-item-quantity {
+      justify-content: flex-start;
+    }
+    .cart-item-total {
+      text-align: right;
+    }
+    .cart-item-remove {
+      display: none;
+    }
+    .cart-item-remove-mobile {
+      display: inline-flex;
+    }
+    .cart-item-img {
+      width: 64px;
+      height: 64px;
+    }
+    .cart-item-img-placeholder {
+      width: 64px;
+      height: 64px;
+    }
+    .cart-items-footer {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .recommendations-grid {
+      grid-template-columns: 1fr;
+    }
+    .collections-grid {
+      grid-template-columns: 1fr;
+    }
+    .section-inner {
+      padding: 0 20px;
+    }
+    .cart-summary-card {
+      padding: 24px;
+    }
+  }
+</style>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+// Update cart item quantity
+document.addEventListener('DOMContentLoaded', function() {
+  // Update cart form on quantity change
+  var qtyInputs = document.querySelectorAll('.qty-input');
+  qtyInputs.forEach(function(input) {
+    input.addEventListener('change', function() {
+      var line = this.dataset.line;
+      var qty = parseInt(this.value, 10);
+      if (qty < 0) qty = 0;
+      updateQuantity(line, qty);
+    });
+  });
+});
+
+function updateQuantity(line, quantity) {
+  if (quantity < 0) quantity = 0;
+
+  fetch('/cart/change.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      line: line,
+      quantity: quantity
+    })
+  })
+  .then(function(response) { return response.json(); })
+  .then(function(cart) {
+    // Reload page to show updated cart
+    window.location.reload();
+  })
+  .catch(function(error) {
+    console.error('Error updating cart:', error);
+    showToast('Error updating quantity');
+  });
+}
+
+function removeCartItem(line) {
+  updateQuantity(line, 0);
+}
+
+function showToast(message) {
+  var toast = document.getElementById('toast');
+  if (toast) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+}
+</script>

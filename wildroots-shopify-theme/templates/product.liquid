@@ -1,0 +1,582 @@
+{% comment %}
+  Wild Roots Hemp - Product Template
+  Based on product-deep-rest.html design
+{% endcomment %}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<!-- ====== PRODUCT CHECKOUT SECTION ====== -->
+<section class="product-checkout">
+  <div class="checkout-inner">
+    <!-- Image Column -->
+    <div class="checkout-image-wrap animate-in delay-1">
+      {% if product.featured_image %}
+        <img
+          id="mainProductImage"
+          src="{{ product.featured_image | img_url: 'large' }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          class="checkout-image-main"
+        >
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'checkout-image-main' }}
+      {% endif %}
+
+      {% if product.images.size > 1 %}
+        <div class="product-thumbnails">
+          {% for image in product.images %}
+            <img
+              src="{{ image | img_url: 'compact' }}"
+              alt="{{ image.alt | escape }}"
+              class="thumb{% if forloop.first %} active{% endif %}"
+              onclick="swapMainImage(this)"
+              data-full="{{ image | img_url: 'large' }}"
+            >
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Content Column -->
+    <div class="checkout-content animate-in delay-2" itemscope itemtype="https://schema.org/Product">
+      <meta itemprop="name" content="{{ product.title | escape }}">
+      <meta itemprop="description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
+      <meta itemprop="sku" content="{{ current_variant.sku | escape }}">
+      <meta itemprop="brand" content="{{ shop.name | escape }}">
+
+      <!-- Product Type / Category -->
+      {% if product.type != blank %}
+        <div class="checkout-category">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          {{ product.type }}
+        </div>
+      {% endif %}
+
+      <!-- Title -->
+      <h1 class="checkout-title">{{ product.title }}</h1>
+
+      <!-- Subtitle / Short Description -->
+      {% if product.metafields.custom.subtitle != blank %}
+        <p class="checkout-subtitle" itemprop="description">{{ product.metafields.custom.subtitle }}</p>
+      {% elsif product.description != blank %}
+        <p class="checkout-subtitle" itemprop="description">{{ product.description | strip_html | truncate: 100 }}</p>
+      {% endif %}
+
+      <!-- Nano-Enhanced Badge -->
+      {% if product.metafields.custom.nano_enhanced == true or product.tags contains 'nano-enhanced' %}
+        <div class="nano-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v4m0 12v4m-8.5-6.5l2.8-2.8m11.4 0l2.8 2.8M2 12h4m12 0h4M5.5 5.5l2.8 2.8m7.4 0l2.8-2.8"/>
+          </svg>
+          Nano-Enhanced
+        </div>
+      {% endif %}
+
+      <!-- Reviews Summary -->
+      <div class="checkout-rating">
+        <div class="checkout-stars" aria-label="Product rating">
+          {% for i in (1..5) %}
+            <svg viewBox="0 0 16 16">
+              <path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/>
+            </svg>
+          {% endfor %}
+        </div>
+        <span class="checkout-rating-text">
+          {% if product.metafields.reviews.rating != blank %}
+            <strong>{{ product.metafields.reviews.rating }}</strong> ({{ product.metafields.reviews.rating_count }} reviews)
+          {% else %}
+            <a href="#product-reviews">Write a review</a>
+          {% endif %}
+        </span>
+      </div>
+
+      <!-- Price -->
+      <div class="checkout-price-wrap">
+        <span class="checkout-price" id="productPrice">
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <span class="sale-price">{{ current_variant.price | money }}</span>
+            <s class="compare-price">{{ current_variant.compare_at_price | money }}</s>
+          {% else %}
+            {{ current_variant.price | money }}
+          {% endif %}
+        </span>
+      </div>
+
+      <!-- Product Specs -->
+      <div class="checkout-specs">
+        {% if product.metafields.custom.mg_strength != blank %}
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">{{ product.metafields.custom.mg_strength }}</span>
+            <span class="checkout-spec-label">MG Strength</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+        {% endif %}
+
+        {% if product.metafields.custom.volume != blank %}
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">{{ product.metafields.custom.volume }}</span>
+            <span class="checkout-spec-label">Volume</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+        {% endif %}
+
+        {% if product.metafields.custom.serving_size != blank %}
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">{{ product.metafields.custom.serving_size }}</span>
+            <span class="checkout-spec-label">Serving Size</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+        {% endif %}
+
+        {% if product.metafields.custom.extract_type != blank %}
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">{{ product.metafields.custom.extract_type }}</span>
+            <span class="checkout-spec-label">Extract Type</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Add to Cart Form -->
+      {% form 'product', product, id: 'product-form', class: 'product-form' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        <!-- Variant Selector -->
+        {% if product.variants.size > 1 %}
+          <div class="variant-selector">
+            {% for option in product.options_with_values %}
+              <div class="option-group">
+                <label class="option-label" for="Option{{ option.position }}">{{ option.name }}</label>
+                <select
+                  id="Option{{ option.position }}"
+                  name="options[{{ option.name | escape }}]"
+                  class="option-select"
+                >
+                  {% for value in option.values %}
+                    <option
+                      value="{{ value | escape }}"
+                      {% if option.selected_value == value %}selected{% endif %}
+                    >
+                      {{ value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="checkout-actions">
+          <!-- Quantity Selector -->
+          <div class="quantity-selector">
+            <button type="button" class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max="99"
+              class="qty-value"
+              id="qtyValue"
+              aria-label="Quantity"
+            >
+            <button type="button" class="qty-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button
+            type="submit"
+            name="add"
+            class="btn-add-cart"
+            id="addToCart"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            {% if current_variant.available %}
+              <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+                <path d="M6 6h15l-1.5 9h-12z"/>
+                <circle cx="9" cy="20" r="1"/>
+                <circle cx="18" cy="20" r="1"/>
+                <path d="M6 6L5 3H2"/>
+              </svg>
+              Add to Cart &middot; {{ current_variant.price | money }}
+            {% else %}
+              Sold Out
+            {% endif %}
+          </button>
+        </div>
+      {% endform %}
+
+      <!-- Guarantee -->
+      <div class="checkout-guarantee">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        30-Day Satisfaction Guarantee &middot; Free US Shipping over $75
+      </div>
+
+      <!-- Payment Icons -->
+      <div class="checkout-payment-icons">
+        <span>Secure Checkout</span>
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRODUCT DESCRIPTION / DETAILS ====== -->
+{% if product.description != blank %}
+<section class="product-description-section">
+  <div class="section-inner">
+    <div class="product-description-content">
+      {{ product.description }}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ====== HOW TO USE (Section with Blocks) ====== -->
+<section class="how-to-use" id="how-to-use">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Directions</p>
+      <h2 class="section-title">How to Use {{ product.title | split: '|' | first | strip }}</h2>
+      {% if product.metafields.custom.usage_subtitle != blank %}
+        <p class="section-desc">{{ product.metafields.custom.usage_subtitle }}</p>
+      {% else %}
+        <p class="section-desc">Simple steps to incorporate this product into your wellness ritual.</p>
+      {% endif %}
+    </div>
+
+    {% if product.metafields.custom.how_to_use_steps != blank %}
+      <!-- Metafield-driven usage steps -->
+      <div class="usage-steps-col">
+        {% assign steps = product.metafields.custom.how_to_use_steps | split: '|' %}
+        {% for step in steps %}
+          {% assign step_parts = step | split: ':' %}
+          <div class="step-row">
+            <div class="use-step-num">{{ forloop.index }}</div>
+            <div class="step-text">
+              <h4>{{ step_parts[0] | strip }}</h4>
+              <p>{{ step_parts[1] | strip }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Default usage steps -->
+      <div class="usage-steps-col">
+        <div class="step-row">
+          <div class="use-step-num">1</div>
+          <div class="step-text">
+            <h4>Shake Gently</h4>
+            <p>Give the bottle a gentle shake before each use to ensure even distribution.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="use-step-num">2</div>
+          <div class="step-text">
+            <h4>Measure Your Dose</h4>
+            <p>Use the dropper to measure your desired amount. Start with the recommended serving.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="use-step-num">3</div>
+          <div class="step-text">
+            <h4>Apply or Ingest</h4>
+            <p>Place under tongue for 30-60 seconds, or add to your favorite beverage.</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== PRODUCT FAQ (Section with Blocks) ====== -->
+<section class="product-faq" id="faq">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Common Questions</p>
+      <h2 class="section-title">Product FAQ</h2>
+      <p class="section-desc">Everything you need to know about {{ product.title | split: '|' | first | strip }}.</p>
+    </div>
+    <div class="faq-list">
+      {% if product.metafields.custom.faq_q1 != blank %}
+        <!-- Metafield-driven FAQs -->
+        {% for i in (1..6) %}
+          {% capture q_key %}faq_q{{ i }}{% endcapture %}
+          {% capture a_key %}faq_a{{ i }}{% endcapture %}
+          {% assign faq_q = product.metafields.custom[q_key] %}
+          {% assign faq_a = product.metafields.custom[a_key] %}
+          {% if faq_q != blank %}
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">
+                {{ faq_q }}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+              <div class="faq-answer">
+                <p>{{ faq_a }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <!-- Default FAQs -->
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How do I use this product?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Follow the directions on the label. Start with the recommended serving size and adjust as needed to find your ideal amount.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How long will one bottle last?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Bottle longevity depends on your personal usage. At the recommended serving size, most bottles last 30 days.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Is this product third-party tested?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, all Wild Roots Hemp products are third-party lab tested for purity and potency. You can find lab results on our website.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What is your return policy?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>We offer a 30-day satisfaction guarantee. If you are not completely satisfied, contact us for a full refund.</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRODUCT REVIEWS PLACEHOLDER ====== -->
+<section class="product-reviews" id="product-reviews">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Customer Love</p>
+      <h2 class="section-title">Reviews</h2>
+    </div>
+    <div id="shopify-product-reviews" data-id="{{ product.id }}">
+      <!-- Shopify Product Reviews app or alternate reviews app will populate this -->
+      {% if product.metafields.spr.reviews != blank %}
+        {{ product.metafields.spr.reviews }}
+      {% else %}
+        <div class="reviews-placeholder">
+          <p>Be the first to review <strong>{{ product.title }}</strong></p>
+          <a href="#" class="btn-write-review" onclick="SPR.toggleForm({{ product.id }}); return false;">Write a Review</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ====== RELATED PRODUCTS ====== -->
+<section class="related-products" id="related">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px;margin-right:8px;vertical-align:middle;">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        Complete Your Routine
+      </div>
+      <h2 class="section-title">You Might Also Love</h2>
+    </div>
+
+    {% assign related_collection = product.collections.first %}
+    {% if related_collection != blank and related_collection.products.size > 1 %}
+      <div class="related-grid">
+        {% assign count = 0 %}
+        {% for related_product in related_collection.products %}
+          {% if related_product.handle != product.handle and count < 3 %}
+            {% assign count = count | plus: 1 %}
+            <a href="{{ related_product.url }}" class="related-card">
+              <div class="related-card-img">
+                {% if related_product.featured_image %}
+                  <img src="{{ related_product.featured_image | img_url: 'medium' }}" alt="{{ related_product.featured_image.alt | escape }}" loading="lazy">
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {% endif %}
+                {% if related_product.type != blank %}
+                  <span class="related-card-badge">{{ related_product.type }}</span>
+                {% endif %}
+              </div>
+              <div class="related-card-content">
+                <h3>{{ related_product.title }}</h3>
+                <p class="related-desc">{{ related_product.description | strip_html | truncate: 80 }}</p>
+                <div class="related-meta">
+                  <span class="related-price">{{ related_product.price | money }}</span>
+                  <span class="related-btn">View Product</span>
+                </div>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Fallback: show from all products -->
+      <div class="related-grid">
+        {% for related_product in collections.all.products limit: 3 %}
+          {% if related_product.handle != product.handle %}
+            <a href="{{ related_product.url }}" class="related-card">
+              <div class="related-card-img">
+                {% if related_product.featured_image %}
+                  <img src="{{ related_product.featured_image | img_url: 'medium' }}" alt="{{ related_product.featured_image.alt | escape }}" loading="lazy">
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {% endif %}
+                {% if related_product.type != blank %}
+                  <span class="related-card-badge">{{ related_product.type }}</span>
+                {% endif %}
+              </div>
+              <div class="related-card-content">
+                <h3>{{ related_product.title }}</h3>
+                <p class="related-desc">{{ related_product.description | strip_html | truncate: 80 }}</p>
+                <div class="related-meta">
+                  <span class="related-price">{{ related_product.price | money }}</span>
+                  <span class="related-btn">View Product</span>
+                </div>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== STICKY ADD TO CART BAR ====== -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-inner">
+    <div class="sticky-product">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: 'thumb' }}" alt="{{ product.title | escape }}">
+      {% endif %}
+      <div class="sticky-product-info">
+        <h4>{{ product.title | split: '|' | first | strip }}</h4>
+        <span>
+          {% if product.type != blank %}{{ product.type }} &middot; {% endif %}
+          {{ current_variant.price | money }}
+        </span>
+      </div>
+    </div>
+    <div class="sticky-actions">
+      <span class="sticky-price" id="stickyPrice">{{ current_variant.price | money }}</span>
+      <button type="button" class="sticky-btn" id="stickyAddToCart" onclick="document.getElementById('addToCart').click();">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SCHEMA.ORG JSON-LD ====== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": {{ product.featured_image | img_url: '1024x1024' | prepend: 'https:' | json }},
+  "description": {{ product.description | strip_html | truncate: 300 | json }},
+  "sku": {{ current_variant.sku | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ shop.name | json }}
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+// Product Image Gallery - Thumbnail Swap
+function swapMainImage(thumb) {
+  var main = document.getElementById('mainProductImage');
+  if (main && thumb.dataset.full) {
+    main.src = thumb.dataset.full;
+    main.alt = thumb.alt;
+    document.querySelectorAll('.product-thumbnails .thumb').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    thumb.classList.add('active');
+  }
+}
+
+// Quantity Selector
+document.addEventListener('DOMContentLoaded', function() {
+  var qtyMinus = document.getElementById('qtyMinus');
+  var qtyPlus = document.getElementById('qtyPlus');
+  var qtyValue = document.getElementById('qtyValue');
+
+  if (qtyMinus && qtyValue) {
+    qtyMinus.addEventListener('click', function() {
+      var val = parseInt(qtyValue.value, 10);
+      if (val > 1) qtyValue.value = val - 1;
+    });
+  }
+
+  if (qtyPlus && qtyValue) {
+    qtyPlus.addEventListener('click', function() {
+      var val = parseInt(qtyValue.value, 10);
+      if (val < 99) qtyValue.value = val + 1;
+    });
+  }
+
+  // Sticky Bar Visibility
+  var stickyBar = document.getElementById('stickyBar');
+  var productCheckout = document.querySelector('.product-checkout');
+
+  if (stickyBar && productCheckout) {
+    window.addEventListener('scroll', function() {
+      var checkoutBottom = productCheckout.getBoundingClientRect().bottom;
+      if (checkoutBottom < 0) {
+        stickyBar.classList.add('visible');
+      } else {
+        stickyBar.classList.remove('visible');
+      }
+    });
+  }
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+});
+</script>

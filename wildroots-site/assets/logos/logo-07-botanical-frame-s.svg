@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Lato:wght@300;400&amp;display=swap');</style></defs>
+  <rect width="300" height="300" fill="#F5F0E8" rx="8"/>
+  <g stroke="#6B4226" opacity="0.7">
+    <path d="M150,15 Q130,35 120,55" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M150,15 Q170,35 180,55" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M135,30 Q140,38 145,42" fill="none" stroke-width="1" opacity="0.5"/>
+    <path d="M165,30 Q160,38 155,42" fill="none" stroke-width="1" opacity="0.5"/>
+    <circle cx="120" cy="55" r="2.5" fill="#9CAF88" stroke="none"/>
+    <circle cx="180" cy="55" r="2.5" fill="#9CAF88" stroke="none"/>
+  </g>
+  <g stroke="#6B4226" opacity="0.7">
+    <path d="M150,285 Q130,265 120,245" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M150,285 Q170,265 180,245" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M135,270 Q140,262 145,258" fill="none" stroke-width="1" opacity="0.5"/>
+    <path d="M165,270 Q160,262 155,258" fill="none" stroke-width="1" opacity="0.5"/>
+    <circle cx="120" cy="245" r="2.5" fill="#9CAF88" stroke="none"/>
+    <circle cx="180" cy="245" r="2.5" fill="#9CAF88" stroke="none"/>
+  </g>
+  <text x="150" y="150" font-family="'Playfair Display',serif" font-size="28" fill="#2D4A3E" text-anchor="middle" letter-spacing="2" font-weight="900">WILD ROOTS</text>
+  <text x="150" y="175" font-family="'Playfair Display',serif" font-size="13" fill="#9CAF88" text-anchor="middle" letter-spacing="7">H E M P</text>
+  <line x1="60" y1="188" x2="240" y2="188" stroke="#9CAF88" stroke-width="0.6" opacity="0.4"/>
+  <text x="150" y="208" font-family="Lato,sans-serif" font-size="8" fill="#6B4226" text-anchor="middle" letter-spacing="2" font-weight="300">ROOTED IN NATURE.</text>
+</svg>

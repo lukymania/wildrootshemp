@@ -1,0 +1,374 @@
+{% comment %}
+  WILD ROOTS HEMP - CONTACT PAGE TEMPLATE
+  ==========================================
+  This template renders the Contact page with:
+  - Page hero banner
+  - Contact form using Shopify's {% form 'contact' %}
+  - Contact info sidebar (email, hours)
+  - Family note section
+  - FAQ teaser grid
+  - Trust bar
+{% endcomment %}
+
+<!-- ==================== PAGE HERO ==================== -->
+<section class="page-hero" aria-label="Contact page hero">
+  <img
+    src="{{ 'hero-landscape.jpg' | asset_url }}"
+    alt="Serene hemp farm landscape at golden hour"
+    class="page-hero-bg"
+    loading="eager"
+  >
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">We're here for you</span>
+    <h1>{{ page.title | default: 'Get in Touch' }}</h1>
+    <p>We read every email. Seriously. Nick and Lucy personally answer your questions.</p>
+  </div>
+</section>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main id="main-content" itemscope itemtype="https://schema.org/ContactPage">
+
+  <!-- ==================== CONTACT SECTION ==================== -->
+  <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-header reveal">
+        <span class="section-label">Send a Message</span>
+        <h2 id="contact-heading">Contact Our Family</h2>
+        <p>Have a question about our products, your order, or just want to say hello? We'd love to hear from you.</p>
+      </div>
+
+      <div class="contact-layout">
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper reveal">
+
+          {% if form.posted_successfully? %}
+            <div class="form-status form-status--success visible" role="status" aria-live="polite">
+              <strong>Thank you!</strong> Your message has been sent successfully. We'll get back to you within 24 hours.
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="form-status form-status--error visible" role="alert" aria-live="assertive">
+              <strong>Oops!</strong> {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          {% form 'contact', id: 'contact-form', class: 'contact-form' %}
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Name</label>
+              <input
+                type="text"
+                id="contact-name"
+                name="contact[name]"
+                class="form-input"
+                placeholder="Your name"
+                required
+                autocomplete="name"
+                value="{% if form.name %}{{ form.name }}{% endif %}"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="contact-email"
+                name="contact[email]"
+                class="form-input"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+                value="{% if form.email %}{{ form.email }}{% endif %}"
+                {% if form.errors contains 'email' %}class="error"{% endif %}
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="contact-subject" class="form-label">Subject</label>
+              <select id="contact-subject" name="contact[subject]" class="form-select" required>
+                <option value="" disabled {% if form.subject == blank %}selected{% endif %}>Select a topic...</option>
+                <option value="General Question" {% if form.subject == 'General Question' %}selected{% endif %}>General Question</option>
+                <option value="Order Support" {% if form.subject == 'Order Support' %}selected{% endif %}>Order Support</option>
+                <option value="Product Question" {% if form.subject == 'Product Question' %}selected{% endif %}>Product Question</option>
+                <option value="Wholesale Inquiry" {% if form.subject == 'Wholesale Inquiry' %}selected{% endif %}>Wholesale Inquiry</option>
+                <option value="Press & Media" {% if form.subject == 'Press & Media' %}selected{% endif %}>Press &amp; Media</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message" class="form-label">Message</label>
+              <textarea
+                id="contact-message"
+                name="contact[body]"
+                class="form-textarea"
+                placeholder="How can we help?"
+                rows="5"
+                required
+              >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit" id="form-submit-btn">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn-text">Send Message</span>
+            </button>
+          {% endform %}
+        </div>
+
+        <!-- Contact Info Sidebar -->
+        <div class="contact-info-wrapper">
+          <!-- Contact Info Card -->
+          <div class="contact-info-card reveal reveal-delay-1">
+            <h3>Contact Information</h3>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Email Us</h4>
+                <p><a href="mailto:{{ shop.email | default: 'info@wildrootshemp.com' }}">{{ shop.email | default: 'info@wildrootshemp.com' }}</a></p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Business Hours</h4>
+                <p>Monday &ndash; Friday<br>9:00 AM &ndash; 5:00 PM PST</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Response Time</h4>
+                <p>Within 24 hours during business days</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Location</h4>
+                <p>West Coast, USA</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Our Promise</h4>
+                <p>We're a small family team. please be patient!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family Cartoon -->
+          <div class="contact-family-image reveal reveal-delay-2">
+            <img
+              src="{{ 'family-cartoon-group.jpg' | asset_url }}"
+              alt="Cartoon illustration of the Wild Roots family founders"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAMILY NOTE SECTION ==================== -->
+  <section class="family-note-section" aria-labelledby="family-note-heading">
+    <div class="container">
+      <div class="family-note-inner">
+        <div class="family-note-image-wrap reveal">
+          <img
+            src="{{ 'family-surfing-cartoon.jpg' | asset_url }}"
+            alt="Cartoon illustration of Nick, Lucy, and their kids in wetsuits with surfboards on a California beach"
+            loading="lazy"
+          >
+        </div>
+        <div class="family-note-content reveal">
+          <span class="section-label" style="color: rgba(255,255,255,0.7);">Personal Touch</span>
+          <h2 id="family-note-heading">From Our Family to Yours</h2>
+          <p>Your message goes straight to our family inbox. Nick and Lucy personally read and respond to every email. No automated replies, no customer service bots. just real people who care about your experience.</p>
+          <p>We're usually surfing in the morning and answering emails in the afternoon. &#127940;&#8205;&#9794;&#65039;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ TEASER SECTION ==================== -->
+  <section class="faq-teaser-section" aria-labelledby="faq-teaser-heading">
+    <div class="container">
+      <div class="faq-teaser-header reveal">
+        <span class="section-label">Quick Answers</span>
+        <h2 id="faq-teaser-heading">Common Questions</h2>
+        <p>Can't find what you're looking for? Send us a message above or visit our full FAQ page.</p>
+      </div>
+
+      <div class="faq-teaser-grid reveal reveal-delay-1">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_teaser' %}
+            <div class="faq-teaser-card" {{ block.shopify_attributes }}>
+              <h4>{{ block.settings.question }}</h4>
+              <p>{{ block.settings.answer }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {% if section.blocks == empty or section.blocks.size == 0 %}
+          <!-- Default FAQ Teasers -->
+          <div class="faq-teaser-card">
+            <h4>How fast do you ship?</h4>
+            <p>Most orders ship within 1&ndash;2 business days.</p>
+          </div>
+
+          <div class="faq-teaser-card">
+            <h4>What's your return policy?</h4>
+            <p>30-day satisfaction guarantee. If you're not happy, we'll make it right.</p>
+          </div>
+
+          <div class="faq-teaser-card">
+            <h4>Do you offer wholesale?</h4>
+            <p>Yes! Email us at <a href="mailto:{{ shop.email | default: 'info@wildrootshemp.com' }}">{{ shop.email | default: 'info@wildrootshemp.com' }}</a> with &ldquo;Wholesale&rdquo; in the subject line.</p>
+          </div>
+
+          <div class="faq-teaser-card">
+            <h4>Where are your products made?</h4>
+            <p>Made in the USA in a GMP-certified facility using proprietary nano-technology from our West Coast biotech partner.</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="faq-teaser-cta reveal reveal-delay-2">
+        <a href="/pages/faq" class="btn btn-secondary">Visit Full FAQ &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TRUST BAR ==================== -->
+  <section class="trust-bar" aria-label="Trust and guarantee badges">
+    <div class="container">
+      <div class="trust-bar-grid reveal">
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">No THC<br>Guaranteed</span>
+        </div>
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">Third-Party<br>Lab Tested</span>
+        </div>
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">30-Day<br>Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "We read every email. Seriously. Nick and Lucy personally answer your questions."
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email",
+      "default": "info@wildrootshemp.com"
+    },
+    {
+      "type": "image_picker",
+      "id": "family_image",
+      "label": "Family Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "surfing_image",
+      "label": "Surfing Illustration Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_teaser",
+      "name": "FAQ Teaser",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How fast do you ship?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Most orders ship within 1-2 business days."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

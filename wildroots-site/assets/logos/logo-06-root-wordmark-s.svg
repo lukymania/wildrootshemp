@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 300" width="280" height="300">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Lato:wght@300;400&amp;display=swap');</style></defs>
+  <rect width="280" height="300" fill="#F5F0E8" rx="8"/>
+  <text x="140" y="105" font-family="'Playfair Display',serif" font-size="85" fill="#2D4A3E" text-anchor="middle" font-weight="900">R</text>
+  <g transform="translate(55,95) scale(0.85)" stroke="#6B4226">
+    <path d="M100,20 C102,25 101,30 100,35 C99,40 100,45 100,50 C100,55 99,60 100,65 C101,70 100,75 101,80 C102,85 100,90 100,95" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M100,35 C92,38 88,42 84,46 C80,50 77,54 73,58 C70,62 66,66 63,70 C60,74 57,78 54,82" fill="none" stroke-width="2" stroke-linecap="round"/>
+    <path d="M84,46 C80,48 76,50 73,54 C70,58 67,62 64,66" fill="none" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M73,58 C70,60 67,63 64,66 C61,69 58,72 55,75" fill="none" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M63,70 C60,73 57,76 54,80 C52,83 50,86 48,89" fill="none" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M54,82 C52,85 50,88 48,91 C46,94 44,97 42,100" fill="none" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+    <path d="M100,40 C108,44 112,48 116,52 C120,56 124,60 127,64 C130,68 134,72 137,76 C140,80 143,84 146,88" fill="none" stroke-width="2" stroke-linecap="round"/>
+    <path d="M116,52 C120,55 124,58 127,62 C130,66 133,70 136,74" fill="none" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M127,64 C130,67 133,70 136,74 C139,78 142,82 145,86" fill="none" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M137,76 C140,79 143,82 146,86 C148,89 150,92 152,95" fill="none" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M146,88 C148,91 150,94 152,97 C154,100 156,103 158,106" fill="none" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+    <path d="M100,55 C94,58 90,62 86,66 C82,70 79,74 76,78" fill="none" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+    <path d="M100,60 C106,64 110,68 114,72 C118,76 121,80 124,84" fill="none" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+  </g>
+  <text x="140" y="165" font-family="'Playfair Display',serif" font-size="22" fill="#2D4A3E" text-anchor="middle" letter-spacing="3" font-weight="700">OOTS</text>
+  <text x="140" y="188" font-family="'Playfair Display',serif" font-size="14" fill="#9CAF88" text-anchor="middle" letter-spacing="6">H E M P</text>
+  <line x1="55" y1="198" x2="225" y2="198" stroke="#9CAF88" stroke-width="0.6" opacity="0.4"/>
+  <text x="140" y="220" font-family="Lato,sans-serif" font-size="9" fill="#6B4226" text-anchor="middle" letter-spacing="2" font-weight="300">WILDLY ROOTED.</text>
+</svg>

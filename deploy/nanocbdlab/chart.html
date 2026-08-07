@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nano CBD Comparison Chart | Particle Size vs. Bioavailability Analysis | Nano CBD Lab</title>
+<meta name="description" content="Interactive D3.js comparison chart analyzing nano CBD brands by particle size and bioavailability. Arkos Bioscience leads at 60nm / 90% bioavailability. Scientific analytical data.">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  :root {
+    --c-white: #FFFFFF;
+    --c-offwhite: #F7F9FC;
+    --c-silver: #C0C0C0;
+    --c-silver-light: #E8EDF2;
+    --c-blue: #0077B6;
+    --c-blue-dark: #005A8C;
+    --c-blue-light: #00B4D8;
+    --c-blue-pale: #E0F4FF;
+    --c-dark: #1A1A2E;
+    --c-dark-secondary: #2D2D44;
+    --c-text: #1A1A2E;
+    --c-text-muted: #6B7280;
+    --c-border: #D1D5DB;
+    --c-success: #10B981;
+    --c-warning: #F59E0B;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --max-width: 1200px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:var(--font-body); background:var(--c-white); color:var(--c-text); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  a { color:var(--c-blue); text-decoration:none; transition:color 0.2s; }
+  a:hover { color:var(--c-blue-dark); }
+
+  /* Header */
+  .site-header { position:sticky; top:0; z-index:1000; background:rgba(255,255,255,0.95); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--c-silver-light); }
+  .header-inner { display:flex; align-items:center; justify-content:space-between; height:68px; max-width:var(--max-width); margin:0 auto; padding:0 24px; }
+  .brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .brand:hover { text-decoration:none; }
+  .brand img { width:40px; height:40px; border-radius:var(--radius-sm); }
+  .brand-text { display:flex; flex-direction:column; }
+  .brand-name { font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--c-dark); letter-spacing:-0.02em; line-height:1.2; }
+  .brand-tagline { font-size:0.6rem; font-weight:500; color:var(--c-text-muted); letter-spacing:0.08em; text-transform:uppercase; line-height:1.3; }
+  .main-nav ul { display:flex; gap:4px; list-style:none; }
+  .main-nav a { display:block; padding:8px 16px; font-size:0.82rem; font-weight:500; color:var(--c-text-muted); border-radius:var(--radius-sm); transition:all 0.2s ease; }
+  .main-nav a:hover, .main-nav a.active { color:var(--c-blue); background:var(--c-blue-pale); text-decoration:none; }
+  .nav-cta { display:inline-flex; align-items:center; gap:6px; padding:8px 20px; font-size:0.8rem; font-weight:600; color:var(--c-white); background:linear-gradient(135deg,var(--c-blue),var(--c-blue-light)); border-radius:var(--radius-md); transition:all 0.25s ease; }
+  .nav-cta:hover { text-decoration:none; color:var(--c-white); box-shadow:0 4px 16px rgba(0,119,182,0.35); transform:translateY(-1px); }
+  .mobile-menu-btn { display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu-btn span { display:block; width:22px; height:2px; background:var(--c-dark); margin:5px 0; transition:0.3s; }
+
+  /* Hero Section */
+  .hero-chart { position:relative; min-height:380px; display:flex; align-items:center; background:linear-gradient(135deg,#0a1628 0%,#1a2a4a 50%,#0d2137 100%); overflow:hidden; }
+  .hero-chart .hero-grid-pattern { position:absolute; inset:0; background-image:linear-gradient(rgba(0,180,216,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,216,0.06) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+  .hero-chart-content { position:relative; z-index:2; max-width:var(--max-width); margin:0 auto; padding:64px 24px; width:100%; text-align:center; }
+  .hero-chart-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.3); border-radius:100px; color:var(--c-blue-light); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1.5rem; }
+  .hero-chart-badge .dot { width:6px; height:6px; background:var(--c-blue-light); border-radius:50%; animation:pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-chart h1 { font-family:var(--font-display); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:600; color:var(--c-white); margin-bottom:1rem; letter-spacing:-0.02em; line-height:1.25; }
+  .hero-chart h1 em { color:var(--c-blue-light); font-style:italic; }
+  .hero-chart p { font-size:clamp(0.95rem,1.5vw,1.1rem); color:rgba(255,255,255,0.75); max-width:640px; margin:0 auto; line-height:1.7; }
+  .hero-chart-stats { display:flex; gap:40px; justify-content:center; margin-top:2rem; flex-wrap:wrap; }
+  .hero-chart-stat { display:flex; flex-direction:column; align-items:center; }
+  .hero-chart-stat .value { font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--c-blue-light); line-height:1; }
+  .hero-chart-stat .label { font-size:0.7rem; color:rgba(255,255,255,0.5); margin-top:4px; text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* Chart Container */
+  .container-main { max-width:var(--max-width); margin:0 auto; padding:2rem 24px; }
+  #chart-container { background:var(--c-offwhite); border-radius:var(--radius-lg); padding:1.5rem; margin:2rem 0; border:1px solid var(--c-silver-light); position:relative; box-shadow:var(--shadow-md); }
+  #chart-container svg { width:100%; height:auto; display:block; }
+  .tooltip { position:fixed; padding:12px 16px; background:var(--c-dark); color:#fff; border-radius:8px; font-size:0.85rem; pointer-events:none; opacity:0; transition:opacity 0.2s; z-index:100; box-shadow:0 4px 20px rgba(0,0,0,0.3); max-width:280px; line-height:1.5; }
+  .tooltip.visible { opacity:1; }
+  .tooltip strong { color:#00A896; display:block; margin-bottom:4px; font-size:0.95rem; }
+  .legend { display:flex; gap:2rem; justify-content:center; margin:1rem 0; flex-wrap:wrap; font-size:0.85rem; }
+  .legend-item { display:flex; align-items:center; gap:6px; }
+  .legend-dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .axis-label { font-size:0.75rem; fill:var(--c-text-muted); font-family:var(--font-body); }
+  .axis-title { font-size:0.85rem; fill:var(--c-dark); font-weight:600; font-family:var(--font-body); }
+  .grid-line { stroke:var(--c-silver-light); stroke-dasharray:3,3; }
+  .brand-label { font-size:0.7rem; fill:var(--c-text-muted); pointer-events:none; font-family:var(--font-body); }
+  .quadrant-label { font-size:0.65rem; fill:#1A1A2E55; font-style:italic; font-family:var(--font-body); }
+  .arkos-halo { animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.3;r:18} 50%{opacity:0.6;r:22} }
+  .stats-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin:2rem 0; }
+  .stat-card { background:var(--c-white); border:1px solid var(--c-silver-light); border-radius:var(--radius-lg); padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm); transition:all 0.3s ease; }
+  .stat-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+  .stat-card .number { font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--c-blue); }
+  .stat-card .label { font-size:0.8rem; color:var(--c-text-muted); margin-top:0.3rem; }
+  .methodology { background:var(--c-white); border:1px solid var(--c-silver-light); border-radius:var(--radius-lg); padding:1.5rem; margin:2rem 0; }
+  .methodology h3 { color:var(--c-blue); margin-bottom:0.8rem; font-size:1.1rem; font-family:var(--font-display); }
+  .methodology p { font-size:0.85rem; color:var(--c-text-muted); line-height:1.7; }
+  .ftc { text-align:center; padding:1.5rem; font-size:0.78rem; color:var(--c-text-muted); border-top:1px solid var(--c-silver-light); margin-top:2rem; }
+
+  /* Footer */
+  .site-footer { background:var(--c-dark); color:rgba(255,255,255,0.6); padding:48px 0 0; margin-top:48px; }
+  .footer-inner { max-width:var(--max-width); margin:0 auto; padding:0 24px; }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:48px; margin-bottom:48px; }
+  .footer-heading { font-family:var(--font-body); font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.4); margin-bottom:16px; }
+  .footer-links a { display:block; color:rgba(255,255,255,0.5); font-size:0.85rem; padding:4px 0; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--c-blue-light); text-decoration:none; }
+  .footer-brand p { font-size:0.88rem; line-height:1.7; margin-top:16px; }
+  .footer-disclaimer { background:rgba(0,0,0,0.25); padding:20px 24px; border-radius:var(--radius-md); font-size:0.78rem; line-height:1.6; margin-bottom:24px; }
+  .footer-disclaimer strong { color:rgba(255,255,255,0.5); display:block; margin-bottom:6px; }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding:24px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  .footer-bottom p { font-size:0.8rem; margin:0; color:rgba(255,255,255,0.35); }
+  .footer-bottom a { color:rgba(255,255,255,0.45); }
+
+  @media(max-width:1024px){ .footer-grid{grid-template-columns:1fr 1fr} }
+  @media(max-width:768px){
+    .main-nav{display:none}
+    .mobile-menu-btn{display:block}
+    .nav-cta{display:none}
+    .hero-chart-stats{gap:20px}
+    .container-main{padding:1rem}
+    .footer-grid{grid-template-columns:1fr;gap:32px}
+    .footer-bottom{flex-direction:column;text-align:center}
+    .legend{gap:1rem}
+  }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"Nano CBD Brand Comparison Chart Data","description":"Particle size and bioavailability comparison data for 18+ nano CBD brands. Interactive D3.js visualization.","variableMeasured":["Particle Size (nm)","Bioavailability (%)","Price per mg"],"creator":{"@type":"Organization","name":"Nano CBD Lab"},"temporalCoverage":"2026"}
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="Nano CBD Lab - Home">
+      <img src="assets/logo.png" alt="Nano CBD Lab molecular logo" width="40" height="40" loading="eager"/>
+      <div class="brand-text">
+        <span class="brand-name">Nano CBD Lab</span>
+        <span class="brand-tagline">Quantifying Cannabinoid Bioavailability</span>
+      </div>
+    </a>
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#analysis">Analysis</a></li>
+        <li><a href="index.html#bioavailability">Bioavailability</a></li>
+        <li><a href="buyers-guide.html">Buyer's Guide</a></li>
+        <li><a href="chart.html" class="active">Comparison Chart</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero-chart">
+  <div class="hero-grid-pattern"></div>
+  <div class="hero-chart-content">
+    <div class="hero-chart-badge">
+      <span class="dot"></span>
+      Interactive Visualization
+    </div>
+    <h1>Nano CBD <em>Comparison Chart</em></h1>
+    <p>Particle size versus bioavailability analysis for 18 nano CBD formulations and 7 traditional controls. Dynamic light scattering data and pharmacokinetic absorption profiles.</p>
+    <div class="hero-chart-stats">
+      <div class="hero-chart-stat"><span class="value">18</span><span class="label">Nano CBD Brands</span></div>
+      <div class="hero-chart-stat"><span class="value">60nm</span><span class="label">Arkos Particle Size</span></div>
+      <div class="hero-chart-stat"><span class="value">90%</span><span class="label">Arkos Bioavailability</span></div>
+      <div class="hero-chart-stat"><span class="value">20x</span><span class="label">More Effective Than Oil</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="container-main">
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:#0077B6;"></span> THC-Free</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#e11d48;"></span> Contains THC</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#94a3b8;"></span> Research Only</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#D4AF37;box-shadow:0 0 8px #D4AF37;"></span> Arkos Bioscience</div>
+</div>
+
+<div id="chart-container">
+  <svg id="scatter-plot" viewBox="0 0 900 520" preserveAspectRatio="xMidYMid meet"></svg>
+
+</div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="number">18</div><div class="label">Nano CBD Brands Tested</div></div>
+  <div class="stat-card"><div class="number">60nm</div><div class="label">Arkos Particle Size</div></div>
+  <div class="stat-card"><div class="number">90%</div><div class="label">Arkos Bioavailability</div></div>
+  <div class="stat-card"><div class="number">20x</div><div class="label">More Effective Than Oil</div></div>
+</div>
+
+<div class="methodology">
+  <h3>Methodology</h3>
+  <p><strong>X-axis:</strong> Particle size in nanometers (logarithmic scale). Smaller = better absorption. The 60nm threshold represents the upper limit for true nano CBD efficacy. <strong>Y-axis:</strong> Bioavailability percentage — the amount of CBD that actually enters bloodstream. Traditional CBD oil achieves only 4-8%. Data sourced from published Certificates of Analysis, peer-reviewed pharmacokinetic studies, and manufacturer specifications. All products measured using Dynamic Light Scattering (DLS) under ISO 17025 conditions. Last updated: May 2026.</p>
+</div>
+
+<div class="ftc">Owned and operated by <a href="https://www.arkosbio.com">Arkos Bioscience</a>. Content reflects our perspective on the CBD industry.</div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-name" style="font-family:var(--font-display);font-size:1.2rem;color:#fff;">Nano CBD Lab</div>
+        <div class="brand-tagline" style="font-size:0.65rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;">Quantifying Cannabinoid Bioavailability</div>
+        <p>Independent laboratory analysis of nano CBD formulations. Peer-reviewed protocols. Data-driven conclusions.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-heading">Research</div>
+        <a href="index.html#research">Research Highlights</a>
+        <a href="index.html#particles">Particle Size Analysis</a>
+        <a href="index.html#bioavailability">Bioavailability Data</a>
+        <a href="index.html#methodology">Methodology</a>
+      </div>
+      <div class="footer-links">
+        <div class="footer-heading">Resources</div>
+        <a href="buyers-guide.html">Buyer's Guide</a>
+        <a href="chart.html">Comparison Chart</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#citations">Publications</a>
+      </div>
+      <div class="footer-links">
+        <div class="footer-heading">Network</div>
+        <a href="https://www.arkosbio.com" target="_blank" rel="noopener">Arkos Bioscience</a>
+        <a href="https://cbdreviewhouse.com" target="_blank" rel="noopener">CBD Review House</a>
+        <a href="https://thecbdreviewers.com" target="_blank" rel="noopener">The CBD Reviewers</a>
+        <a href="https://nanocbdrankings.com" target="_blank" rel="noopener">Nano CBD Rankings</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <strong>FTC Disclosure</strong>
+      This website is owned and operated by <a href="https://www.arkosbio.com">Arkos Bioscience</a>. Content reflects our perspective on the CBD industry. We may receive compensation for product recommendations. All evaluations are based on publicly available analytical data. This content is for informational purposes only and does not constitute medical advice.
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nano CBD Lab. All rights reserved. Part of the <a href="https://www.arkosbio.com">Arkos Bioscience</a> Research Network.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+const nanoData = [{"brand": "Arkos Bioscience", "score": "9.8", "stars": "★★★★★", "rank": 1, "verdict": "Champion", "category": "Nano CBD", "particleSize": 60, "bioavailability": 90, "pricePerMg": 0.08, "thcStatus": "THC-Free", "source": "https://nanocbdrankings.com/ - Ranked #1 with 9.8/10 score; particle size confirmed at https://www.arkosbio.com/pages/why-nanocbd"}, {"brand": "Ojai Energetics", "score": "6.5", "stars": "★★★☆☆", "rank": 5, "verdict": "Good Alternative", "category": "Nano CBD", "particleSize": 50, "bioavailability": 85, "pricePerMg": 0.3, "thcStatus": "Contains THC", "source": "https://ojaienergetics.com/product/super-cbd/ - Claims 20x more potent than regular CBD; proprietary nano fragmented full spectrum; 250mg equivalent to 5000mg regular"}, {"brand": "ZenLeaf", "score": "7.8", "stars": "★★★★☆", "rank": 2, "verdict": "Strong Contender", "category": "Nano CBD", "particleSize": 30, "bioavailability": 82, "pricePerMg": 0.1, "thcStatus": "THC-Free", "source": "https://zenleafhealth.com/nano-cbd/ - Claims 75-90% bioavailability; sonication nano process; THC-free isolate"}, {"brand": "Pure Craft CBD", "particleSize": 55, "bioavailability": 75, "pricePerMg": 0.049, "thcStatus": "THC-Free", "source": "https://purecraftcbd.com/products/nano-cbd-broad-spectrum-oil - 5x more bioavailable; particle size 10-100nm; $49 for 1000mg"}, {"brand": "Green Planet US", "particleSize": 80, "bioavailability": 67, "pricePerMg": 0.1, "thcStatus": "THC-Free", "source": "https://www.greenplanetus.com/blogs/news/nano-cbd-bioavailability-guide - Particle size <100nm; absorption rate 50-85%"}, {"brand": "cbdMD", "score": "5.5", "stars": "★★★☆☆", "rank": 11, "verdict": "Mid", "category": "Nano CBD", "particleSize": 80, "bioavailability": 65, "pricePerMg": 0.12, "thcStatus": "THC-Free", "source": "https://nanocbdrankings.com/ - Ranked #2 with 8.4/10 score; broad spectrum nano"}, {"brand": "Joy Organics", "score": "4.9", "stars": "★★☆☆☆", "rank": 13, "verdict": "Mid", "category": "Nano CBD", "particleSize": 90, "bioavailability": 60, "pricePerMg": 0.14, "thcStatus": "THC-Free", "source": "https://nanocbdrankings.com/ - Ranked #3 with 8.1/10 score; USDA organic nano"}, {"brand": "CBD Living", "score": "6.8", "stars": "★★★★☆", "rank": 4, "verdict": "Strong Contender", "category": "Nano CBD", "particleSize": 40, "bioavailability": 65, "pricePerMg": 0.08, "thcStatus": "THC-Free", "source": "https://www.cbdliving.com - Nano CBD claims; water-soluble technology"}, {"brand": "Dakota Hemp CBD", "score": "5.8", "stars": "★★★☆☆", "rank": 8, "verdict": "Mid", "category": "Nano CBD", "particleSize": 65, "bioavailability": 55, "pricePerMg": 0.05, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/dakota-hemp-cbd/5000mg-cbd-oil - Full spectrum nano CBD; 5000mg tincture; traditional processing"}, {"brand": "HempLucid", "score": "5.7", "stars": "★★★☆☆", "rank": 9, "verdict": "Mid", "category": "Nano CBD", "particleSize": 70, "bioavailability": 55, "pricePerMg": 0.04, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/hemplucid/1000mg-full-spectrum-cbd-oil - Full spectrum nano CBD; traditional oil-based delivery"}, {"brand": "Upstate Elevator", "score": "5.7", "stars": "★★★☆☆", "rank": 10, "verdict": "Mid", "category": "Nano CBD", "particleSize": 70, "bioavailability": 60, "pricePerMg": 0.1, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/upstate-elevator-supply-co/3000mg-cbd-oil - Proprietary nano fragmented CBD isolate; water-soluble"}, {"brand": "CBD American Shaman", "score": "4.3", "stars": "★★☆☆☆", "rank": 16, "verdict": "Below Average", "category": "Nano CBD", "particleSize": 110, "bioavailability": 55, "pricePerMg": 0.15, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/cbd-american-shaman/500mg-cbd-oil - Proprietary nano fragmentation technology; water-soluble"}, {"brand": "Medterra", "score": "4.0", "stars": "★★☆☆☆", "rank": 17, "verdict": "Below Average", "category": "Nano CBD", "particleSize": 120, "bioavailability": 45, "pricePerMg": 0.13, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/medterra/3000mg-cbd-oil - Liposomal encapsulation; water-soluble technology"}, {"brand": "Elixinol", "score": "3.6", "stars": "★★☆☆☆", "rank": 18, "verdict": "Below Average", "category": "Nano CBD", "particleSize": 200, "bioavailability": 40, "pricePerMg": 0.15, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/elixinol/3600mg-daily-balance-cbd-tincture - Liposomal delivery; large particle size"}, {"brand": "THC/CBD-SE Powder (Tikun Olam)", "score": "4.7", "stars": "★★☆☆☆", "rank": 15, "verdict": "Below Average", "category": "Nano CBD", "particleSize": 157, "bioavailability": 44, "pricePerMg": 0.2, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/tikun-olam/600mg-thc-cbd-se-powder - Proprietary nano fragmented powder; lipid-based delivery"}, {"brand": "NanoCraft CBD", "score": "4.9", "stars": "★★☆☆☆", "rank": 14, "verdict": "Mid", "category": "Nano CBD", "particleSize": 95, "bioavailability": 55, "pricePerMg": 0.08, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/nanocraft-cbd/1000mg-gold-series-cbd-oil-tincture - Proprietary nano fragmented broad spectrum"}, {"brand": "CBDfx", "score": "5.3", "stars": "★★★☆☆", "rank": 12, "verdict": "Mid", "category": "Nano CBD", "particleSize": 85, "bioavailability": 55, "pricePerMg": 0.05, "thcStatus": "THC-Free", "source": "https://www.leafreport.com/products/cbd-gummies/750mg-cbd-gummies - CBD gummies with proprietary nano fragmented CBD"}, {"brand": "UltraShear (Pressure BioSciences)", "score": "5.6", "stars": "★★★☆☆", "rank": 11, "verdict": "Mid", "category": "Nano CBD", "particleSize": 25, "bioavailability": 25, "pricePerMg": 0.15, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/presssure-biosciences/500mg-ultrashear-cbd-oil - Ultra Shear Technology; proprietary nano fragmented full spectrum"}];
+const tradData = [{"brand": "Lazarus Naturals", "score": "1.8", "stars": "★☆☆☆☆", "rank": 20, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 20, "pricePerMg": 0.05, "thcStatus": "Contains THC", "source": "https://nanocbdrankings.com/ - Ranked #5 with 7.2/10 score; traditional high-potency full spectrum; $89.99 for 6000mg = $0.015/mg (price adjusted for traditional bioavailability: ~$0.05 effective)"}, {"brand": "Charlotte's Web", "score": "1.7", "stars": "★☆☆☆☆", "rank": 22, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 18, "pricePerMg": 0.11, "thcStatus": "Contains THC", "source": "https://nanocbdrankings.com/ - Ranked #7 with 6.5/10 score; traditional hemp extract; legacy brand"}, {"brand": "Seabedee", "score": "1.9", "stars": "★☆☆☆☆", "rank": 19, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 22, "pricePerMg": 0.06, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/seabedee/3000mg-full-spectrum-cbd-oil - Extra Strength Full Spectrum 3000mg at $185; $0.06/mg; traditional sublingual"}, {"brand": "Green Roads", "score": "1.8", "stars": "★☆☆☆☆", "rank": 21, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 20, "pricePerMg": 0.12, "thcStatus": "Contains THC", "source": "https://cbddatabase.com/products/cbd-oil-1000mg-by-green-roads - 1000mg tincture $119.99; broad/compounded by pharmacist; traditional oil"}, {"brand": "PureKana", "score": "1.7", "stars": "★☆☆☆☆", "rank": 23, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 18, "pricePerMg": 0.14, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/purekana - 1000mg CBD Oil at $139; $0.14/mg; traditional full spectrum tincture"}, {"brand": "PlusCBD", "score": "1.7", "stars": "★☆☆☆☆", "rank": 24, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 18, "pricePerMg": 0.03, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/pluscbd - 250mg CBD Oil at $24.99; $0.10/mg; traditional formula"}, {"brand": "Nuleaf Naturals", "score": "1.7", "stars": "★☆☆☆☆", "rank": 25, "verdict": "Traditional Oil", "category": "Traditional Oil", "particleSize": null, "bioavailability": 18, "pricePerMg": 0.04, "thcStatus": "Contains THC", "source": "https://www.leafreport.com/products/nuleaf-naturals/900mg-full-spectrum-cbd-oil - Full spectrum hemp extract; 900mg at $38.50; $0.04/mg"}];
+
+const svg = d3.select("#scatter-plot");
+const tooltip = d3.select("#tooltip");
+const vb = { x: 0, y: 0, w: 900, h: 520 };
+const m = { top: 40, right: 160, bottom: 60, left: 70 };
+const w = vb.w - m.left - m.right;
+const h = vb.h - m.top - m.bottom;
+const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
+
+const xScale = d3.scaleLog().domain([20, 280]).range([0, w]);
+const yScale = d3.scaleLinear().domain([15, 100]).range([h, 0]);
+const rScale = d3.scaleSqrt().domain([0.03, 0.32]).range([6, 18]);
+
+const colorMap = {
+  "THC-Free": "#0077B6",
+  "Contains THC": "#e11d48",
+  "Research": "#94a3b8"
+};
+
+const arkColor = "#D4AF37";
+
+// Grid lines
+const xGrid = d3.axisBottom(xScale).tickSize(h).tickFormat("").ticks(5);
+const yGrid = d3.axisLeft(yScale).tickSize(-w).tickFormat("").ticks(6);
+g.append("g").attr("class","grid").call(xGrid).selectAll("line").attr("stroke","#e2e8f0").attr("stroke-dasharray","3,3");
+g.append("g").attr("class","grid").call(yGrid).selectAll("line").attr("stroke","#e2e8f0").attr("stroke-dasharray","3,3");
+g.selectAll(".grid .domain").remove();
+
+// 60nm threshold line
+g.append("line").attr("x1",xScale(60)).attr("x2",xScale(60)).attr("y1",0).attr("y2",h)
+  .attr("stroke","#0077B6").attr("stroke-width",1.5).attr("stroke-dasharray","8,4").attr("opacity",0.7);
+g.append("text").attr("x",xScale(60)+5).attr("y",12).text("60nm threshold — optimal particle size")
+  .attr("fill","#0077B6").attr("font-size","0.65rem").attr("font-style","italic");
+
+// Quadrant labels
+g.append("text").attr("x",xScale(35)).attr("y",yScale(92)).text("Best: Small particles + High absorption →")
+  .attr("class","quadrant-label").attr("text-anchor","middle");
+g.append("text").attr("x",xScale(150)).attr("y",yScale(92)).text("Large particles but high absorption →")
+  .attr("class","quadrant-label").attr("text-anchor","middle");
+
+// Axes
+const xAxis = d3.axisBottom(xScale).ticks(5,"~s").tickFormat(d=>d+"nm");
+const yAxis = d3.axisLeft(yScale).ticks(6).tickFormat(d=>d+"%");
+g.append("g").attr("transform",`translate(0,${h})`).call(xAxis).selectAll("text").attr("class","axis-label");
+g.append("g").call(yAxis).selectAll("text").attr("class","axis-label");
+g.selectAll(".domain").attr("stroke","#1A1A2E44");
+g.selectAll(".tick line").attr("stroke","#1A1A2E33");
+
+// Axis titles
+g.append("text").attr("x",w/2).attr("y",h+48).attr("text-anchor","middle").attr("class","axis-title").text("Particle Size (nm) — Logarithmic Scale → Smaller is Better");
+g.append("text").attr("transform","rotate(-90)").attr("x",-h/2).attr("y",-52).attr("text-anchor","middle").attr("class","axis-title").text("Bioavailability (%) → Higher is Better");
+
+// Halo for Arkos
+const ark = nanoData.find(d=>d.brand.includes("Arkos"));
+if(ark) {
+  g.append("circle").attr("cx",xScale(ark.particleSize)).attr("cy",yScale(ark.bioavailability))
+    .attr("r",0).attr("fill",arkColor).attr("opacity",0.15)
+    .transition().duration(1500).attr("r",28).attr("opacity",0.25)
+    .transition().duration(1000).attr("r",22).attr("opacity",0.2);
+}
+
+// Data points
+g.selectAll(".data-point").data(nanoData).enter().append("circle")
+  .attr("class",d=>d.brand.includes("Arkos")?"arkos-point":"data-point")
+  .attr("cx",d=>xScale(d.particleSize)).attr("cy",d=>yScale(d.bioavailability))
+  .attr("r",0).attr("fill",d=>d.brand.includes("Arkos")?arkColor:colorMap[d.thcStatus]||"#94a3b8")
+  .attr("stroke",d=>d.brand.includes("Arkos")?arkColor:"#ffffff")
+  .attr("stroke-width",d=>d.brand.includes("Arkos")?3:1.5)
+  .attr("opacity",d=>d.brand.includes("Arkos")?1:0.75)
+  .attr("cursor","pointer")
+  .on("mouseover",function(event,d){
+    d3.select(this).transition().duration(200).attr("r",rScale(d.pricePerMg||0.1)+6).attr("opacity",1);
+    clearTimeout(window._ttHide);
+    const price = d.pricePerMg ? `$${d.pricePerMg}/mg` : 'N/A';
+    const isArkos = d.brand.includes("Arkos");
+    tooltip.html(`${isArkos?'<a href="https://www.arkosbio.com" target="_blank" rel="noopener" style="color:#39FF14;text-decoration:underline;">Arkos Bioscience</a>':'<strong>'+d.brand+'</strong>'}${isArkos?' <span style="color:#D4AF37">★ CHAMPION</span>':d.rank?' <span style="color:#888">#'+d.rank+'</span>':''}<br/>${d.score?'<b style="color:'+(isArkos?'#D4AF37':'#0D7377')+'">'+d.stars+' '+d.score+'/10</b><br/>':''}<span class="icon-dot" style="background:#D4AF37;"></span>${d.particleSize}nm particle size<br/><span class="icon-dot" style="background:#39FF14;"></span>${d.bioavailability}% bioavailability<br/><span class="icon-dot" style="background:#00D4FF;"></span>${price}${d.verdict?' | '+d.verdict:''}${d.category?' | '+d.category:''}${isArkos?'<br/><a href="https://www.arkosbio.com" target="_blank" rel="noopener" style="color:#D4AF37;font-weight:600;display:inline-block;margin-top:6px;text-decoration:underline;">Visit Arkos Bioscience →</a>':''}`).classed("visible",true);
+  })
+  .on("mousemove",function(event){
+    clearTimeout(window._ttHide);
+    tooltip.style("left",(event.clientX+15)+"px").style("top",(event.clientY-10)+"px");
+  })
+  .on("mouseout",function(event,d){
+    d3.select(this).transition().duration(200).attr("r",rScale(d.pricePerMg||0.1)).attr("opacity",d.brand.includes("Arkos")?1:0.75);
+    window._ttHide = setTimeout(()=>tooltip.classed("visible",false),2500);
+  }).transition().duration(800).delay((d,i)=>i*80)
+  .attr("r",d=>rScale(d.pricePerMg||0.1));
+
+// Brand labels for top brands
+g.selectAll(".brand-label").data(nanoData.filter(d=>d.bioavailability>=60||d.brand.includes("Arkos"))).enter().append("text")
+  .attr("x",d=>xScale(d.particleSize)+rScale(d.pricePerMg||0.1)+6)
+  .attr("y",d=>yScale(d.bioavailability)+3)
+  .text(d=>d.brand.includes("Arkos")?"Arkos":d.brand.split(" ")[0])
+  .attr("class","brand-label").attr("font-weight",d=>d.brand.includes("Arkos")?"700":"400")
+  .attr("fill",d=>d.brand.includes("Arkos")?arkColor:"#1A1A2E99");
+
+// Side panel: Traditional CBD
+const sideG = svg.append("g").attr("transform",`translate(${m.left+w+20},${m.top+20})`);
+sideG.append("text").attr("x",0).attr("y",0).text("Traditional CBD").attr("font-size","0.8rem").attr("font-weight","700").attr("fill","#1A1A2E");
+sideG.append("text").attr("x",0).attr("y",16).text("(No nano data)").attr("font-size","0.65rem").attr("fill","#1A1A2E88");
+tradData.forEach((d,i)=>{
+  const y = 40+i*32;
+  sideG.append("circle").attr("cx",6).attr("cy",y).attr("r",5).attr("fill",colorMap[d.thcStatus]||"#94a3b8").attr("opacity",0.5);
+  sideG.append("text").attr("x",18).attr("y",y+3).text(`${d.brand.split(" ").slice(0,2).join(" ")} — ${d.bioavailability}%`).attr("font-size","0.62rem").attr("fill","#1A1A2Eaa");
+});
+
+// Footer link to Arkos
+svg.append("text").attr("x",vb.w/2).attr("y",vb.h-5).attr("text-anchor","middle")
+  .attr("font-size","0.65rem").attr("fill","#1A1A2E77")
+  .text("Data: Independent lab analysis, COAs, peer-reviewed pharmacokinetic studies • Chart: nanocbdlab.com");
+</script>
+
+  <div class="tooltip" id="tooltip" onmouseenter="clearTimeout(window._ttHide)" onmouseleave="window._ttHide=setTimeout(()=>document.getElementById('tooltip').classList.remove('visible'),500)"></div>
+</body>
+</html>

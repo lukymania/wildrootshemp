@@ -1,0 +1,743 @@
+{% comment %}
+  WILD ROOTS HEMP - FAQ PAGE TEMPLATE
+  ==========================================
+  This template renders the FAQ page with:
+  - FAQ accordion using section blocks (each block = one Q&A pair)
+  - Toggle functionality for open/close
+  - Contact info at bottom
+{% endcomment %}
+
+<!-- ==================== PAGE HERO ==================== -->
+<section class="page-hero" aria-label="FAQ and Contact page hero">
+  <img
+    src="{{ 'hero-landscape.jpg' | asset_url }}"
+    alt="Serene hemp farm landscape at golden hour"
+    class="page-hero-bg"
+    loading="eager"
+  >
+  <div class="page-hero-overlay" aria-hidden="true"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">We're here for you</span>
+    <h1>{{ page.title | default: 'Questions? We\'re Here to Help.' }}</h1>
+    <p>From our family to yours, straight answers about nano-hemp wellness.</p>
+  </div>
+</section>
+
+<!-- ==================== BREADCRUMB ==================== -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="container">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="/"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1">
+      </li>
+      <li class="breadcrumb-separator" aria-hidden="true">/</li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" class="breadcrumb-current">FAQ &amp; Contact</span>
+        <meta itemprop="position" content="2">
+        <link itemprop="item" href="/pages/faq">
+      </li>
+    </ol>
+  </div>
+</nav>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main id="main-content">
+
+  <!-- ==================== FAQ SECTION ==================== -->
+  <section class="faq-section" id="faq" aria-labelledby="faq-heading" itemscope itemtype="https://schema.org/FAQPage">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="section-label">Common Questions</span>
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+        <p>Everything you need to know about our nano-hemp products, from the science behind them to shipping and returns.</p>
+      </div>
+
+      {% assign faq_categories = "" %}
+
+      {% comment %} Check if blocks are configured {% endcomment %}
+      {% if section.blocks.size > 0 %}
+        {% comment %} Group FAQ items by category {% endcomment %}
+        {% assign current_category = "" %}
+        {% assign in_category = false %}
+
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_category' %}
+            {% if in_category %}
+              </div>
+            </div>
+            {% endif %}
+            {% assign current_category = block.settings.category_title %}
+            {% assign in_category = true %}
+            <div class="faq-category reveal">
+              <h3 class="faq-category-title">{{ block.settings.category_title }}</h3>
+              <div class="accordion" role="region" aria-label="{{ block.settings.category_title }} frequently asked questions">
+          {% elsif block.type == 'faq_item' %}
+            {% unless in_category %}
+              {% assign in_category = true %}
+              <div class="faq-category reveal">
+                <h3 class="faq-category-title">{{ block.settings.category | default: 'General' }}</h3>
+                <div class="accordion" role="region" aria-label="FAQ accordion">
+            {% endunless %}
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-{{ block.id }}"
+                onclick="toggleAccordion(this)"
+                {{ block.shopify_attributes }}
+              >
+                <span class="accordion-question">{{ block.settings.question }}</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-{{ block.id }}">
+                <div class="accordion-answer">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        {% if in_category %}
+          </div>
+        </div>
+        {% endif %}
+
+      {% else %}
+        <!-- ==================== DEFAULT FAQ CONTENT (fallback) ==================== -->
+
+        <!-- Category: About Nano-Hemp -->
+        <div class="faq-category reveal">
+          <h3 class="faq-category-title">About Nano-Hemp</h3>
+          <div class="accordion" role="region" aria-label="About Nano-Hemp frequently asked questions">
+
+            <!-- FAQ 1 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-1"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">What is nano-hemp and how is it different from regular hemp?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-1">
+                <div class="accordion-answer">
+                  <p>Nano-hemp is hemp that has been processed using our proprietary nano fragmentation technology to create particles smaller than 100 nanometers. To put that in perspective, traditional hemp particles range from 5,000 to 10,000 nanometers in size.</p>
+                  <p>Because nano-hemp particles are so much smaller, your body can absorb them <strong>3-8 times more efficiently</strong> than regular hemp. That means:</p>
+                  <ul>
+                    <li><strong>Faster onset</strong>, you may notice effects within 15-30 minutes instead of 45-90 minutes</li>
+                    <li><strong>Better bioavailability</strong>, more of the active compounds reach your system</li>
+                    <li><strong>Longer duration</strong>, effects tend to last longer due to efficient cellular uptake</li>
+                    <li><strong>Smaller serving sizes</strong>, you need less product to achieve the desired result</li>
+                  </ul>
+                  <p>Think of it like this: traditional hemp particles are like trying to push a beach ball through a keyhole, while nano-hemp particles are like pouring sand through it. Our technology breaks those beach balls into grains of sand.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-2"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">How does proprietary nano fragmentation technology work?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-2">
+                <div class="accordion-answer">
+                  <p>Our proprietary nano fragmentation and encapsulation technology was developed by PhD scientists at a <strong>powerful West Coast biotech company</strong>. While the exact process is protected intellectual property, we can share the science at a high level:</p>
+                  <ul>
+                    <li>The process begins with premium, lab-tested hemp extract sourced from quality-grown hemp plants</li>
+                    <li>Through advanced engineering, the hemp particles are broken down to nano-size, less than 100 nanometers in diameter, this is the fragmentation step</li>
+                    <li>Each nano-particle is then individually encapsulated with a protective coating using our clean carrier ingredients</li>
+                    <li>This encapsulation step is critical: without it, the tiny nano-particles would naturally reassemble into large clusters, undoing the fragmentation</li>
+                    <li>The coating locks each particle at nano-size, preventing reassembly and maintaining maximum bioavailability</li>
+                    <li>The result is a stable, water-compatible formula that your body can absorb 3-8x more efficiently</li>
+                  </ul>
+                  <p>What makes our technology different is the two-step approach: fragmentation creates the small particles, and encapsulation keeps them small. Both steps are essential, and both are validated through third-party laboratory testing on every batch we produce.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-3"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">How long does it take to feel the effects?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-3">
+                <div class="accordion-answer">
+                  <p>Most people begin to feel the effects of our nano-hemp products within <strong>15-30 minutes</strong>. This is significantly faster than traditional hemp products, which typically take 45-90 minutes to take effect.</p>
+                  <p>Several factors can influence how quickly you feel the effects:</p>
+                  <ul>
+                    <li><strong>Your metabolism</strong>, faster metabolisms may notice effects sooner</li>
+                    <li><strong>Body weight</strong>, serving size can be adjusted based on individual needs</li>
+                    <li><strong>Empty vs. full stomach</strong>, taking nano-hemp on an empty stomach may lead to faster absorption</li>
+                    <li><strong>Consistency of use</strong>, many people report that effects build and improve with regular daily use over 1-2 weeks</li>
+                  </ul>
+                  <p>We always recommend being consistent with your routine for at least two weeks to give your body time to fully respond. Individual results vary, and finding your ideal serving size may take a little experimentation.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-4"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">Will nano-hemp show up on a drug test?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-4">
+                <div class="accordion-answer">
+                  <p>Our products contain <strong>No THC</strong>. They are made with pure hemp extract that has been refined to remove all detectable levels of THC.</p>
+                  <p>Every batch is <strong>third-party lab tested</strong> to verify THC content and ensure purity. These lab reports are available upon request.</p>
+                  <p>However, we always recommend that if you are subject to drug testing for work or other reasons, you should inform your employer or testing administrator that you use hemp-based wellness products. While our products contain no THC, some highly sensitive tests may detect other hemp compounds. We want you to feel confident and informed in your choices.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category: Products -->
+        <div class="faq-category reveal">
+          <h3 class="faq-category-title">Products</h3>
+          <div class="accordion" role="region" aria-label="Product frequently asked questions">
+
+            <!-- FAQ 5 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-5"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">What are the ingredients in your products?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-5">
+                <div class="accordion-answer">
+                  <p>We believe in radical transparency. Every Wild Roots product contains exactly these four ingredients:</p>
+                  <ul class="ingredient-list">
+                    <li><span class="ingredient-dot"></span><strong>Nano-Hemp</strong>, Our proprietary nano-fragmented hemp extract</li>
+                    <li><span class="ingredient-dot"></span><strong>Propylene Glycol</strong>, USP-grade carrier agent</li>
+                    <li><span class="ingredient-dot"></span><strong>Vegetable Glycerin</strong>, Plant-derived base</li>
+                    <li><span class="ingredient-dot"></span><strong>Distilled Water</strong>, Pure, clean hydration</li>
+                  </ul>
+                  <p>Our <strong>Deep Rest</strong> formula also contains <strong>CBN Isolate</strong> for evening support.</p>
+                  <p>Nothing hidden, nothing extra. No artificial flavors, no fillers, no preservatives, no mystery ingredients. Just clean, effective nano-hemp wellness.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-6"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">How do I use the tinctures?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-6">
+                <div class="accordion-answer">
+                  <p>Our tinctures are designed to be simple and flexible. Here are the two best ways to use them:</p>
+                  <ul>
+                    <li><strong>Sublingual (under the tongue):</strong> Fill the dropper to your desired amount, place the oil under your tongue, and hold it there for 30-60 seconds before swallowing. This allows the nano-hemp to absorb quickly through the tissues in your mouth.</li>
+                    <li><strong>Add to a beverage:</strong> You can also add your serving to any drink of your choice, coffee, tea, smoothie, or even water. Because our nano-hemp is water-compatible, it mixes easily.</li>
+                  </ul>
+                  <p>Start with the recommended serving size listed on the bottle. Everyone's body is different, so feel free to adjust up or down based on how you feel. Consistency is key, we recommend taking your tincture at the same time each day for best results.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 7 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-7"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">Which product is right for me?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-7">
+                <div class="accordion-answer">
+                  <p>With six products to choose from, there's something for everyone. Here's a quick guide:</p>
+                  <ul>
+                    <li><strong>Daily Roots</strong>, Our standard-strength tincture, perfect for everyday wellness and beginners just starting their nano-hemp journey</li>
+                    <li><strong>Deep Roots</strong>, Our extra-strength formula for those who want maximum support and have experience with nano-hemp</li>
+                    <li><strong>Deep Rest</strong>, Our evening formula with added CBN Isolate, designed for restful nights and evening routines</li>
+                    <li><strong>Root Relief</strong>, A targeted roll-on for localized application where you need it most</li>
+                    <li><strong>Wild Relief</strong>, An oil-based botanical spray for targeted topical relief</li>
+                    <li><strong>Paw &amp; Root</strong>, Specifically formulated for your four-legged family members</li>
+                  </ul>
+                  <p>Not sure where to start? <strong>Daily Roots</strong> is our most popular choice for first-time users. You can always reach out to our family team for personalized recommendations.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 8 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-8"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">Are your products safe for pets?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-8">
+                <div class="accordion-answer">
+                  <p>Yes, <strong>Paw &amp; Root Pet Drops</strong> are specifically formulated for pets with appropriate serving sizes and concentrations tailored for animals.</p>
+                  <p>Our other products are designed and dosed for human use. We don't recommend giving human-formulated nano-hemp products to your pets, as the serving sizes and concentrations are not appropriate for them.</p>
+                  <p>As with any new supplement for your pet, we recommend consulting your veterinarian before starting Paw &amp; Root. Every pet is different, and your vet knows your furry family member's health history best.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category: Shipping & Returns -->
+        <div class="faq-category reveal">
+          <h3 class="faq-category-title">Shipping &amp; Returns</h3>
+          <div class="accordion" role="region" aria-label="Shipping and returns frequently asked questions">
+
+            <!-- FAQ 9 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-9"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">What are your shipping policies?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-9">
+                <div class="accordion-answer">
+                  <p>We ship to all 50 states and offer several shipping options:</p>
+                  <ul>
+                    <li><strong>Standard shipping:</strong> 5-7 business days (calculated at checkout for orders under $50)</li>
+                    <li><strong>Express shipping:</strong> Available at checkout for faster delivery</li>
+                  </ul>
+                  <p>All orders are processed within 1-2 business days. You'll receive a tracking number via email as soon as your order ships. We ship to all 50 states, and every package is carefully packed to ensure your products arrive in perfect condition.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 10 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-10"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">What is your return policy?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-10">
+                <div class="accordion-answer">
+                  <p>We stand behind our products with a <strong>30-day satisfaction guarantee</strong>. If you're not completely satisfied with your purchase for any reason, contact our customer service team within 30 days of delivery for a full refund.</p>
+                  <p>No hoops to jump through, no restocking fees. We simply want you to love your Wild Roots experience. To initiate a return, reach out to us at <a href="mailto:{{ shop.email | default: 'hello@wildrootshemp.com' }}">{{ shop.email | default: 'hello@wildrootshemp.com' }}</a> with your order number, and we'll take care of the rest.</p>
+                  <p>Your satisfaction is our family's promise to you.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category: Company -->
+        <div class="faq-category reveal">
+          <h3 class="faq-category-title">Company</h3>
+          <div class="accordion" role="region" aria-label="Company frequently asked questions">
+
+            <!-- FAQ 11 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-11"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">Where are your products made?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-11">
+                <div class="accordion-answer">
+                  <p>All Wild Roots Hemp products are proudly <strong>Made in the USA</strong> in a <strong>GMP-certified facility</strong>. Every single batch is third-party lab tested for purity, potency, and safety before it ever reaches your doorstep.</p>
+                  <p>Our hemp is sourced from premium, carefully selected growers who meet our rigorous standards for quality and sustainability. From raw material to finished bottle, every step of our process meets or exceeds industry best practices.</p>
+                  <p>We started with roots in the Midwest and found our wild on the West Coast. Our values, hard work, honesty, doing right by family, come from the heartland. Our products are crafted with that same spirit, wherever the coast may find us.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ 12 -->
+            <div class="accordion-item">
+              <button
+                class="accordion-trigger"
+                aria-expanded="false"
+                aria-controls="faq-panel-12"
+                onclick="toggleAccordion(this)"
+              >
+                <span class="accordion-question">Do you partner with a biotech company?</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+              <div class="accordion-panel" id="faq-panel-12">
+                <div class="accordion-answer">
+                  <p>Yes! We partner with a <strong>West Coast biotech company</strong>. Here's how it works:</p>
+                  <p>Our West Coast biotech partner is where the science happens, a team of PhD scientists and nano-technology experts who developed our proprietary nano fragmentation technology. They focus on research, innovation, and pushing the boundaries of what's possible with hemp science.</p>
+                  <p><strong>Wild Roots Hemp</strong> is where that science meets your family. We're the consumer-facing brand that takes their groundbreaking technology and crafts it into the premium, easy-to-use products you know and love. Same technology, same rigorous standards, just wrapped in a family-friendly package.</p>
+                  <p>Think of our biotech partner as the brilliant scientist in the lab, and Wild Roots as the family bringing that brilliance to your home. Two companies, one mission: helping people live better through the power of nano-hemp.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ==================== TRUST BAR ==================== -->
+  <section class="trust-bar" aria-label="Trust and guarantee badges">
+    <div class="container">
+      <div class="trust-bar-grid reveal">
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">No THC<br>Guaranteed</span>
+        </div>
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">Third-Party<br>Lab Tested</span>
+        </div>
+        <div class="trust-bar-item">
+          <div class="trust-bar-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <span class="trust-bar-text">30-Day<br>Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT SECTION ==================== -->
+  <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-header reveal">
+        <span class="section-label" style="color: rgba(255,255,255,0.7);">Get in Touch</span>
+        <h2 id="contact-heading">Contact Our Family</h2>
+        <p>Have a question we didn't answer? Send us a message. We'd love to hear from you.</p>
+      </div>
+
+      <div class="contact-layout">
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper reveal">
+          {% form 'contact', id: 'faq-contact-form', class: 'contact-form' %}
+            {% if form.posted_successfully? %}
+              <div class="form-status form-status--success visible" role="status">
+                <strong>Thank you!</strong> We'll get back to you within 24 hours.
+              </div>
+            {% endif %}
+
+            <div class="form-group">
+              <label for="faq-contact-name" class="form-label">Your Name</label>
+              <input
+                type="text"
+                id="faq-contact-name"
+                name="contact[name]"
+                class="form-input"
+                placeholder="Jane Doe"
+                required
+                autocomplete="name"
+                value="{% if form.name %}{{ form.name }}{% endif %}"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="faq-contact-email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                id="faq-contact-email"
+                name="contact[email]"
+                class="form-input"
+                placeholder="jane@example.com"
+                required
+                autocomplete="email"
+                value="{% if form.email %}{{ form.email }}{% endif %}"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="faq-contact-subject" class="form-label">Subject</label>
+              <select id="faq-contact-subject" name="contact[subject]" class="form-select" required>
+                <option value="" disabled selected>Choose a topic...</option>
+                <option value="Order Question">Order Question</option>
+                <option value="Product Question">Product Question</option>
+                <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+                <option value="General">General</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="faq-contact-message" class="form-label">Your Message</label>
+              <textarea
+                id="faq-contact-message"
+                name="contact[body]"
+                class="form-textarea"
+                placeholder="How can we help you?"
+                required
+              >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+          {% endform %}
+        </div>
+
+        <!-- Contact Info & Family Note -->
+        <div class="contact-info-wrapper">
+          <!-- Contact Info Card -->
+          <div class="contact-info-card reveal reveal-delay-1">
+            <h3>Contact Information</h3>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Email Us</h4>
+                <p><a href="mailto:{{ shop.email | default: 'hello@wildrootshemp.com' }}">{{ shop.email | default: 'hello@wildrootshemp.com' }}</a></p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Business Hours</h4>
+                <p>Monday - Friday<br>9:00 AM - 5:00 PM CST</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Response Time</h4>
+                <p>Within 24 hours during business days</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 010 7.75"/>
+                </svg>
+              </div>
+              <div class="contact-info-content">
+                <h4>Who You'll Hear From</h4>
+                <p>We're a small family team, please be patient!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family Note -->
+          <div class="family-note reveal reveal-delay-2">
+            <div class="family-note-image">
+              <img
+                src="{{ 'family-cartoon-group.jpg' | asset_url }}"
+                alt="Cartoon illustration of the Wild Roots family founders"
+                loading="lazy"
+              >
+            </div>
+            <h3>We Read Every Email. Seriously.</h3>
+            <p>Nick and Lucy personally answer customer questions. Your message goes <span class="family-note-highlight">straight to our family inbox</span>. We're not a call center, we're a family, and we treat every customer like one of our own.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Accordion Toggle
+function toggleAccordion(trigger) {
+  var panel = document.getElementById(trigger.getAttribute('aria-controls'));
+  var isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+  // Close all other accordions in the same accordion container
+  var parentAccordion = trigger.closest('.accordion');
+  if (parentAccordion) {
+    parentAccordion.querySelectorAll('.accordion-trigger[aria-expanded="true"]').forEach(function(openTrigger) {
+      if (openTrigger !== trigger) {
+        var openPanel = document.getElementById(openTrigger.getAttribute('aria-controls'));
+        openTrigger.setAttribute('aria-expanded', 'false');
+        openPanel.classList.remove('open');
+      }
+    });
+  }
+
+  // Toggle current accordion
+  trigger.setAttribute('aria-expanded', !isExpanded);
+  panel.classList.toggle('open');
+}
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "Questions? We're Here to Help."
+    },
+    {
+      "type": "textarea",
+      "id": "page_subtitle",
+      "label": "Page Subtitle",
+      "default": "From our family to yours, straight answers about nano-hemp wellness."
+    },
+    {
+      "type": "header",
+      "content": "Contact Section"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact Heading",
+      "default": "Contact Our Family"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Contact Text",
+      "default": "Have a question we didn't answer? Send us a message. We'd love to hear from you."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_category",
+      "name": "FAQ Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_title",
+          "label": "Category Title",
+          "default": "About Nano-Hemp"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is nano-hemp?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Nano-hemp is hemp that has been processed using proprietary nano fragmentation technology to create particles smaller than 100 nanometers.</p>"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category (for grouping)",
+          "default": "General"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Page",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

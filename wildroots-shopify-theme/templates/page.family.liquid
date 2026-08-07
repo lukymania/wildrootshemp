@@ -1,0 +1,306 @@
+{% comment %}
+  WILD ROOTS HEMP - FAMILY PAGE TEMPLATE
+  ==========================================
+  This template renders the Family page with:
+  - Family hero with video background
+  - Intro text section
+  - Family member cards linking to individual pages
+  - Uses section blocks for each family member
+{% endcomment %}
+
+<!-- ==================== FAMILY HERO ==================== -->
+<section class="family-hero">
+  <video class="family-hero-video" autoplay muted playsinline aria-hidden="true">
+    {% if section.settings.hero_video_url != blank %}
+      <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+    {% else %}
+      <source src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/assets/videos/family-hero-redwoods.mp4" type="video/mp4">
+    {% endif %}
+  </video>
+  <div class="family-hero-overlay"></div>
+  <div class="container">
+    <h1>{{ page.title | default: 'Meet the Wild Roots Family' }}</h1>
+    <p>We are a family of athletes, dancers, and outdoor enthusiasts who built Wild Roots Hemp to support the active lives we lead.</p>
+  </div>
+</section>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<main itemscope itemtype="https://schema.org/AboutPage">
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="family-intro">
+    <div class="container">
+      <p>Every product we make was born from a real need in our own home. From the tennis court to the dance studio, from mountain trails to the family room, here is how each of us uses Wild Roots nano-hemp in our daily wellness routine.</p>
+    </div>
+  </section>
+
+  <!-- ==================== FAMILY GRID ==================== -->
+  <section class="family-grid-section">
+    <div class="container">
+      <div class="family-grid">
+
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'family_member' %}
+              <a href="{{ block.settings.link }}" class="family-card {% if block.settings.card_class != blank %}{{ block.settings.card_class }}{% endif %}" {{ block.shopify_attributes }}>
+                <div class="family-card-image">
+                  {% if block.settings.image != blank %}
+                    <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.name }} - {{ block.settings.role }}">
+                  {% else %}
+                    <img src="{{ block.settings.image_fallback | asset_url }}" alt="{{ block.settings.name }}">
+                  {% endif %}
+                </div>
+                <div class="family-card-body">
+                  <h3>{{ block.settings.name }}</h3>
+                  <span class="role">{{ block.settings.role }}</span>
+                  <p>{{ block.settings.bio }}</p>
+                  <span class="family-card-link">Read
+                    {% if block.settings.name == 'Nick' or block.settings.name == 'Will' or block.settings.name == 'The Wellness Pup' %}His{% else %}Her{% endif %} Story &rarr;</span>
+                </div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <!-- Default Family Members (fallback when no blocks configured) -->
+
+          <!-- Lucy (Mom) -->
+          <a href="/pages/family-mom" class="family-card">
+            <div class="family-card-image">
+              <img src="{{ 'family-mom-tennis.jpg' | asset_url }}" alt="Lucy playing tennis">
+            </div>
+            <div class="family-card-body">
+              <h3>Lucy</h3>
+              <span class="role">Mom &amp; Avid Tennis Player</span>
+              <p>Sprays Wild Relief on her elbows and knees after tennis. Uses Root Relief roll-on for headache support.</p>
+              <span class="family-card-link">Read Her Story &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Nick (Dad) -->
+          <a href="/pages/family-dad" class="family-card dad">
+            <div class="family-card-image">
+              <img src="{{ 'family-dad-runner.jpg' | asset_url }}" alt="Nick running and mountain biking">
+            </div>
+            <div class="family-card-body">
+              <h3>Nick</h3>
+              <span class="role">Dad, Runner &amp; Mountain Biker</span>
+              <p>Triathlete turned runner and mountain biker. Uses Daily Roots and Deep Roots to stay active across every terrain.</p>
+              <span class="family-card-link">Read His Story &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Will (Son) -->
+          <a href="/pages/family-son" class="family-card">
+            <div class="family-card-image">
+              <img src="{{ 'family-son-athlete.jpg' | asset_url }}" alt="Will surfing and mountain biking">
+            </div>
+            <div class="family-card-body">
+              <h3>Will</h3>
+              <span class="role">14, All-Around Athlete</span>
+              <p>Football, basketball, surfing, mountain biking, tennis, rock climbing, and snowboarding. Daily Roots keeps him going.</p>
+              <span class="family-card-link">Read His Story &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Quinn (Dancer 1) -->
+          <a href="/pages/family-dancer1" class="family-card">
+            <div class="family-card-image">
+              <img src="{{ 'family-dancer1-ballet.jpg' | asset_url }}" alt="Quinn dancing">
+            </div>
+            <div class="family-card-body">
+              <h3>Quinn</h3>
+              <span class="role">11, Elite All-Around Dancer</span>
+              <p>Contemporary, jazz, ballet, ballroom, and more. Also skis, surfs, mountain bikes, and plays tennis.</p>
+              <span class="family-card-link">Read Her Story &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Charlie (Dancer 2) -->
+          <a href="/pages/family-dancer2" class="family-card">
+            <div class="family-card-image">
+              <img src="{{ 'family-dancer2-contemporary.jpg' | asset_url }}" alt="Charlie dancing contemporary">
+            </div>
+            <div class="family-card-body">
+              <h3>Charlie</h3>
+              <span class="role">9, Elite All-Around Dancer</span>
+              <p>Contemporary specialist who also skis, surfs, mountain bikes, and plays tennis. Wild Relief and Deep Roots go everywhere with her.</p>
+              <span class="family-card-link">Read Her Story &rarr;</span>
+            </div>
+          </a>
+
+          <!-- The Dog -->
+          <a href="/pages/family-dog" class="family-card dog">
+            <div class="family-card-image">
+              <img src="{{ 'family-dog-wellness.jpg' | asset_url }}" alt="The family rescue dog">
+            </div>
+            <div class="family-card-body">
+              <h3>The Wellness Pup</h3>
+              <span class="role">Rescue Mix</span>
+              <p>Part pit bull, boxer, Staffordshire terrier, Rottweiler, and street dog. Gets Paw &amp; Root drops in his breakfast and rubbed into his hips.</p>
+              <span class="family-card-link">Read His Story &rarr;</span>
+            </div>
+          </a>
+
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA SECTION ==================== -->
+  <section class="family-cta">
+    <div class="container">
+      <h2>Find What Works for Your Family</h2>
+      <p>Every family is different. Explore our full product line to find the right nano-hemp wellness solution for your lifestyle.</p>
+      <a href="/collections/all" class="btn-primary">Shop All Products &rarr;</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Hero Video Boomerang
+(function() {
+  var video = document.querySelector('.family-hero-video');
+  if (!video) return;
+  var forward = true;
+  var lastTime = 0;
+  var PAD = 0.06;
+
+  function playForward() {
+    forward = true;
+    lastTime = 0;
+    video.play().catch(function(){});
+  }
+
+  function seekLoop(timestamp) {
+    if (forward) return;
+    if (!lastTime) lastTime = timestamp;
+    var elapsed = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(seekLoop); return; }
+    video.currentTime = Math.max(video.currentTime - elapsed, PAD);
+    if (video.currentTime <= PAD) {
+      playForward();
+    } else {
+      requestAnimationFrame(seekLoop);
+    }
+  }
+
+  function monitor() {
+    if (!forward) { requestAnimationFrame(monitor); return; }
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(monitor); return; }
+    if (video.currentTime >= duration - PAD) {
+      forward = false;
+      lastTime = 0;
+      video.pause();
+      requestAnimationFrame(seekLoop);
+    } else {
+      requestAnimationFrame(monitor);
+    }
+  }
+
+  function start() {
+    video.play().then(function(){ requestAnimationFrame(monitor); }).catch(function(){ requestAnimationFrame(monitor); });
+  }
+
+  if (video.readyState >= 1) {
+    start();
+  } else {
+    video.addEventListener('loadedmetadata', start);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Family Page",
+  "settings": [
+    {
+      "type": "url",
+      "id": "hero_video_url",
+      "label": "Hero Video URL",
+      "info": "Direct URL to MP4 video file for the hero background"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "Meet the Wild Roots Family"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Introduction Text",
+      "default": "Every product we make was born from a real need in our own home. From the tennis court to the dance studio, from mountain trails to the family room, here is how each of us uses Wild Roots nano-hemp in our daily wellness routine."
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA Heading",
+      "default": "Find What Works for Your Family"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Every family is different. Explore our full product line to find the right nano-hemp wellness solution for your lifestyle."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "family_member",
+      "name": "Family Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Member Photo"
+        },
+        {
+          "type": "text",
+          "id": "image_fallback",
+          "label": "Fallback Image Asset Name",
+          "info": "e.g. family-mom-tennis.jpg (used if no image picker image)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Lucy"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role / Title",
+          "default": "Mom & Avid Tennis Player"
+        },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Short Bio",
+          "default": "Sprays Wild Relief on her elbows and knees after tennis."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to Individual Page"
+        },
+        {
+          "type": "text",
+          "id": "card_class",
+          "label": "Card CSS Class",
+          "info": "e.g. 'dad' for Nick's card (special image positioning)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Family Page",
+      "category": "Pages"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,682 @@
+{% comment %}
+  Wild Roots Hemp - Blog Listing Template
+  "The Root Journal" - Article cards with pagination
+{% endcomment %}
+
+<!-- ====== BLOG HERO ====== -->
+<section class="blog-hero">
+  <div class="blog-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{ blog.title }}</span>
+    </nav>
+    <h1 class="blog-title">
+      {% if blog.handle == 'root-journal' or blog.handle == 'news' %}
+        The Root Journal
+      {% else %}
+        {{ blog.title }}
+      {% endif %}
+    </h1>
+    {% if blog.handle == 'root-journal' or blog.handle == 'news' %}
+      <p class="blog-subtitle">Stories, science, and wellness wisdom from the Wild Roots family.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ====== BLOG FILTERS / TAGS ====== -->
+{% if blog.all_tags.size > 0 %}
+<section class="blog-filters">
+  <div class="filters-inner">
+    <span class="filters-label">Filter by topic:</span>
+    <div class="filters-tags">
+      <a href="{{ blog.url }}" class="filter-tag {% unless current_tags %}active{% endunless %}">All</a>
+      {% for tag in blog.all_tags limit: 10 %}
+        {% if current_tags contains tag %}
+          <span class="filter-tag active">{{ tag }}</span>
+        {% else %}
+          {{ tag | link_to_tag: tag | replace: '<a', '<a class="filter-tag"' }}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ====== ARTICLES GRID ====== -->
+<section class="blog-articles">
+  <div class="section-inner">
+    {% paginate blog.articles by 9 %}
+      {% if blog.articles.size > 0 %}
+        <div class="articles-grid">
+          {% for article in blog.articles %}
+            <article class="article-card" data-article-handle="{{ article.handle }}">
+              <a href="{{ article.url }}" class="article-card-link">
+                <!-- Article Image -->
+                <div class="article-card-img">
+                  {% if article.image %}
+                    <img
+                      src="{{ article.image | img_url: 'medium' }}"
+                      alt="{{ article.image.alt | escape }}"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="article-card-img-placeholder">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                      </svg>
+                    </div>
+                  {% endif %}
+
+                  <!-- Article Tags as Badges -->
+                  {% if article.tags.size > 0 %}
+                    <div class="article-card-tags">
+                      {% for tag in article.tags limit: 2 %}
+                        <span class="article-tag">{{ tag }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <!-- Article Content -->
+                <div class="article-card-content">
+                  <!-- Meta: Date & Author -->
+                  <div class="article-meta">
+                    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                      {{ article.published_at | date: '%B %d, %Y' }}
+                    </time>
+                    {% if article.author %}
+                      <span class="meta-sep">&middot;</span>
+                      <span class="article-author">{{ article.author }}</span>
+                    {% endif %}
+                  </div>
+
+                  <!-- Title -->
+                  <h2 class="article-card-title">{{ article.title }}</h2>
+
+                  <!-- Excerpt -->
+                  {% if article.excerpt != blank %}
+                    <div class="article-card-excerpt">{{ article.excerpt | strip_html | truncate: 140 }}</div>
+                  {% else %}
+                    <div class="article-card-excerpt">{{ article.content | strip_html | truncate: 140 }}</div>
+                  {% endif %}
+
+                  <!-- Read More Link -->
+                  <span class="article-read-more">
+                    Read More
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </article>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if paginate.pages > 1 %}
+          <div class="blog-pagination">
+            {{ paginate | default_pagination: next: 'Next', previous: 'Previous' }}
+          </div>
+        {% endif %}
+
+      {% else %}
+        <!-- Empty State -->
+        <div class="blog-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+          <h2>No articles yet</h2>
+          <p>Check back soon for stories, science, and wellness wisdom.</p>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+<!-- ====== NEWSLETTER CTA ====== -->
+<section class="blog-newsletter">
+  <div class="newsletter-inner">
+    <h2 class="newsletter-title">Get Root Wisdom Delivered</h2>
+    <p class="newsletter-desc">Subscribe to The Root Journal for wellness tips, new product announcements, and exclusive offers.</p>
+    {% form 'customer', class: 'newsletter-form' %}
+      {% if form.posted_successfully? %}
+        <div class="newsletter-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          Thank you for subscribing!
+        </div>
+      {% else %}
+        <div class="newsletter-fields">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email"
+            class="newsletter-input"
+            required
+            aria-label="Email address"
+          >
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </div>
+        {% if form.errors %}
+          <div class="newsletter-error">
+            {{ form.errors | default_errors }}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endform %}
+  </div>
+</section>
+
+<!-- ====== STYLES ====== -->
+<style>
+  /* ===== Blog Hero ===== */
+  .blog-hero {
+    padding-top: 80px;
+    background: linear-gradient(135deg, var(--cream, #f5f0e8) 0%, var(--warm-white, #fdfcf9) 100%);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .blog-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb a {
+    color: var(--stone, #8a8278);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .breadcrumb-sep {
+    opacity: 0.4;
+  }
+
+  .breadcrumb-current {
+    color: var(--forest, #1a3a2f);
+    font-weight: 500;
+  }
+
+  .blog-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .blog-subtitle {
+    font-size: 1.0625rem;
+    color: var(--stone, #8a8278);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ===== Blog Filters ===== */
+  .blog-filters {
+    background: var(--warm-white, #fdfcf9);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+    padding: 16px 0;
+    position: sticky;
+    top: 80px;
+    z-index: 100;
+  }
+
+  .filters-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .filters-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--charcoal-light, #4a4a4a);
+    white-space: nowrap;
+  }
+
+  .filters-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    background: white;
+    border: 1px solid var(--border, #e5e0d8);
+    border-radius: 100px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--charcoal, #2c2c2c);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .filter-tag:hover {
+    border-color: var(--evening-accent, #9b8db0);
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .filter-tag.active {
+    background: var(--forest, #1a3a2f);
+    border-color: var(--forest, #1a3a2f);
+    color: white;
+  }
+
+  /* ===== Articles Grid ===== */
+  .blog-articles {
+    padding: 60px 0 100px;
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .article-card {
+    background: var(--linen, #faf8f3);
+    border-radius: 16px;
+    border: 1px solid var(--border-light, #f0ece5);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .article-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+    border-color: var(--border, #e5e0d8);
+  }
+
+  .article-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .article-card-img {
+    position: relative;
+    height: 220px;
+    background: var(--cream, #f5f0e8);
+    overflow: hidden;
+  }
+
+  .article-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .article-card:hover .article-card-img img {
+    transform: scale(1.05);
+  }
+
+  .article-card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream, #f5f0e8);
+  }
+
+  .article-card-img-placeholder svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--border, #e5e0d8);
+  }
+
+  .article-card-tags {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .article-tag {
+    padding: 4px 12px;
+    background: rgba(26, 58, 47, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .article-card-content {
+    padding: 28px;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .meta-sep {
+    opacity: 0.5;
+  }
+
+  .article-card-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--charcoal, #2c2c2c);
+    line-height: 1.3;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+
+  .article-card:hover .article-card-title {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .article-card-excerpt {
+    font-size: 0.9375rem;
+    color: var(--stone, #8a8278);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .article-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: color 0.3s ease;
+  }
+
+  .article-read-more svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+  }
+
+  .article-card:hover .article-read-more svg {
+    transform: translateX(4px);
+  }
+
+  .article-card:hover .article-read-more {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  /* ===== Pagination ===== */
+  .blog-pagination {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .blog-pagination .pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .blog-pagination .pagination a,
+  .blog-pagination .pagination .current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .blog-pagination .pagination a {
+    color: var(--charcoal, #2c2c2c);
+    border: 1px solid var(--border, #e5e0d8);
+    background: white;
+  }
+
+  .blog-pagination .pagination a:hover {
+    border-color: var(--forest, #1a3a2f);
+    color: var(--forest, #1a3a2f);
+  }
+
+  .blog-pagination .pagination .current {
+    background: var(--forest, #1a3a2f);
+    color: white;
+    border: 1px solid var(--forest, #1a3a2f);
+  }
+
+  .blog-pagination .pagination .deco {
+    color: var(--stone, #8a8278);
+    padding: 0 4px;
+  }
+
+  /* ===== Empty State ===== */
+  .blog-empty {
+    text-align: center;
+    padding: 80px 24px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .blog-empty .empty-icon {
+    width: 64px;
+    height: 64px;
+    stroke: var(--border, #e5e0d8);
+    margin: 0 auto 24px;
+  }
+
+  .blog-empty h2 {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 12px;
+  }
+
+  .blog-empty p {
+    font-size: 1rem;
+    color: var(--stone, #8a8278);
+  }
+
+  /* ===== Newsletter CTA ===== */
+  .blog-newsletter {
+    padding: 80px 40px;
+    background: linear-gradient(180deg, var(--forest-deep, #0f241c) 0%, var(--forest, #1a3a2f) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-newsletter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 70% 30%, rgba(155, 141, 176, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .newsletter-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .newsletter-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--cream, #f5f0e8);
+    margin-bottom: 12px;
+  }
+
+  .newsletter-desc {
+    font-size: 1rem;
+    color: rgba(245, 240, 232, 0.7);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .newsletter-fields {
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    height: 52px;
+    padding: 0 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: var(--cream, #f5f0e8);
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.9375rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-input::placeholder {
+    color: rgba(245, 240, 232, 0.4);
+  }
+
+  .newsletter-input:focus {
+    border-color: var(--lavender, #b8a9c9);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .newsletter-btn {
+    height: 52px;
+    padding: 0 28px;
+    background: var(--evening-accent, #9b8db0);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .newsletter-btn:hover {
+    background: var(--lavender, #b8a9c9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(155, 141, 176, 0.3);
+  }
+
+  .newsletter-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    background: rgba(156, 175, 136, 0.15);
+    border: 1px solid rgba(156, 175, 136, 0.3);
+    border-radius: 12px;
+    color: var(--sage, #a8b5a0);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .newsletter-success svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--sage, #a8b5a0);
+  }
+
+  .newsletter-error {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(193, 124, 91, 0.15);
+    border: 1px solid rgba(193, 124, 91, 0.3);
+    border-radius: 8px;
+    color: var(--terra-cotta, #c17c5b);
+    font-size: 0.875rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-hero-inner {
+      padding: 40px 20px;
+    }
+    .blog-articles .section-inner {
+      padding: 0 20px;
+    }
+    .articles-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .filters-inner {
+      padding: 0 20px;
+    }
+    .newsletter-fields {
+      flex-direction: column;
+    }
+    .newsletter-btn {
+      width: 100%;
+    }
+    .blog-newsletter {
+      padding: 60px 20px;
+    }
+  }
+</style>

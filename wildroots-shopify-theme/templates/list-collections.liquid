@@ -1,0 +1,513 @@
+{% comment %}
+  Wild Roots Hemp - List Collections Template
+  Displays all collections in a grid with images, titles, and descriptions
+{% endcomment %}
+
+{% comment %}Exclude empty collections and frontpage{% endcomment %}
+{% assign visible_collections = '' %}
+{% for collection in collections %}
+  {% unless collection.handle == 'frontpage' %}
+    {% if collection.products_count > 0 %}
+      {% assign visible_collections = visible_collections | append: collection.handle | append: ',' %}
+    {% endif %}
+  {% endunless %}
+{% endfor %}
+
+<!-- ====== COLLECTIONS HERO ====== -->
+<section class="collections-hero">
+  <div class="collections-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">All Collections</span>
+    </nav>
+    <h1 class="collections-title">Our Collections</h1>
+    <p class="collections-subtitle">Explore our range of nano-enhanced hemp wellness products, crafted with proprietary technology and Midwest roots.</p>
+  </div>
+</section>
+
+<!-- ====== COLLECTIONS GRID ====== -->
+<section class="collections-grid-section">
+  <div class="section-inner">
+    <div class="collections-grid">
+      {% for collection in collections %}
+        {% unless collection.handle == 'frontpage' %}
+          {% if collection.products_count > 0 %}
+            <div class="collection-card">
+              <a href="{{ collection.url }}" class="collection-card-link">
+                <!-- Collection Image -->
+                <div class="collection-card-img">
+                  {% if collection.image %}
+                    <img
+                      src="{{ collection.image | img_url: 'master' }}"
+                      alt="{{ collection.title | escape }}"
+                      loading="lazy"
+                    >
+                  {% elsif collection.products.first.featured_image %}
+                    <img
+                      src="{{ collection.products.first.featured_image | img_url: 'master' }}"
+                      alt="{{ collection.title | escape }}"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="collection-card-img-placeholder">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                      </svg>
+                    </div>
+                  {% endif %}
+
+                  <!-- Product Count Badge -->
+                  <div class="collection-count-badge">
+                    {{ collection.products_count }} Product{% if collection.products_count != 1 %}s{% endif %}
+                  </div>
+                </div>
+
+                <!-- Collection Info -->
+                <div class="collection-card-content">
+                  <h2 class="collection-card-title">{{ collection.title }}</h2>
+
+                  {% if collection.description != blank %}
+                    <p class="collection-card-desc">{{ collection.description | strip_html | truncate: 120 }}</p>
+                  {% endif %}
+
+                  <span class="collection-card-cta">
+                    Explore Collection
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            </div>
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+
+    <!-- Fallback: No Collections Found -->
+    {% assign has_visible_collections = false %}
+    {% for collection in collections %}
+      {% unless collection.handle == 'frontpage' %}
+        {% if collection.products_count > 0 %}
+          {% assign has_visible_collections = true %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+
+    {% unless has_visible_collections %}
+      <div class="collections-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <h2>No collections found</h2>
+        <p>Collections will appear here once they are created and have products.</p>
+        <a href="/" class="btn-primary">Back to Home</a>
+      </div>
+    {% endunless %}
+  </div>
+</section>
+
+<!-- ====== SHOP ALL CTA ====== -->
+<section class="collections-shop-all">
+  <div class="shop-all-inner">
+    <h2 class="shop-all-title">Looking for something specific?</h2>
+    <p class="shop-all-desc">Browse all our nano-enhanced hemp products in one place.</p>
+    <a href="/collections/all" class="btn-shop-all">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      Shop All Products
+    </a>
+  </div>
+</section>
+
+<!-- ====== SCHEMA.ORG JSON-LD ====== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "All Collections",
+  "description": "Browse all Wild Roots Hemp product collections featuring nano-enhanced hemp wellness products.",
+  "url": {{ shop.url | append: '/collections' | json }},
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  },
+  "hasPart": [
+    {% for collection in collections %}
+      {% unless collection.handle == 'frontpage' %}
+        {% if collection.products_count > 0 %}
+    {
+      "@type": "Collection",
+      "name": {{ collection.title | json }},
+      "description": {{ collection.description | strip_html | truncate: 160 | json }},
+      "url": {{ shop.url | append: collection.url | json }},
+      "numberOfItems": {{ collection.products_count }}
+    }{% unless forloop.last %},{% endunless %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- ====== STYLES ====== -->
+<style>
+  /* ===== Collections Hero ===== */
+  .collections-hero {
+    padding-top: 80px;
+    background: linear-gradient(135deg, var(--cream, #f5f0e8) 0%, var(--warm-white, #fdfcf9) 100%);
+    border-bottom: 1px solid var(--border-light, #f0ece5);
+  }
+
+  .collections-hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 0.75rem;
+    color: var(--stone, #8a8278);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .breadcrumb a {
+    color: var(--stone, #8a8278);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--forest, #1a3a2f);
+  }
+
+  .breadcrumb-sep {
+    opacity: 0.4;
+  }
+
+  .breadcrumb-current {
+    color: var(--forest, #1a3a2f);
+    font-weight: 500;
+  }
+
+  .collections-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .collections-subtitle {
+    font-size: 1.0625rem;
+    color: var(--stone, #8a8278);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ===== Collections Grid ===== */
+  .collections-grid-section {
+    padding: 60px 0 100px;
+    background: var(--warm-white, #fdfcf9);
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .collection-card {
+    background: white;
+    border: 1px solid var(--border-light, #f0ece5);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .collection-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.1);
+    border-color: var(--border, #e5e0d8);
+  }
+
+  .collection-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-card-img {
+    position: relative;
+    height: 320px;
+    background: var(--cream, #f5f0e8);
+    overflow: hidden;
+  }
+
+  .collection-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .collection-card:hover .collection-card-img img {
+    transform: scale(1.05);
+  }
+
+  .collection-card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--cream, #f5f0e8) 0%, var(--linen, #faf8f3) 100%);
+  }
+
+  .collection-card-img-placeholder svg {
+    width: 64px;
+    height: 64px;
+    stroke: var(--border, #e5e0d8);
+  }
+
+  .collection-count-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 6px 16px;
+    background: rgba(26, 58, 47, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.04em;
+  }
+
+  .collection-card-content {
+    padding: 32px;
+  }
+
+  .collection-card-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .collection-card-desc {
+    font-size: 0.9375rem;
+    color: var(--stone, #8a8278);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .collection-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: color 0.3s ease;
+  }
+
+  .collection-card-cta svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-card:hover .collection-card-cta {
+    color: var(--evening-accent, #9b8db0);
+  }
+
+  .collection-card:hover .collection-card-cta svg {
+    transform: translateX(4px);
+  }
+
+  /* ===== Empty State ===== */
+  .collections-empty {
+    text-align: center;
+    padding: 80px 24px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .collections-empty .empty-icon {
+    width: 64px;
+    height: 64px;
+    stroke: var(--border, #e5e0d8);
+    margin: 0 auto 24px;
+  }
+
+  .collections-empty h2 {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--forest, #1a3a2f);
+    margin-bottom: 12px;
+  }
+
+  .collections-empty p {
+    font-size: 1rem;
+    color: var(--stone, #8a8278);
+    margin-bottom: 24px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    background: var(--forest, #1a3a2f);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--forest-light, #2d5a48);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(26, 58, 47, 0.25);
+  }
+
+  /* ===== Shop All CTA ===== */
+  .collections-shop-all {
+    padding: 80px 40px;
+    background: linear-gradient(180deg, var(--forest-deep, #0f241c) 0%, var(--forest, #1a3a2f) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .collections-shop-all::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 30% 50%, rgba(155, 141, 176, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .shop-all-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .shop-all-title {
+    font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--cream, #f5f0e8);
+    margin-bottom: 12px;
+  }
+
+  .shop-all-desc {
+    font-size: 1rem;
+    color: rgba(245, 240, 232, 0.7);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .btn-shop-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: var(--evening-accent, #9b8db0);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-shop-all svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-shop-all:hover {
+    background: var(--lavender, #b8a9c9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(155, 141, 176, 0.3);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .collections-grid {
+      gap: 32px;
+    }
+    .collection-card-img {
+      height: 260px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collections-hero-inner {
+      padding: 40px 20px;
+    }
+    .section-inner {
+      padding: 0 20px;
+    }
+    .collections-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .collection-card-img {
+      height: 220px;
+    }
+    .collection-card-content {
+      padding: 24px;
+    }
+    .collection-card-title {
+      font-size: 1.5rem;
+    }
+    .collections-shop-all {
+      padding: 60px 20px;
+    }
+    .shop-all-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
