@@ -1,94 +1,311 @@
 {% comment %}
-  Wild Roots Hemp - Footer Section
+  Reliable global footer. Configured Shopify menus are used when available;
+  useful storefront links are rendered as fallbacks when menu settings are empty.
 {% endcomment %}
 
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand-col">
-        {%- if settings.footer_logo != blank -%}
-          <img class="footer-brand-logo" src="{{ settings.footer_logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" loading="lazy">
-        {%- elsif settings.logo != blank -%}
-          <img class="footer-brand-logo" src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="140" loading="lazy">
-        {%- else -%}
-          <div class="footer-brand-name">{{ shop.name }}</div>
-        {%- endif -%}
-        <p class="footer-brand-desc">{{ shop.description }}</p>
-        <div class="footer-socials">
-          {%- if settings.social_instagram_link != blank -%}
-            <a href="{{ settings.social_instagram_link }}" aria-label="Instagram" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-            </a>
-          {%- endif -%}
-          {%- if settings.social_facebook_link != blank -%}
-            <a href="{{ settings.social_facebook_link }}" aria-label="Facebook" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-            </a>
-          {%- endif -%}
-          {%- if settings.social_twitter_link != blank -%}
-            <a href="{{ settings.social_twitter_link }}" aria-label="Twitter" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-          {%- endif -%}
-        </div>
+<footer class="wr-global-footer" role="contentinfo">
+  <div class="wr-footer-inner">
+    <div class="wr-footer-grid">
+      <div class="wr-footer-brand">
+        <a class="wr-footer-brand-link" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+          {% if section.settings.footer_logo != blank %}
+            <img class="wr-footer-logo" src="{{ section.settings.footer_logo | image_url: width: 360 }}" alt="{{ shop.name | escape }}" loading="lazy" width="180">
+          {% elsif settings.logo != blank %}
+            <img class="wr-footer-logo" src="{{ settings.logo | image_url: width: 360 }}" alt="{{ shop.name | escape }}" loading="lazy" width="180">
+          {% else %}
+            <span class="wr-footer-wordmark">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+        <p class="wr-footer-tagline">Rooted in nature. Refined by science. Made for everyday wellness.</p>
+        {% if section.settings.show_social %}
+          <div class="wr-footer-social">
+            <a href="https://www.instagram.com/wildrootshemp/" target="_blank" rel="noopener noreferrer" aria-label="Wild Roots Hemp on Instagram">Instagram</a>
+            <a href="https://www.tiktok.com/@wild.roots.hemp" target="_blank" rel="noopener noreferrer" aria-label="Wild Roots Hemp on TikTok"><svg class="wr-footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:#F5F0E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v10.5a4.5 4.5 0 1 1-3-4.24"/><path d="M15 4c.5 3 2.3 4.8 5 5"/></svg><span>TikTok</span></a>
+          </div>
+        {% endif %}
       </div>
 
-      <div class="footer-links-col">
-        <h4>Shop</h4>
+      <nav class="wr-footer-column" aria-label="Shop footer navigation">
+        <h2>Shop</h2>
         <ul>
-          {%- for link in linklists[section.settings.shop_menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
+          {% if section.settings.shop_menu != blank and section.settings.shop_menu.links.size > 0 %}
+            {% for link in section.settings.shop_menu.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/collections/all">Shop All</a></li>
+            <li><a href="/products/daily-roots">Daily Roots</a></li>
+            <li><a href="/products/deep-rest">Deep Rest</a></li>
+            <li><a href="/products/root-relief">Root Relief</a></li>
+            <li><a href="/products/paw-root">Paw Root</a></li>
+          {% endif %}
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-links-col">
-        <h4>Company</h4>
+      <nav class="wr-footer-column" aria-label="Company footer navigation">
+        <h2>Company</h2>
         <ul>
-          {%- for link in linklists[section.settings.company_menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/pages/the-science">The Science</a></li>
+          <li><a href="/pages/family">Family</a></li>
+          <li><a href="/blogs/news">The Root Journal</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-links-col">
-        <h4>Support</h4>
+      <nav class="wr-footer-column" aria-label="Help footer navigation">
+        <h2>Help</h2>
         <ul>
-          {%- for link in linklists[section.settings.support_menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
+          {% if section.settings.help_menu != blank and section.settings.help_menu.links.size > 0 %}
+            {% for link in section.settings.help_menu.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/pages/contact">Contact</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+            <li><a href="/policies/shipping-policy">Shipping</a></li>
+            <li><a href="/policies/refund-policy">Returns</a></li>
+            <li><a href="/policies/privacy-policy">Privacy</a></li>
+          {% endif %}
         </ul>
-      </div>
+      </nav>
     </div>
 
-    <div class="footer-bottom">
+    <div class="wr-footer-contact">
+      <a href="mailto:{% if shop.email != blank %}{{ shop.email }}{% else %}hello@wildrootshemp.com{% endif %}">{% if shop.email != blank %}{{ shop.email }}{% else %}hello@wildrootshemp.com{% endif %}</a>
+      <span aria-hidden="true">•</span>
+      <a href="tel:+14056677123">(405) 667-7123</a>
+    </div>
+
+    <div class="wr-footer-bottom">
       <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
-      <p class="footer-disclaimer">These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+      <p class="wr-footer-disclaimer">These statements have not been evaluated by the Food and Drug Administration. Products are not intended to diagnose, treat, cure, or prevent any disease.</p>
     </div>
   </div>
 </footer>
+
+<style>
+  .wr-global-footer,
+  .wr-global-footer * {
+    box-sizing: border-box;
+  }
+
+  .wr-global-footer {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin: 0;
+    padding: 64px 0 24px;
+    background: #17382f;
+    color: #ffffff;
+  }
+
+  .wr-footer-inner {
+    width: min(100%, 1280px);
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .wr-footer-grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 2fr) repeat(3, minmax(140px, 1fr));
+    gap: 48px;
+    align-items: start;
+  }
+
+  .wr-footer-brand-link,
+  .wr-global-footer a {
+    color: inherit;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .wr-footer-logo {
+    display: block;
+    width: auto;
+    max-width: 180px;
+    height: auto;
+    margin: 0 0 18px;
+  }
+
+  .wr-footer-wordmark {
+    display: inline-block;
+    margin-bottom: 18px;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .wr-footer-tagline {
+    max-width: 340px;
+    margin: 0;
+    color: rgba(255, 255, 255, .76);
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+
+  .wr-footer-social {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .wr-footer-social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .wr-footer-social-icon {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+  }
+
+  .wr-footer-column h2 {
+    margin: 0 0 18px;
+    color: #ffffff;
+    font-family: var(--font-body, Arial, sans-serif);
+    font-size: .78rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .wr-footer-column ul {
+    display: grid;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wr-footer-column a,
+  .wr-footer-contact a {
+    color: rgba(255, 255, 255, .78);
+    font-size: .92rem;
+    line-height: 1.5;
+    transition: color .2s ease;
+  }
+
+  .wr-footer-column a:hover,
+  .wr-footer-column a:focus-visible,
+  .wr-footer-contact a:hover,
+  .wr-footer-contact a:focus-visible,
+  .wr-footer-social a:hover,
+  .wr-footer-social a:focus-visible {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .wr-footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, .16);
+  }
+
+  .wr-footer-contact span {
+    color: rgba(255, 255, 255, .35);
+  }
+
+  .wr-footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 640px);
+    gap: 32px;
+    align-items: start;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    color: rgba(255, 255, 255, .58);
+    font-size: .75rem;
+    line-height: 1.6;
+  }
+
+  .wr-footer-bottom p {
+    margin: 0;
+  }
+
+  .wr-footer-disclaimer {
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .wr-footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px 32px;
+    }
+
+    .wr-footer-bottom {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .wr-footer-disclaimer {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .wr-global-footer {
+      padding-top: 48px;
+    }
+
+    .wr-footer-inner {
+      padding: 0 20px;
+    }
+
+    .wr-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .wr-footer-contact {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 36px;
+    }
+
+    .wr-footer-contact span {
+      display: none;
+    }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Footer",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+    {
       "type": "link_list",
       "id": "shop_menu",
-      "default": "footer-shop",
-      "label": "Shop Menu"
+      "label": "Shop menu"
     },
     {
       "type": "link_list",
-      "id": "company_menu",
-      "default": "footer-company",
-      "label": "Company Menu"
+      "id": "help_menu",
+      "label": "Help menu"
     },
     {
-      "type": "link_list",
-      "id": "support_menu",
-      "default": "footer-support",
-      "label": "Support Menu"
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social links",
+      "default": true
     }
   ]
 }
