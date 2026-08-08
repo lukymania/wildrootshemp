@@ -1,0 +1,88 @@
+{%- if request.page_type == 'product' -%}
+<script>
+(function () {
+  var PRODUCT_SELECTOR = '[itemscope][itemtype="https://schema.org/Product"], [itemscope][itemtype="http://schema.org/Product"]';
+  var RATING_SELECTOR = '[itemscope][itemtype="https://schema.org/AggregateRating"], [itemscope][itemtype="http://schema.org/AggregateRating"]';
+
+  function allIncludingRoot(root, selector) {
+    var nodes = [];
+    if (root && root.nodeType === 1 && root.matches(selector)) nodes.push(root);
+    if (root && root.querySelectorAll) {
+      root.querySelectorAll(selector).forEach(function (node) { nodes.push(node); });
+    }
+    return nodes;
+  }
+
+  function stripScope(scope) {
+    scope.removeAttribute('itemscope');
+    scope.removeAttribute('itemtype');
+    scope.removeAttribute('itemid');
+    scope.removeAttribute('itemprop');
+    if (scope.hasAttribute('itemprop')) scope.removeAttribute('itemprop');
+    scope.querySelectorAll('[itemprop]').forEach(function (node) {
+      node.removeAttribute('itemprop');
+    });
+  }
+
+  function cleanProductMicrodata(root) {
+    allIncludingRoot(root || document, PRODUCT_SELECTOR).forEach(function (scope) {
+      var hasName = scope.querySelector('[itemprop~="name"]');
+      var hasImage = scope.querySelector('[itemprop~="image"]');
+      var hasOffer = scope.querySelector('[itemprop~="offers"], [itemscope][itemtype="https://schema.org/Offer"], [itemscope][itemtype="http://schema.org/Offer"]');
+      if (!hasName || !hasImage || !hasOffer) stripScope(scope);
+    });
+  }
+
+  function cleanRatingMicrodata(root) {
+    allIncludingRoot(root || document, RATING_SELECTOR).forEach(function (scope) {
+      var ratingValue = scope.querySelector('[itemprop~="ratingValue"]');
+      var count = scope.querySelector('[itemprop~="ratingCount"], [itemprop~="reviewCount"]');
+      var productParent = scope.closest(PRODUCT_SELECTOR);
+      var itemReviewed = scope.querySelector('[itemprop~="itemReviewed"]');
+      if (!ratingValue || !count || (!productParent && !itemReviewed)) stripScope(scope);
+    });
+  }
+
+  function removeOrphanedProductProperties(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var nodes = [];
+    if (root && root.nodeType === 1 && root.hasAttribute('itemprop')) nodes.push(root);
+    scope.querySelectorAll('[itemprop]').forEach(function (node) { nodes.push(node); });
+    nodes.forEach(function (node) {
+      var names = (node.getAttribute('itemprop') || '').split(/\s+/);
+      var productProps = ['name','description','image','offers','price','priceCurrency','availability','sku','brand','aggregateRating','review'];
+      var isProductProp = names.some(function (name) { return productProps.indexOf(name) !== -1; });
+      if (isProductProp && !node.closest(PRODUCT_SELECTOR)) node.removeAttribute('itemprop');
+    });
+  }
+
+  function cleanNode(root) {
+    cleanProductMicrodata(root);
+    cleanRatingMicrodata(root);
+    removeOrphanedProductProperties(root);
+  }
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      mutation.addedNodes.forEach(function (node) {
+        if (node.nodeType === 1) cleanNode(node);
+      });
+    });
+  });
+
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+  cleanNode(document);
+
+  function finalCleanup() {
+    cleanNode(document);
+    observer.disconnect();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', finalCleanup, { once: true });
+  } else {
+    finalCleanup();
+  }
+})();
+</script>
+{%- endif -%}
