@@ -1,74 +1,55 @@
-{% comment %}
-  Wild Roots Hemp - Header Section
-  Navigation with logo, menu links, and cart icon
-{% endcomment %}
-
-<header class="site-header" role="banner">
-  <div class="header-inner">
-    <a href="/" class="header-logo" aria-label="{{ shop.name }} - Home">
-      {%- if settings.logo != blank -%}
-        <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="160" height="auto" loading="eager">
-      {%- else -%}
-        <span class="header-brand-text">{{ shop.name }}</span>
-      {%- endif -%}
+<style>
+  .wr-global-header { position: sticky; top: 0; z-index: 1000; height: 80px; background: #faf8f3; border-bottom: 1px solid rgba(45,74,62,.14); }
+  .wr-global-header__inner { max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .wr-global-header__logo { display: flex; align-items: center; flex-shrink: 0; }
+  .wr-global-header__logo img { display: block; width: auto; height: 68px; }
+  .wr-global-header__nav { display: none; }
+  .wr-global-header__nav ul { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; list-style: none; }
+  .wr-global-header__nav a { color: #3d2b1f; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
+  .wr-global-header__nav a:hover { color: #c17a5f; }
+  .wr-global-header__actions { display: flex; align-items: center; gap: 16px; }
+  .wr-global-header__cart { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; color: #2d4a3e; text-decoration: none; }
+  .wr-global-header__cart svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.9; }
+  .wr-global-header__count { position: absolute; top: 1px; right: -1px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px; background: #c17a5f; color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
+  .wr-global-header__toggle { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 42px; height: 42px; padding: 8px; border: 0; background: transparent; cursor: pointer; }
+  .wr-global-header__toggle span { width: 100%; height: 2px; background: #2d4a3e; transition: transform .25s ease, opacity .25s ease; }
+  .wr-global-header__toggle[aria-expanded='true'] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .wr-global-header__toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .wr-global-header__toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .wr-global-header__mobile { position: fixed; inset: 80px 0 0; z-index: 999; display: none; padding: 30px 24px; background: #faf8f3; overflow-y: auto; }
+  .wr-global-header__mobile.is-open { display: block; }
+  .wr-global-header__mobile ul { margin: 0; padding: 0; list-style: none; }
+  .wr-global-header__mobile a { display: block; padding: 15px 0; border-bottom: 1px solid rgba(45,74,62,.15); color: #2d4a3e; font-family: Georgia, serif; font-size: 24px; font-weight: 700; text-decoration: none; }
+  @media (min-width: 900px) { .wr-global-header__nav { display: block; } .wr-global-header__toggle { display: none; } }
+  @media (max-width: 899px) { .wr-global-header__inner { padding: 0 18px; } .wr-global-header__logo img { height: 62px; } }
+</style>
+<header class="wr-global-header" role="banner">
+  <div class="wr-global-header__inner">
+    <a class="wr-global-header__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 300 | image_tag: widths: '140, 200, 300', loading: 'eager', alt: shop.name }}
+      {% else %}
+        <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="{{ shop.name | escape }}">
+      {% endif %}
     </a>
-
-    <nav class="header-nav" role="navigation" aria-label="Main navigation">
-      <ul class="nav-list">
-        {%- for link in linklists[section.settings.menu].links -%}
-          <li class="nav-item{% if link.active %} nav-item-active{% endif %}">
-            <a href="{{ link.url }}" class="nav-link"{% if link.active %} aria-current="page"{% endif %}>
-              {{ link.title }}
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      <a href="/cart" class="cart-toggle" onclick="WildRoots.cart.open(); return false;" aria-label="Cart">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+    <nav class="wr-global-header__nav" aria-label="Main navigation"><ul>
+      <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
+    </ul></nav>
+    <div class="wr-global-header__actions">
+      <a class="wr-global-header__cart" href="{{ routes.cart_url }}" aria-label="Shopping cart{% if cart.item_count > 0 %}, {{ cart.item_count }} items{% endif %}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.3 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L21.5 8H7"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
+        {% if cart.item_count > 0 %}<span class="wr-global-header__count">{{ cart.item_count }}</span>{% endif %}
       </a>
-      <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="wr-global-header__toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="WrGlobalMobileNav-{{ section.id }}"><span></span><span></span><span></span></button>
     </div>
   </div>
-
-  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
-    <ul class="mobile-nav-list">
-      {%- for link in linklists[section.settings.menu].links -%}
-        <li class="mobile-nav-item">
-          <a href="{{ link.url }}" class="mobile-nav-link">{{ link.title }}</a>
-        </li>
-      {%- endfor -%}
-    </ul>
-  </div>
 </header>
-
+<nav class="wr-global-header__mobile" id="WrGlobalMobileNav-{{ section.id }}" aria-label="Mobile navigation"><ul>
+  <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
+</ul></nav>
+<script>
+(function(){var script=document.currentScript;var mobile=script.previousElementSibling;var header=mobile.previousElementSibling;if(!header||!mobile)return;var toggle=header.querySelector('.wr-global-header__toggle');if(!toggle)return;toggle.addEventListener('click',function(){var open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));mobile.classList.toggle('is-open',!open);document.documentElement.style.overflow=open?'':'hidden';});mobile.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){toggle.setAttribute('aria-expanded','false');mobile.classList.remove('is-open');document.documentElement.style.overflow='';});});})();
+</script>
 {% schema %}
-{
-  "name": "Header",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "default": "main-menu",
-      "label": "Menu"
-    },
-    {
-      "type": "header",
-      "content": "Logo"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo_mobile",
-      "label": "Mobile logo"
-    }
-  ]
-}
+{"name":"Header","settings":[{"type":"image_picker","id":"logo","label":"Logo"},{"type":"link_list","id":"menu","label":"Menu","default":"main-menu"},{"type":"checkbox","id":"show_search","label":"Show search","default":false},{"type":"checkbox","id":"transparent_on_homepage","label":"Transparent on homepage","default":false}]}
 {% endschema %}

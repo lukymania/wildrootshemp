@@ -1,0 +1,76 @@
+{% comment %}
+  Precise spacing repair for the custom Home, Family, and Science pages.
+  Keeps the accessibility skip link available to keyboard users without
+  allowing it to occupy visible layout space.
+{% endcomment %}
+
+<style>
+  .skip-to-content-link {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .skip-to-content-link:focus,
+  .skip-to-content-link:focus-visible {
+    position: fixed !important;
+    top: 8px !important;
+    left: 8px !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+    z-index: 99999 !important;
+    background: #ffffff !important;
+    color: #17352a !important;
+    border: 2px solid #17352a !important;
+    border-radius: 6px !important;
+  }
+
+  /* Home and Family use an 80px fixed custom header. Reserve that height once. */
+  body.template-index #MainContent,
+  body.wr-family #MainContent {
+    padding-top: 80px !important;
+  }
+
+  body.template-index #MainContent .site-header,
+  body.wr-family #MainContent .site-header {
+    margin: 0 !important;
+  }
+
+  body.template-index #MainContent .hero,
+  body.wr-family #MainContent .family-hero {
+    margin-top: 0 !important;
+  }
+
+  /* Science uses a sticky header in normal document flow, so no extra offset. */
+  body.wr-the-science #MainContent {
+    padding-top: 0 !important;
+  }
+
+  body.wr-the-science #MainContent > .shopify-section,
+  body.wr-the-science #MainContent .site-header,
+  body.wr-the-science #MainContent .hero {
+    margin-top: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
+
+{% schema %}
+{"name":"Page spacing repair","settings":[]}
+{% endschema %}

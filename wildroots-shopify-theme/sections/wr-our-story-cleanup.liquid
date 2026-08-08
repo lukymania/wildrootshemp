@@ -1,0 +1,66 @@
+{% comment %}
+  Targeted Our Story cleanup:
+  - Removes the West Coast biotech partner badge card.
+  - Centers the "What We Stand For" section label.
+  - Stacks the science illustration and statistic cards on mobile.
+{% endcomment %}
+
+<style>
+  #MainContent .arkos-badge {
+    display: none !important;
+  }
+
+  #MainContent .values-section > .container > .section-label {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  @media (max-width: 767px) {
+    #MainContent .arkos-grid {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 2rem !important;
+    }
+
+    #MainContent .arkos-text,
+    #MainContent .arkos-visual {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    #MainContent .arkos-visual {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+    }
+
+    #MainContent .arkos-visual > img {
+      width: 100% !important;
+      max-width: 450px !important;
+      margin: 0 auto !important;
+    }
+
+    #MainContent .arkos-highlight {
+      width: 100% !important;
+      min-width: 0 !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 1rem !important;
+      margin-top: 1.5rem !important;
+    }
+
+    #MainContent .arkos-stat {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Our Story cleanup",
+  "settings": []
+}
+{% endschema %}

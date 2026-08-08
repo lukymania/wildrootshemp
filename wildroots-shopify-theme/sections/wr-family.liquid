@@ -1,0 +1,473 @@
+<style>
+    :root {
+      --deep-forest: #2D4A3E;
+      --sage-mist: #9CAF88;
+      --terra-cotta: #C17A5F;
+      --cream: #F5F0E8;
+      --white: #FFFFFF;
+      --charcoal: #3D3D3D;
+      --raw-umber: #8B7355;
+      --light-sage: #E8E6D9;
+      --font-headline: 'Playfair Display', serif;
+      --font-body: 'Lato', sans-serif;
+      --font-accent: 'Cormorant Garamond', serif;
+      --header-height: 80px;
+      --max-width: 1200px;
+      --forest-deep: #2D4A3E;
+      --lavender: #9CAF88;
+      --font-display: 'Playfair Display', serif;
+      --transition: all 0.3s ease;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-body); color: var(--charcoal); background: var(--cream); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Header */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); background-color: var(--cream); z-index: 1000; border-bottom: 1px solid rgba(45, 74, 62, 0.12); }
+    .header-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .logo-img { height: 68px; width: auto; display: block; }
+    .nav-desktop { display: none; }
+    .nav-list { display: flex; list-style: none; gap: 2.5rem; margin: 0; padding: 0; }
+    .nav-list li { display: flex; }
+    .nav-list a { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; color: var(--charcoal); position: relative; padding: 0.25rem 0; transition: color 0.2s; }
+    .nav-list a:hover { color: var(--terra-cotta); }
+    .header-actions { display: flex; align-items: center; gap: 1rem; }
+    .cart-btn { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; color: var(--deep-forest); cursor: pointer; text-decoration: none; }
+    .cart-btn svg { width: 24px; height: 24px; stroke: currentColor; fill: none; }
+    .cart-btn:hover { color: var(--terra-cotta); }
+    .cart-count { position: absolute; top: -1px; right: -2px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: var(--terra-cotta); color: #fff; font-size: 0.65rem; font-weight: 700; line-height: 1; }
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; padding: 8px; z-index: 1001; touch-action: manipulation; -webkit-tap-highlight-color: transparent; background: none; border: none; cursor: pointer; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--deep-forest); transition: all 0.3s ease; }
+    .mobile-nav { display: none; position: fixed; top: var(--header-height); left: 0; right: 0; bottom: 0; background: rgba(245, 240, 232, 0.98); backdrop-filter: blur(20px); padding: 2rem; flex-direction: column; gap: 1.5rem; z-index: 999; }
+    .mobile-nav.active { display: flex; }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+    .mobile-nav-list a { font-family: var(--font-headline); font-weight: 700; font-size: 1.5rem; color: var(--deep-forest); display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--light-sage); }
+    .mobile-nav-list a:hover { color: var(--terra-cotta); }
+    @media (min-width: 769px) {
+      .nav-desktop { display: flex !important; align-items: center; }
+      .menu-toggle { display: none !important; }
+    }
+
+    /* Hero */
+    .family-hero { margin-top: var(--header-height); padding: 5rem 0 4rem; background: linear-gradient(135deg, var(--deep-forest) 0%, #1e362d 100%); text-align: center; color: #fff; position: relative; overflow: hidden; }
+    .family-hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.35; }
+    .family-hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(45,74,62,0.7) 0%, rgba(30,54,45,0.8) 100%); z-index: 1; }
+    .family-hero .container { position: relative; z-index: 2; }
+    .family-hero h1 { font-family: var(--font-headline); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; color: #F1C6A8; text-shadow: 0 2px 18px rgba(10, 29, 23, 0.8); }
+    .family-hero p { font-size: 1.15rem; max-width: 600px; margin: 0 auto; opacity: 0.85; }
+
+    /* Nick card image fix - anchor to top so head is visible */
+    .family-card.dad .family-card-image img,
+    .family-card:nth-child(2) .family-card-image img { object-position: center top; }
+
+    /* Intro */
+    .family-intro { padding: 4rem 0; text-align: center; }
+    .family-intro p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: var(--raw-umber); }
+
+    /* Family Grid */
+    .family-grid-section { padding: 0 0 6rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+    .family-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .family-card { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .family-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .family-card-image { height: 280px; overflow: hidden; }
+    .family-card-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform 0.5s ease; }
+    .family-card:hover .family-card-image img { transform: scale(1.05); }
+    .family-card-body { padding: 1.5rem; }
+    .family-card-body h3 { font-family: var(--font-headline); font-size: 1.3rem; color: var(--deep-forest); margin-bottom: 0.25rem; }
+    .family-card-body .role { font-family: var(--font-accent); font-style: italic; font-size: 1rem; color: var(--terra-cotta); margin-bottom: 0.75rem; display: block; }
+    .family-card-body p { font-size: 0.9rem; color: var(--raw-umber); line-height: 1.5; margin-bottom: 1rem; }
+    .family-card-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85rem; color: var(--terra-cotta); text-transform: uppercase; letter-spacing: 0.5px; transition: gap 0.2s; }
+    .family-card:hover .family-card-link { gap: 10px; }
+
+    /* Dog card spans full width */
+    .family-card.dog { grid-column: span 1; }
+
+    @media (max-width: 768px) {
+      .family-grid { grid-template-columns: 1fr; }
+      .family-card.dog { grid-column: span 1; }
+    }
+
+    /* CTA */
+    .family-cta { padding: 4rem 0; text-align: center; background: var(--white); }
+    .family-cta h2 { font-family: var(--font-headline); font-size: clamp(2rem, 3.5vw, 2.75rem); color: var(--deep-forest); margin-bottom: 1rem; }
+    .family-cta p { color: var(--raw-umber); margin-bottom: 1.5rem; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--sage-mist) 0%, #7A8F6A 100%); color: #fff; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(122,143,106,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(122,143,106,0.4); }
+
+    /* Footer */
+    .site-footer {
+      background: var(--forest-deep);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 72px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+        .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover { background: rgba(255,255,255,0.1); border-color: var(--lavender); }
+
+    .footer-socials a svg { width: 16px; height: 16px; stroke: var(--cream); stroke-width: 1.5; fill: none; }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.6);
+      transition: var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--lavender); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.6875rem;
+      color: rgba(245, 240, 232, 0.35);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.4);
+    }
+  </style>
+
+
+<header class="site-header" id="header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="logo-link" aria-label="Wild Roots Hemp Home">
+      <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img" height="68">
+    </a>
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="/pages/our-story">Our Story</a></li>
+        <li><a href="/#products">Shop</a></li>
+        <li><a href="/pages/the-science">The Science</a></li>
+        <li><a href="/blogs/news">Journal</a></li>
+        <li><a href="/pages/family">Family</a></li>
+        <li><a href="faq-/pages/contact">FAQ</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="{{ routes.cart_url }}" class="cart-btn" aria-label="Shopping cart with {{ cart.item_count }} items">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12L6 6z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+        {% if cart.item_count > 0 %}<span class="cart-count">{{ cart.item_count }}</span>{% endif %}
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <ul class="mobile-nav-list">
+    <li><a href="/pages/our-story">Our Story</a></li>
+    <li><a href="/#products">Shop</a></li>
+    <li><a href="/pages/the-science">The Science</a></li>
+    <li><a href="/blogs/news">Journal</a></li>
+    <li><a href="/pages/family">Family</a></li>
+    <li><a href="faq-/pages/contact">FAQ</a></li>
+    <li><a href="/pages/contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main itemscope itemtype="https://schema.org/AboutPage">
+  <section class="family-hero">
+    <video class="family-hero-video wr-boomerang-video" autoplay muted playsinline preload="auto" data-playback-rate="0.5" aria-hidden="true">
+      <source src="{{ 'family-hero-redwoods.mp4' | asset_url }}" type="video/mp4">
+    </video>
+    <div class="family-hero-overlay"></div>
+    <div class="container">
+      <h1>Meet the Wild Roots Family</h1>
+      <p>We are a family of athletes, dancers, and outdoor enthusiasts who built Wild Roots Hemp to support the active lives we lead.</p>
+    </div>
+  </section>
+
+  <section class="family-intro">
+    <div class="container">
+      <p>Every product we make was born from a real need in our own home. From the tennis court to the dance studio, from mountain trails to the family room, here is how each of us uses Wild Roots nano-hemp in our daily wellness routine.</p>
+    </div>
+  </section>
+
+  <section class="family-grid-section">
+    <div class="container">
+      <div class="family-grid">
+
+        <a href="/pages/lucy" class="family-card">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-mom-tennis.jpg" alt="Lucy playing tennis">
+          </div>
+          <div class="family-card-body">
+            <h3>Lucy</h3>
+            <span class="role">Mom & Avid Tennis Player</span>
+            <p>Sprays Wild Relief on her elbows and knees after tennis. Uses Root Relief roll-on for headache support.</p>
+            <span class="family-card-link">Read Her Story &rarr;</span>
+          </div>
+        </a>
+
+        <a href="/pages/nick" class="family-card dad">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-dad-runner.jpg" alt="Nick running and mountain biking">
+          </div>
+          <div class="family-card-body">
+            <h3>Nick</h3>
+            <span class="role">Dad, Runner & Mountain Biker</span>
+            <p>Triathlete turned runner and mountain biker. Uses Daily Roots and Deep Roots to stay active across every terrain.</p>
+            <span class="family-card-link">Read His Story &rarr;</span>
+          </div>
+        </a>
+
+        <a href="/pages/will" class="family-card">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-son-athlete.jpg" alt="Will surfing and mountain biking">
+          </div>
+          <div class="family-card-body">
+            <h3>Will</h3>
+            <span class="role">14, All-Around Athlete</span>
+            <p>Football, basketball, surfing, mountain biking, tennis, rock climbing, and snowboarding. Daily Roots keeps him going.</p>
+            <span class="family-card-link">Read His Story &rarr;</span>
+          </div>
+        </a>
+
+        <a href="/pages/quinn" class="family-card">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-dancer1-ballet.jpg" alt="Quinn dancing">
+          </div>
+          <div class="family-card-body">
+            <h3>Quinn</h3>
+            <span class="role">11, Elite All-Around Dancer</span>
+            <p>Contemporary, jazz, ballet, ballroom, and more. Also skis, surfs, mountain bikes, and plays tennis.</p>
+            <span class="family-card-link">Read Her Story &rarr;</span>
+          </div>
+        </a>
+
+        <a href="/pages/charlie" class="family-card">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-dancer2-contemporary.jpg" alt="Charlie dancing contemporary">
+          </div>
+          <div class="family-card-body">
+            <h3>Charlie</h3>
+            <span class="role">9, Elite All-Around Dancer</span>
+            <p>Contemporary specialist who also skis, surfs, mountain bikes, and plays tennis. Wild Relief and Deep Roots go everywhere with her.</p>
+            <span class="family-card-link">Read Her Story &rarr;</span>
+          </div>
+        </a>
+
+        <a href="/pages/rocket" class="family-card dog">
+          <div class="family-card-image">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-dog-wellness.jpg" alt="The family rescue dog">
+          </div>
+          <div class="family-card-body">
+            <h3>The Wellness Pup</h3>
+            <span class="role">Rescue Mix</span>
+            <p>Part pit bull, boxer, Staffordshire terrier, Rottweiler, and street dog. Gets Paw & Root drops in his breakfast and rubbed into his hips.</p>
+            <span class="family-card-link">Read His Story &rarr;</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="family-cta">
+    <div class="container">
+      <h2>Find What Works for Your Family</h2>
+      <p>Every family is different. Explore our full product line to find the right nano-hemp wellness solution for your lifestyle.</p>
+      <a href="/#products" class="btn-primary">Shop All Products &rarr;</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@wild.roots.hemp" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:#F5F0E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v10.5a4.5 4.5 0 1 1-3-4.24"/><path d="M15 4c.5 3 2.3 4.8 5 5"/></svg></a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="/products/daily-roots">Daily Roots</a></li>
+            <li><a href="/products/deep-roots">Deep Roots Extra Strength</a></li>
+            <li><a href="/products/deep-rest">Deep Rest Evening</a></li>
+            <li><a href="/products/root-relief">Root Relief Roll-On</a></li>
+            <li><a href="/products/wild-relief">Wild Relief Botanical Spray</a></li>
+            <li><a href="/products/paw-root">Paw &amp; Root Pet Drops</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/our-story">Our Story</a></li>
+            <li><a href="/pages/family">Family</a></li>
+            <li><a href="/pages/the-science">The Science</a></li>
+            <li><a href="/blogs/news">Journal</a></li>
+            <li><a href="faq-/pages/contact">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq-/pages/contact">Contact Us</a></li>
+            <li><a href="faq-/pages/contact">Shipping Info</a></li>
+            <li><a href="faq-/pages/contact">Privacy Policy</a></li>
+            <li><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">
+          <strong>FDA Disclaimer:</strong> These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before use if you are pregnant, nursing, or taking any medications.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Wild Roots Hemp. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Mobile menu toggle
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  function toggleMenu() {
+    menuToggle.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    var isOpen = mobileNav.classList.contains('active');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  menuToggle.addEventListener('click', toggleMenu);
+  menuToggle.addEventListener('touchstart', function(e) { e.preventDefault(); toggleMenu(); }, {passive: false});
+</script>
+
+<!-- Hero Video Boomerang -->
+<script>
+(function() {
+  var video = document.querySelector('.family-hero-video-legacy-disabled');
+  if (!video) return;
+  var forward = true;
+  var lastTime = 0;
+  var PAD = 0.06;
+
+  function playForward() {
+    forward = true;
+    lastTime = 0;
+    video.play().catch(function(){});
+  }
+
+  function seekLoop(timestamp) {
+    if (forward) return;
+    if (!lastTime) lastTime = timestamp;
+    var elapsed = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(seekLoop); return; }
+    video.currentTime = Math.max(video.currentTime - elapsed, PAD);
+    if (video.currentTime <= PAD) {
+      playForward();
+    } else {
+      requestAnimationFrame(seekLoop);
+    }
+  }
+
+  function monitor() {
+    if (!forward) { requestAnimationFrame(monitor); return; }
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(monitor); return; }
+    if (video.currentTime >= duration - PAD) {
+      forward = false;
+      lastTime = 0;
+      video.pause();
+      requestAnimationFrame(seekLoop);
+    } else {
+      requestAnimationFrame(monitor);
+    }
+  }
+
+  function start() {
+    video.play().then(function(){ requestAnimationFrame(monitor); }).catch(function(){ requestAnimationFrame(monitor); });
+  }
+
+  if (video.readyState >= 1) {
+    start();
+  } else {
+    video.addEventListener('loadedmetadata', start);
+  }
+})();
+</script>
+
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}

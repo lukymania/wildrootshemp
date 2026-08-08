@@ -1,0 +1,107 @@
+{% comment %}
+  Functional homepage newsletter signup.
+  Replaces the static demo form in wildroots-homepage with Shopify's native
+  customer newsletter form so submitted addresses are stored as marketing subscribers.
+{% endcomment %}
+
+<div id="wr-home-newsletter-native-{{ section.id }}" class="wr-home-newsletter-native" hidden>
+  {% form 'customer', class: 'newsletter-form', id: 'wr-home-newsletter-form' %}
+    <input type="hidden" name="contact[tags]" value="newsletter, homepage, wild-roots-family, welcome-15">
+    <input
+      type="email"
+      name="contact[email]"
+      class="newsletter-input"
+      value="{% if customer %}{{ customer.email }}{% endif %}"
+      placeholder="Enter your email address"
+      aria-label="Email address for newsletter"
+      autocomplete="email"
+      autocapitalize="off"
+      spellcheck="false"
+      required
+    >
+    <button type="submit" class="newsletter-btn">Join the Family</button>
+
+    {% if form.posted_successfully? %}
+      <div class="wr-newsletter-message wr-newsletter-success" role="status" tabindex="-1">
+        <strong>Welcome to the family!</strong>
+        <span>Use code <strong>WILD15</strong> for 15% off your first order.</span>
+      </div>
+    {% endif %}
+
+    {% if form.errors %}
+      <div class="wr-newsletter-message wr-newsletter-error" role="alert">
+        {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
+  {% endform %}
+</div>
+
+<style>
+  #newsletter .wr-newsletter-message {
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.85rem 1rem;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  #newsletter .wr-newsletter-success {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+
+  #newsletter .wr-newsletter-success span {
+    display: block;
+  }
+
+  #newsletter .wr-newsletter-error {
+    background: rgba(120, 20, 20, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #fff;
+  }
+
+  #newsletter .wr-newsletter-error ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<script>
+  (function () {
+    function installNativeNewsletterForm() {
+      var holder = document.getElementById('wr-home-newsletter-native-{{ section.id }}');
+      var target = document.querySelector('#newsletter form.newsletter-form');
+      if (!holder || !target) return;
+
+      var nativeForm = holder.querySelector('form.newsletter-form');
+      if (!nativeForm) return;
+
+      target.replaceWith(nativeForm);
+      holder.remove();
+
+      var message = nativeForm.querySelector('.wr-newsletter-message');
+      if (message) {
+        message.focus();
+        document.getElementById('newsletter').scrollIntoView({ block: 'center' });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', installNativeNewsletterForm);
+    } else {
+      installNativeNewsletterForm();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Homepage newsletter form",
+  "settings": []
+}
+{% endschema %}

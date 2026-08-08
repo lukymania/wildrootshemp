@@ -1,0 +1,78 @@
+{%- comment -%}
+  Generates one authoritative, complete Product graph on the homepage
+  from live Shopify catalog data. Legacy incomplete Product entities are
+  removed server-side in the homepage section rather than with JavaScript.
+{%- endcomment -%}
+
+{%- assign product_handles = 'root-relief,wild-relief,deep-roots,deep-rest,daily-roots,paw-root' | split: ',' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {%- assign rendered_products = 0 -%}
+    {%- for product_handle in product_handles -%}
+      {%- assign schema_product = all_products[product_handle] -%}
+      {%- assign schema_variant = schema_product.selected_or_first_available_variant -%}
+      {%- if schema_product != blank and schema_variant != blank -%}
+        {%- if rendered_products > 0 -%},{%- endif -%}
+        {%- assign rendered_products = rendered_products | plus: 1 -%}
+        {%- capture fallback_image_url -%}
+          {%- case product_handle -%}
+            {%- when 'root-relief' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-rollon-cutout.png
+            {%- when 'wild-relief' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-mist-cutout.png
+            {%- when 'deep-roots' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-roots-cutout.png
+            {%- when 'deep-rest' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png
+            {%- when 'daily-roots' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png
+            {%- when 'paw-root' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-paw-root-cutout.png
+          {%- endcase -%}
+        {%- endcapture -%}
+        {
+          "@type": "Product",
+          "@id": {{ shop.url | append: schema_product.url | append: '#product' | json }},
+          "name": {{ schema_product.title | json }},
+          "url": {{ shop.url | append: schema_product.url | json }},
+          "description": {{ schema_product.description | strip_html | strip_newlines | truncate: 500 | json }},
+          "image": [
+            {%- if schema_product.featured_image != blank -%}
+              {{ schema_product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}
+            {%- else -%}
+              {{ fallback_image_url | strip | json }}
+            {%- endif -%}
+          ],
+          "brand": {
+            "@type": "Brand",
+            "name": "Wild Roots Hemp"
+          },
+          {%- if schema_variant.sku != blank %}
+          "sku": {{ schema_variant.sku | json }},
+          {%- endif %}
+          "offers": {
+            "@type": "Offer",
+            "url": {{ shop.url | append: schema_product.url | json }},
+            "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+            "price": {{ schema_variant.price | divided_by: 100.0 | json }},
+            "availability": "https://schema.org/{% if schema_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+            "itemCondition": "https://schema.org/NewCondition",
+            "seller": {
+              "@type": "Organization",
+              "name": "Wild Roots Hemp"
+            }
+          }
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product schema fix",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product schema fix"
+    }
+  ]
+}
+{% endschema %}

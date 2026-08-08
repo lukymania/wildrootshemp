@@ -1,0 +1,26 @@
+<style>
+  :root{--wr-deep-forest:#2D4A3E;--wr-terra-cotta:#C17A5F;--wr-cream:#F5F0E8;--wr-dark-brown:#3D2B1F;--wr-light-sage:#C5D4B8;--wr-header-height:80px}
+  .wr-site-header{position:fixed;inset:0 0 auto;height:var(--wr-header-height);background:var(--wr-cream);border-bottom:1px solid rgba(45,74,62,.12);z-index:1000;font-family:'Lato',sans-serif}
+  .wr-header-inner{max-width:1200px;height:100%;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+  .wr-logo{display:flex;align-items:center;text-decoration:none}.wr-logo img{height:68px;width:auto;display:block}
+  .wr-nav-desktop{display:none}.wr-nav-list{display:flex;list-style:none;gap:40px;margin:0;padding:0}
+  .wr-nav-list a{color:var(--wr-dark-brown);font-size:.9rem;letter-spacing:1px;text-decoration:none;text-transform:uppercase;position:relative;padding-bottom:4px}
+  .wr-nav-list a:after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--wr-terra-cotta);transition:width .3s ease}.wr-nav-list a:hover{color:var(--wr-terra-cotta)}.wr-nav-list a:hover:after{width:100%}
+  .wr-header-actions{display:flex;align-items:center;gap:24px}.wr-cart-link{position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:var(--wr-deep-forest);text-decoration:none}.wr-cart-link svg{width:24px;height:24px;stroke:currentColor;fill:none}
+  .wr-cart-count{position:absolute;top:-1px;right:-2px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--wr-terra-cotta);color:#fff;font-size:.65rem;font-weight:700;line-height:1}
+  .wr-menu-toggle{width:28px;height:20px;padding:0;border:0;background:transparent;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;z-index:1002}.wr-menu-toggle span{display:block;width:100%;height:2px;background:var(--wr-deep-forest);transition:transform .3s ease,opacity .3s ease}.wr-menu-toggle.active span:nth-child(1){transform:translateY(9px) rotate(45deg)}.wr-menu-toggle.active span:nth-child(2){opacity:0}.wr-menu-toggle.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+  .wr-mobile-nav{position:fixed;top:var(--wr-header-height);inset-inline:0;bottom:0;padding:32px;background:var(--wr-cream);transform:translate3d(100%,0,0);transition:transform .4s ease;overflow-y:auto;z-index:999;font-family:'Lato',sans-serif}.wr-mobile-nav.active{transform:translate3d(0,0,0)}.wr-mobile-nav ul{display:flex;flex-direction:column;gap:24px;list-style:none;margin:0;padding:0}.wr-mobile-nav a{display:block;padding:8px 0;border-bottom:1px solid var(--wr-light-sage);color:var(--wr-deep-forest);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none}
+  @media(min-width:900px){.wr-nav-desktop{display:block}.wr-menu-toggle{display:none}}
+</style>
+<header class="wr-site-header" id="wrSiteHeader">
+  <div class="wr-header-inner">
+    <a href="/" class="wr-logo" aria-label="Wild Roots Hemp home"><img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp"></a>
+    <nav class="wr-nav-desktop" aria-label="Main navigation"><ul class="wr-nav-list"><li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li></ul></nav>
+    <div class="wr-header-actions">
+      <a href="{{ routes.cart_url }}" class="wr-cart-link" aria-label="Shopping cart with {{ cart.item_count }} items"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12L6 6z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>{% if cart.item_count > 0 %}<span class="wr-cart-count">{{ cart.item_count }}</span>{% endif %}</a>
+      <button type="button" class="wr-menu-toggle" id="wrMenuToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="wr-mobile-nav" id="wrMobileNav" aria-label="Mobile navigation"><ul><li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li></ul></nav>
+<script>(function(){var t=document.getElementById('wrMenuToggle'),n=document.getElementById('wrMobileNav');if(!t||!n)return;function o(e){t.classList.toggle('active',e);n.classList.toggle('active',e);t.setAttribute('aria-expanded',e?'true':'false');document.body.style.overflow=e?'hidden':''}t.addEventListener('click',function(){o(!n.classList.contains('active'))});n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){o(false)})});document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)});window.addEventListener('resize',function(){if(window.innerWidth>=900)o(false)})})();</script>

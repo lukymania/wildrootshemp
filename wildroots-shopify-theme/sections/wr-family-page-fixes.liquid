@@ -1,0 +1,67 @@
+{% comment %}
+  Shared repair layer for all family-member pages.
+  - Replaces stale hardcoded product-card prices with live Shopify prices.
+  - Hides the legacy inline family footer and renders the standard site footer.
+  - Repositions Nick's hero image so his head remains visible.
+{% endcomment %}
+
+<style>
+  #MainContent footer.site-footer {
+    display: none !important;
+  }
+
+  {% if template.suffix == 'wr-nick' %}
+    #MainContent .page-hero-bg {
+      object-position: center top !important;
+    }
+  {% endif %}
+</style>
+
+<div id="wr-family-shared-footer-{{ section.id }}">
+  {% render 'wr-site-footer' %}
+</div>
+
+<script>
+  (() => {
+    const livePrices = {
+      'daily-roots': {{ all_products['daily-roots'].price | money_without_trailing_zeros | json }},
+      'deep-roots': {{ all_products['deep-roots'].price | money_without_trailing_zeros | json }},
+      'deep-rest': {{ all_products['deep-rest'].price | money_without_trailing_zeros | json }},
+      'root-relief': {{ all_products['root-relief'].price | money_without_trailing_zeros | json }},
+      'wild-relief': {{ all_products['wild-relief'].price | money_without_trailing_zeros | json }},
+      'paw-root': {{ all_products['paw-root'].price | money_without_trailing_zeros | json }}
+    };
+
+    const updateFamilyPrices = () => {
+      document.querySelectorAll('#MainContent .product-card').forEach((card) => {
+        const productLink = card.querySelector('a[href*="/products/"]');
+        const priceElement = card.querySelector('.product-card-price');
+        if (!productLink || !priceElement) return;
+
+        let productHandle = '';
+        try {
+          const productUrl = new URL(productLink.href, window.location.origin);
+          const match = productUrl.pathname.match(/\/products\/([^/]+)/);
+          productHandle = match ? match[1] : '';
+        } catch (error) {
+          return;
+        }
+
+        if (livePrices[productHandle]) {
+          priceElement.textContent = livePrices[productHandle];
+          priceElement.setAttribute('data-price-source', 'shopify');
+        }
+      });
+    };
+
+    updateFamilyPrices();
+    document.addEventListener('shopify:section:load', updateFamilyPrices);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Family page fixes",
+  "settings": []
+}
+{% endschema %}

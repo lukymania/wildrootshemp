@@ -1,0 +1,1723 @@
+<style>
+/* ========================================
+ CSS CUSTOM PROPERTIES (Design Tokens)
+======================================== */
+:root {
+ /* Brand Colors */
+ --forest: #2D4A3E;
+ --sage: #9CAF88;
+ --terra: #C17A5F;
+ --cream: #F5F0E8;
+ --dark: #1A2E26;
+ --dark-alt: #243D33;
+ --white: #FFFFFF;
+ --black: #1A1A1A;
+ --gray: #6B7B6E;
+ --light-gray: #E8E4DC;
+ --border: rgba(45, 74, 62, 0.15);
+
+ /* Science Section Dark Theme */
+ --science-bg: #1a2e26;
+ --science-card: #243D33;
+ --science-card-hover: #2D4A3E;
+ --science-border: rgba(156, 175, 136, 0.2);
+ --science-text: #E8E2D6;
+ --science-muted: #9CAF88;
+
+ /* Typography */
+ --font-display: 'Georgia', 'Times New Roman', serif;
+ --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+ /* Spacing */
+ --space-xs: 0.5rem;
+ --space-sm: 1rem;
+ --space-md: 2rem;
+ --space-lg: 4rem;
+ --space-xl: 6rem;
+
+ /* Container */
+ --max-width: 1200px;
+ --container-padding: 1.5rem;
+
+ /* Border Radius */
+ --radius-sm: 6px;
+ --radius-md: 12px;
+ --radius-lg: 20px;
+
+ /* Shadows */
+ --shadow-sm: 0 2px 8px rgba(26, 46, 38, 0.08);
+ --shadow-md: 0 8px 30px rgba(26, 46, 38, 0.12);
+ --shadow-lg: 0 20px 60px rgba(26, 46, 38, 0.18);
+
+ /* Transitions */
+ --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+ --transition-slow: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+ /* Header Height */
+ --header-height: 80px;
+      --forest-deep: #0f241c;
+    }
+
+/* ========================================
+ RESET & BASE
+======================================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+ font-family: var(--font-body);
+ color: var(--black);
+ background: var(--cream);
+ line-height: 1.6;
+ -webkit-font-smoothing: antialiased;
+ overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; transition: var(--transition); }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ========================================
+ UTILITIES
+======================================== */
+.container {
+ max-width: var(--max-width);
+ margin: 0 auto;
+ padding-left: var(--container-padding);
+ padding-right: var(--container-padding);
+}
+.section-padding { padding: var(--space-xl) 0; }
+.section-padding-lg { padding: calc(var(--space-xl) * 1.5) 0; }
+.text-center { text-align: center; }
+
+/* ========================================
+ HEADER / NAVIGATION
+======================================== */
+.site-header {
+ position: sticky;
+ top: 0;
+ z-index: 1000;
+ background: rgba(245, 240, 232, 0.95);
+ backdrop-filter: blur(20px);
+ -webkit-backdrop-filter: blur(20px);
+ border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+ height: var(--header-height);
+}
+.header-inner {
+ max-width: var(--max-width);
+ margin: 0 auto;
+ padding: 0 var(--container-padding);
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ height: 100%;
+}
+.logo-img {
+ height: 68px;
+ width: auto;
+ display: block;
+}
+.nav-desktop { display: none; }
+.nav-list { display: flex; list-style: none; gap: 2.5rem; margin: 0; padding: 0; }
+.nav-list li { display: flex; }
+.nav-list a {
+ font-family: var(--font-body);
+ font-weight: 400;
+ font-size: 0.9rem;
+ letter-spacing: 1px;
+ text-transform: uppercase;
+ color: var(--dark-brown);
+ position: relative;
+ padding: 0.25rem 0;
+ transition: var(--transition);
+}
+.nav-list a::after {
+ content: '';
+ position: absolute;
+ bottom: -2px;
+ left: 0;
+ width: 0;
+ height: 2px;
+ background: var(--terra-cotta);
+ transition: var(--transition);
+}
+.nav-list a:hover { color: var(--terra-cotta); }
+.nav-list a:hover::after { width: 100%; }
+.nav-list a.active { color: var(--terra-cotta); font-weight: 600; }
+.nav-list a.active::after { width: 100%; }
+
+.header-actions {
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+}
+.cart-btn {
+ position: relative;
+ width: 40px;
+ height: 40px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border: 0;
+ background: transparent;
+ color: var(--forest);
+ cursor: pointer;
+ text-decoration: none;
+}
+.cart-btn svg {
+ width: 24px;
+ height: 24px;
+ stroke: currentColor;
+ fill: none;
+}
+.cart-btn:hover { color: var(--terra-cotta); }
+.cart-count {
+ position: absolute;
+ top: -1px;
+ right: -2px;
+ min-width: 18px;
+ height: 18px;
+ padding: 0 4px;
+ border-radius: 999px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: var(--terra-cotta);
+ color: #fff;
+ font-size: 0.65rem;
+ font-weight: 700;
+ line-height: 1;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+ display: none;
+ flex-direction: column;
+ gap: 5px;
+ padding: 8px;
+ z-index: 1001;
+ touch-action: manipulation;
+ -webkit-tap-highlight-color: transparent;
+}
+.menu-toggle span {
+ display: block;
+ width: 24px;
+ height: 2px;
+ background: var(--forest);
+ transition: var(--transition);
+}
+.menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Nav */
+.mobile-nav {
+ display: none;
+ position: fixed;
+ top: var(--header-height);
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: rgba(245, 240, 232, 0.98);
+ backdrop-filter: blur(20px);
+ padding: 2rem;
+ flex-direction: column;
+ gap: 1.5rem;
+ z-index: 999;
+}
+.mobile-nav.active { display: flex; }
+.mobile-nav-list {
+ list-style: none;
+ display: flex;
+ flex-direction: column;
+ gap: 1.5rem;
+}
+.mobile-nav-list a {
+ font-size: 1.125rem;
+ padding: 0.75rem 0;
+ border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+ color: var(--gray);
+ text-decoration: none;
+}
+
+/* ========================================
+ HERO BANNER
+======================================== */
+.hero {
+ position: relative;
+ min-height: 55vh;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ overflow: hidden;
+ background: var(--dark);
+}
+.hero-video {
+ position: absolute;
+ inset: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ opacity: 0.5;
+}
+.hero-video::-webkit-media-controls { display: none !important; }
+.hero-bg {
+ display: none;
+}
+.hero-overlay {
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(180deg, rgba(26, 46, 38, 0.7) 0%, rgba(26, 46, 38, 0.85) 60%, rgba(26, 46, 38, 0.95) 100%);
+}
+.hero-content {
+ position: relative;
+ z-index: 2;
+ text-align: center;
+ max-width: 800px;
+ padding: var(--space-lg) var(--container-padding);
+}
+.hero-label {
+ display: inline-block;
+ font-size: 0.75rem;
+ font-weight: 600;
+ letter-spacing: 3px;
+ text-transform: uppercase;
+ color: var(--sage);
+ margin-bottom: var(--space-sm);
+ padding: 0.4rem 1rem;
+ border: 1px solid var(--sage);
+ border-radius: 50px;
+}
+.hero-title {
+ font-family: var(--font-display);
+ font-size: clamp(2.5rem, 6vw, 4.5rem);
+ font-weight: 600;
+ color: var(--cream);
+ line-height: 1.15;
+ margin-bottom: var(--space-sm);
+}
+.hero-subtitle {
+ font-size: clamp(1rem, 2vw, 1.25rem);
+ color: var(--sage);
+ font-weight: 300;
+ max-width: 500px;
+ margin: 0 auto;
+}
+.hero-scroll {
+ position: absolute;
+ bottom: 2rem;
+ left: 50%;
+ transform: translateX(-50%);
+ z-index: 2;
+}
+.hero-scroll svg {
+ width: 24px;
+ height: 24px;
+ stroke: var(--sage);
+ animation: bounce 2s infinite;
+}
+@keyframes bounce {
+ 0%, 100% { transform: translateY(0); }
+ 50% { transform: translateY(8px); }
+}
+
+/* ========================================
+ SECTION HEADERS
+======================================== */
+.section-header {
+ max-width: 700px;
+ margin: 0 auto var(--space-lg);
+ text-align: center;
+}
+.section-label {
+ display: inline-block;
+ font-size: 0.7rem;
+ font-weight: 600;
+ letter-spacing: 3px;
+ text-transform: uppercase;
+ color: var(--terra);
+ margin-bottom: var(--space-xs);
+}
+.section-title {
+ font-family: var(--font-display);
+ font-size: clamp(2rem, 4.5vw, 3.25rem);
+ font-weight: 600;
+ color: var(--forest);
+ line-height: 1.2;
+ margin-bottom: var(--space-sm);
+}
+.section-subtitle {
+ font-size: 1.05rem;
+ color: var(--gray);
+ line-height: 1.7;
+}
+
+/* ========================================
+ SECTION 1: WHAT IS NANO-HEMP?
+======================================== */
+.intro-section { background: var(--cream); }
+.intro-layout {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: var(--space-lg);
+ align-items: center;
+}
+.intro-content p {
+ font-size: 1.05rem;
+ line-height: 1.85;
+ color: var(--black);
+ margin-bottom: var(--space-sm);
+}
+.intro-content p strong {
+ color: var(--forest);
+ font-weight: 600;
+}
+.intro-highlight {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ background: var(--forest);
+ color: var(--cream);
+ padding: 0.5rem 1rem;
+ border-radius: var(--radius-sm);
+ font-size: 0.9rem;
+ font-weight: 600;
+ margin-top: var(--space-xs);
+}
+.intro-image {
+ border-radius: var(--radius-lg);
+ overflow: hidden;
+ box-shadow: var(--shadow-lg);
+}
+.intro-image img {
+ width: 100%;
+ display: block;
+ border-radius: var(--radius-lg);
+ transition: var(--transition-slow);
+}
+.intro-image:hover img { transform: scale(1.02); }
+.intro-image-caption {
+ padding: 1rem 1.5rem;
+ background: var(--cream);
+ color: var(--gray);
+ font-size: 0.8rem;
+ text-align: center;
+ font-style: italic;
+}
+
+/* Stats Bar */
+.stats-bar {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: var(--space-md);
+ margin-top: var(--space-lg);
+ padding-top: var(--space-lg);
+ border-top: 1px solid var(--border);
+}
+.stat-item { text-align: center; }
+.stat-number {
+ font-family: var(--font-display);
+ font-size: 2.5rem;
+ color: var(--terra);
+ line-height: 1;
+ margin-bottom: 0.25rem;
+}
+.stat-label {
+ font-size: 0.8rem;
+ color: var(--gray);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+}
+
+/* ========================================
+ SECTION 2: THREE STAGES
+======================================== */
+.stages-section {
+ background: var(--science-bg);
+ color: var(--science-text);
+ position: relative;
+ overflow: hidden;
+}
+.stages-section::before {
+ content: '';
+ position: absolute;
+ top: -50%;
+ right: -20%;
+ width: 600px;
+ height: 600px;
+ background: radial-gradient(circle, rgba(156, 175, 136, 0.05) 0%, transparent 70%);
+ pointer-events: none;
+}
+.stages-section .section-title { color: var(--cream); }
+.stages-section .section-subtitle { color: var(--sage); }
+.stages-section .section-label { color: var(--terra); }
+
+.stages-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: var(--space-md);
+ position: relative;
+ z-index: 1;
+ max-width: 900px;
+ margin: 0 auto;
+}
+.stage-card {
+ background: var(--science-card);
+ border: 1px solid var(--science-border);
+ border-radius: var(--radius-md);
+ padding: var(--space-md);
+ text-align: center;
+ transition: var(--transition);
+ position: relative;
+}
+.stage-card:hover {
+ background: var(--science-card-hover);
+ transform: translateY(-4px);
+ box-shadow: var(--shadow-lg);
+ border-color: var(--sage);
+}
+.stage-number {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ width: 56px;
+ height: 56px;
+ background: var(--forest);
+ color: var(--sage);
+ font-family: var(--font-display);
+ font-size: 1.5rem;
+ font-weight: 700;
+ border-radius: 50%;
+ margin-bottom: var(--space-sm);
+ border: 2px solid var(--sage);
+}
+.stage-title {
+ font-family: var(--font-display);
+ font-size: 1.35rem;
+ color: var(--cream);
+ margin-bottom: var(--space-xs);
+}
+.stage-desc {
+ font-size: 0.95rem;
+ color: var(--science-muted);
+ line-height: 1.7;
+}
+.stage-connector {
+ display: none;
+}
+
+/* ========================================
+ SECTION 3: COMPARISON TABLE
+======================================== */
+.compare-section { background: var(--cream); }
+.compare-table-wrapper {
+ max-width: 900px;
+ margin: 0 auto;
+ border-radius: var(--radius-md);
+ overflow: hidden;
+ box-shadow: var(--shadow-md);
+}
+.compare-table {
+ width: 100%;
+ border-collapse: collapse;
+}
+.compare-table thead th {
+ background: var(--forest);
+ color: var(--cream);
+ padding: 1.25rem 1.5rem;
+ font-size: 0.85rem;
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ text-align: left;
+}
+.compare-table thead th:nth-child(2) { background: var(--dark-alt); }
+.compare-table thead th:nth-child(3) {
+ background: var(--sage);
+ color: var(--dark);
+}
+.compare-table tbody tr {
+ background: var(--white);
+ transition: var(--transition);
+}
+.compare-table tbody tr:nth-child(even) { background: var(--cream); }
+.compare-table tbody tr:hover { background: rgba(156, 175, 136, 0.1); }
+.compare-table tbody td {
+ padding: 1.25rem 1.5rem;
+ font-size: 0.95rem;
+ border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+}
+.compare-table tbody td:first-child {
+ font-weight: 600;
+ color: var(--forest);
+}
+.compare-table tbody td:nth-child(2) { color: var(--gray); }
+.compare-table tbody td:nth-child(3) {
+ font-weight: 600;
+ color: var(--forest);
+ background: rgba(156, 175, 136, 0.08);
+}
+.compare-table .highlight {
+ display: inline-block;
+ background: var(--sage);
+ color: var(--dark);
+ padding: 0.15rem 0.6rem;
+ border-radius: 50px;
+ font-size: 0.8rem;
+ font-weight: 700;
+}
+
+/* Mobile Table Cards */
+.table-cards { display: none; }
+.table-card {
+ background: var(--white);
+ border-radius: var(--radius-md);
+ padding: var(--space-md);
+ margin-bottom: var(--space-sm);
+ box-shadow: var(--shadow-sm);
+ border-left: 4px solid var(--sage);
+}
+.table-card-header {
+ font-family: var(--font-display);
+ font-size: 1.15rem;
+ color: var(--forest);
+ margin-bottom: var(--space-xs);
+}
+.table-card-row {
+ display: flex;
+ justify-content: space-between;
+ padding: 0.5rem 0;
+ border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+}
+.table-card-row:last-child { border-bottom: none; }
+.table-card-label {
+ font-size: 0.8rem;
+ font-weight: 600;
+ color: var(--gray);
+ text-transform: uppercase;
+}
+.table-card-value {
+ font-weight: 600;
+ color: var(--forest);
+}
+
+/* ========================================
+ SECTION 4: FOUR INGREDIENTS
+======================================== */
+.ingredients-section {
+ background: var(--science-bg);
+ color: var(--science-text);
+ position: relative;
+}
+.ingredients-section .section-title { color: var(--cream); }
+.ingredients-section .section-subtitle { color: var(--sage); }
+.ingredients-section .section-label { color: var(--terra); }
+
+.ingredients-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: var(--space-md);
+ margin-bottom: var(--space-lg);
+}
+.ingredient-card {
+ display: flex;
+ gap: var(--space-sm);
+ background: var(--science-card);
+ border: 1px solid var(--science-border);
+ border-radius: var(--radius-md);
+ padding: var(--space-md);
+ transition: var(--transition);
+}
+.ingredient-card:hover {
+ background: var(--science-card-hover);
+ border-color: var(--sage);
+ transform: translateY(-3px);
+}
+.ingredient-icon {
+ flex-shrink: 0;
+ width: 56px;
+ height: 56px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: var(--forest);
+ border-radius: var(--radius-sm);
+ font-size: 1.5rem;
+ border: 1px solid var(--sage);
+}
+
+.ingredient-icon svg {
+ width: 30px;
+ height: 30px;
+ fill: none;
+ stroke: currentColor;
+ stroke-width: 1.6;
+ stroke-linecap: round;
+ stroke-linejoin: round;
+}
+.ingredient-info h3 {
+ font-family: var(--font-display);
+ font-size: 1.2rem;
+ color: var(--cream);
+ margin-bottom: 0.4rem;
+}
+.ingredient-info p {
+ font-size: 0.9rem;
+ color: var(--science-muted);
+ line-height: 1.7;
+}
+
+/* Ingredients CTA */
+.ingredients-cta {
+ text-align: center;
+ max-width: 700px;
+ margin: 0 auto;
+ padding: var(--space-md);
+ background: rgba(156, 175, 136, 0.08);
+ border: 1px dashed var(--science-border);
+ border-radius: var(--radius-md);
+}
+.ingredients-cta p {
+ font-size: 1.1rem;
+ color: var(--science-text);
+ font-style: italic;
+}
+.ingredients-cta-note {
+ text-align: center;
+ margin-top: var(--space-sm);
+ font-size: 0.85rem;
+ color: var(--sage);
+}
+
+/* ========================================
+ SECTION 5: THIRD-PARTY TESTING
+======================================== */
+.testing-section { background: var(--cream); }
+.testing-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: var(--space-md);
+ margin-bottom: var(--space-lg);
+}
+.testing-card {
+ background: var(--white);
+ border: 1px solid var(--border);
+ border-radius: var(--radius-md);
+ padding: var(--space-md);
+ text-align: center;
+ transition: var(--transition);
+}
+.testing-card:hover {
+ border-color: var(--sage);
+ box-shadow: var(--shadow-md);
+ transform: translateY(-4px);
+}
+.testing-icon {
+ width: 64px;
+ height: 64px;
+ margin: 0 auto var(--space-sm);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: var(--forest);
+ border-radius: 50%;
+}
+.testing-icon svg { stroke: var(--sage); }
+.testing-card h3 {
+ font-family: var(--font-display);
+ font-size: 1.1rem;
+ color: var(--forest);
+ margin-bottom: 0.5rem;
+}
+.testing-card p {
+ font-size: 0.85rem;
+ color: var(--gray);
+ line-height: 1.6;
+}
+
+/* Testing CTA Banner */
+.testing-cta {
+ background: var(--forest);
+ border-radius: var(--radius-md);
+ padding: var(--space-md) var(--space-lg);
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: var(--space-md);
+}
+.testing-cta-text {
+ color: var(--cream);
+ font-family: var(--font-display);
+ font-size: 1.3rem;
+}
+.testing-cta-sub {
+ color: var(--sage);
+ font-size: 0.9rem;
+ margin-top: 0.25rem;
+}
+.testing-cta-btn {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ background: var(--sage);
+ color: var(--dark);
+ padding: 0.875rem 2rem;
+ border-radius: var(--radius-sm);
+ font-size: 0.9rem;
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ transition: var(--transition);
+ white-space: nowrap;
+}
+.testing-cta-btn:hover {
+ background: var(--cream);
+ transform: translateY(-2px);
+}
+
+/* ========================================
+ SECTION 6: FAQ ACCORDION
+======================================== */
+.faq-section { background: var(--cream); }
+.faq-container {
+ max-width: 800px;
+ margin: 0 auto;
+}
+.faq-item {
+ background: var(--white);
+ border: 1px solid var(--border);
+ border-radius: var(--radius-md);
+ margin-bottom: var(--space-xs);
+ overflow: hidden;
+ transition: var(--transition);
+}
+.faq-item:hover { border-color: var(--sage); }
+.faq-item.active { border-color: var(--sage); box-shadow: var(--shadow-sm); }
+.faq-question {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ width: 100%;
+ padding: 1.25rem 1.5rem;
+ font-size: 1.05rem;
+ font-weight: 600;
+ color: var(--forest);
+ text-align: left;
+ transition: var(--transition);
+}
+.faq-question:hover { background: rgba(156, 175, 136, 0.05); }
+.faq-icon {
+ flex-shrink: 0;
+ width: 28px;
+ height: 28px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: 50%;
+ background: var(--light-gray);
+ margin-left: var(--space-sm);
+ transition: var(--transition);
+}
+.faq-icon svg { stroke: var(--forest); transition: var(--transition); }
+.faq-item.active .faq-icon { background: var(--sage); }
+.faq-item.active .faq-icon svg { stroke: var(--dark); transform: rotate(180deg); }
+.faq-answer {
+ max-height: 0;
+ overflow: hidden;
+ transition: max-height 0.4s ease-out, padding 0.4s ease;
+}
+.faq-item.active .faq-answer {
+ max-height: 400px;
+ padding: 0 1.5rem 1.5rem;
+}
+.faq-answer p {
+ font-size: 0.95rem;
+ color: var(--gray);
+ line-height: 1.8;
+}
+
+/* ========================================
+ FOOTER
+======================================== */
+.footer {
+ background: var(--dark);
+ color: var(--cream);
+ padding-top: var(--space-xl);
+}
+
+.footer-brand .logo {
+ color: var(--cream);
+ margin-bottom: var(--space-sm);
+ display: inline-block;
+}
+.footer-brand p {
+ font-size: 0.9rem;
+ color: var(--sage);
+ line-height: 1.7;
+ margin-bottom: var(--space-sm);
+}
+.footer-heading {
+ font-family: var(--font-display);
+ font-size: 1rem;
+ color: var(--cream);
+ margin-bottom: var(--space-sm);
+ letter-spacing: 1px;
+}
+.footer-links li { margin-bottom: 0.6rem; }
+.footer-links a {
+ font-size: 0.9rem;
+ color: var(--sage);
+ transition: var(--transition);
+}
+.footer-links a:hover { color: var(--cream); padding-left: 4px; }
+.footer-contact p {
+ font-size: 0.9rem;
+ color: var(--sage);
+ margin-bottom: 0.5rem;
+}
+
+.footer-social a {
+ width: 40px;
+ height: 40px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: rgba(156, 175, 136, 0.1);
+ border-radius: 50%;
+ transition: var(--transition);
+}
+.footer-social a:hover {
+ background: var(--sage);
+ transform: translateY(-3px);
+}
+.footer-social a:hover svg { stroke: var(--dark); }
+.footer-social svg { stroke: var(--sage); }
+
+
+
+/* ========================================
+ DECORATIVE ROOT ILLUSTRATION
+======================================== */
+.root-deco {
+ position: absolute;
+ opacity: 0.06;
+ pointer-events: none;
+ z-index: 0;
+}
+.root-deco img { width: 300px; }
+
+/* ========================================
+ ANIMATIONS
+======================================== */
+@keyframes fadeInUp {
+ from { opacity: 0; transform: translateY(30px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+ opacity: 1;
+ transform: translateY(0);
+ transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+@keyframes pulse {
+ 0%, 100% { transform: scale(1); }
+ 50% { transform: scale(1.05); }
+}
+
+/* ========================================
+ RESPONSIVE DESIGN
+======================================== */
+@media (max-width: 1024px) {
+ .intro-layout { grid-template-columns: 1fr; }
+ .intro-image { max-width: 500px; margin: 2rem auto 0; }
+ .stages-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+ .ingredients-grid { grid-template-columns: 1fr; }
+ .testing-grid { grid-template-columns: repeat(2, 1fr); }
+ 
+}
+
+@media (min-width: 769px) {
+ .nav-desktop { display: flex !important; align-items: center; }
+ .menu-toggle { display: none !important; }
+}
+
+@media (max-width: 768px) {
+ :root { --container-padding: 1rem; --space-xl: 4rem; --space-lg: 2.5rem; }
+ .nav-desktop { display: none; }
+ .menu-toggle { display: flex;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;}
+ .hero { min-height: 50vh; }
+ .stats-bar { grid-template-columns: 1fr; gap: var(--space-sm); }
+ .stat-number { font-size: 2rem; }
+ .testing-grid { grid-template-columns: 1fr; }
+ .testing-cta { flex-direction: column; text-align: center; }
+ 
+ 
+
+ /* Table to Cards */
+ .compare-table-wrapper { display: none; }
+ .table-cards { display: block; }
+}
+
+@media (max-width: 480px) {
+ .hero-title { font-size: 2rem; }
+ .section-title { font-size: 1.75rem; }
+ .stage-card { padding: var(--space-sm); }
+ .ingredient-card { flex-direction: column; text-align: center; }
+ .ingredient-icon { margin: 0 auto; }
+ .faq-question { font-size: 0.95rem; padding: 1rem 1.25rem; }
+ .faq-item.active .faq-answer { padding: 0 1.25rem 1.25rem; }
+}
+
+/* ========================================
+ REDUCED MOTION
+======================================== */
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after {
+ animation-duration: 0.01ms !important;
+ animation-iteration-count: 1 !important;
+ transition-duration: 0.01ms !important;
+ scroll-behavior: auto !important;
+ }
+}
+
+/* ========================================
+ PRINT STYLES
+======================================== */
+@media print {
+ .site-header, .hero-scroll, .footer-social, .menu-toggle { display: none !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;}
+ body { font-size: 12pt; color: #000; background: #fff; }
+ .hero { min-height: auto; padding: 2rem 0; page-break-after: avoid; }
+ .section-padding, .section-padding-lg { padding: 1.5rem 0; page-break-inside: avoid; }
+ .faq-item.active .faq-answer { max-height: none; }
+}
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--forest);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 72px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover { background: rgba(255,255,255,0.1); border-color: var(--lavender); }
+
+    .footer-socials a svg { width: 16px; height: 16px; stroke: var(--cream); stroke-width: 1.5; fill: none; }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.6);
+      transition: var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--lavender); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.6875rem;
+      color: rgba(245, 240, 232, 0.35);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.4);
+    }
+
+    @media (min-width: 768px) {
+      .footer-top {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+</style>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header" id="header">
+ <div class="header-inner">
+ <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+ </a>
+ <nav class="nav-desktop" aria-label="Main navigation">
+ <ul class="nav-list">
+ <li><a href="/pages/our-story">Our Story</a></li>
+ <li><a href="/#products">Shop</a></li>
+ <li><a href="/pages/the-science">The Science</a></li>
+ <li><a href="/blogs/news">Journal</a></li>
+ <li><a href="/pages/family">Family</a></li>
+        <li><a href="faq-/pages/contact">FAQ</a></li>
+ <li><a href="/pages/contact">Contact</a></li>
+ </ul>
+ </nav>
+ <div class="header-actions">
+ <a href="{{ routes.cart_url }}" class="cart-btn" id="cartBtn" aria-label="Shopping cart with {{ cart.item_count }} items">
+ <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M6 6h15l-1.5 9h-12L6 6z"/>
+ <circle cx="9" cy="20" r="1"/>
+ <circle cx="18" cy="20" r="1"/>
+ <path d="M6 6L5 3H2"/>
+ </svg>
+ {% if cart.item_count > 0 %}<span class="cart-count" id="cartCount">{{ cart.item_count }}</span>{% endif %}
+ </a>
+ <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+ <span></span><span></span><span></span>
+ </button>
+ </div>
+ </div>
+</header>
+
+<!-- Mobile Navigation -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+ <ul class="mobile-nav-list">
+ <li><a href="/pages/our-story">Our Story</a></li>
+ <li><a href="/#products">Shop</a></li>
+ <li><a href="/pages/the-science">The Science</a></li>
+ <li><a href="/blogs/news">Journal</a></li>
+ <li><a href="/pages/family">Family</a></li>
+ <li><a href="faq-/pages/contact">FAQ</a></li>
+ <li><a href="/pages/contact">Contact</a></li>
+ </ul>
+</nav>
+
+<!-- ==================== HERO BANNER ==================== -->
+<section class="hero" aria-label="The Science of Nano-Hemp Hero">
+ <video class="hero-video wr-boomerang-video" autoplay muted playsinline preload="auto" data-playback-rate="0.5" aria-hidden="true">
+ <source src="{{ 'hero-science-lab.mp4' | asset_url }}" type="video/mp4">
+ </video>
+ <div class="hero-overlay"></div>
+ <div class="hero-content">
+ <span class="hero-label">Proprietary Technology</span>
+ <h1 class="hero-title">The Science of Nano-Hemp</h1>
+ <p class="hero-subtitle">Why smaller particles make a bigger difference.</p>
+ </div>
+ <a href="#what-is-nano-hemp" class="hero-scroll" aria-label="Scroll to content">
+ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7" /></svg>
+ </a>
+</section>
+
+<!-- ==================== MAIN ARTICLE CONTENT ==================== -->
+<main itemscope itemtype="https://schema.org/Article">
+
+<!-- ==================== SECTION 1: WHAT IS NANO-HEMP? ==================== -->
+<section id="what-is-nano-hemp" class="intro-section section-padding" aria-labelledby="nano-hemp-heading">
+ <div class="container">
+ <!-- Top row: 1st paragraph + botanical image side by side -->
+ <div class="intro-layout">
+ <div class="intro-content fade-in" itemprop="articleBody">
+ <span class="section-label">Understanding the Technology</span>
+ <h2 id="nano-hemp-heading" class="section-title">What Is Nano-Hemp?</h2>
+ <p><strong>Nano-hemp is hemp that has been processed using proprietary nano fragmentation technology</strong>, an advanced method that breaks hemp particles down to under 100 nanometers. This dramatic size reduction enables 3-8x better absorption than traditional hemp, allowing nano-particles to pass efficiently through biological membranes for faster, more effective wellness support.</p>
+ </div>
+ <div class="intro-image fade-in">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/science-intro-illustration.jpg" alt="Elegant botanical illustration showing hemp leaves with nano-particles flowing from large to nano-size" loading="lazy" style="width: 100%; display: block;">
+ <div class="intro-image-caption">Proprietary nano fragmentation reduces hemp particles to under 100nm</div>
+ </div>
+ </div>
+
+ <!-- Remaining paragraphs: full width -->
+ <div class="intro-content fade-in" style="margin-top: 2.5rem;">
+ <p>The process breaks down hemp particles to <strong>under 100 nanometers</strong> in size. To put that into perspective, a single human hair is approximately 80,000 nanometers wide. That means our nano-hemp particles are roughly 800 times smaller than the width of a human hair, small enough to pass through biological membranes with remarkable efficiency.</p>
+ <p>These nano-sized particles are small enough to be absorbed directly through the mucous membranes in your mouth and digestive tract, bypassing many of the barriers that limit traditional hemp absorption. This means dramatically better absorption, faster onset of effects, and more consistent results with every use.</p>
+
+ <!-- Bioavailability Visual -->
+ <div class="science-visual fade-in" style="margin: 2.5rem 0; max-width: 900px; margin-left: auto; margin-right: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15);">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/science-skin-barrier-v2.jpg" alt="Traditional hemp particles (~2,000nm) blocked by skin barrier vs nano-hemp particles (&lt;100nm) passing through" loading="lazy" style="width: 100%; display: block;">
+ </div>
+
+ <p>Traditional hemp products contain particles measuring between <strong>5,000 and 10,000 nanometers</strong>, far too large for efficient absorption by the human body. Because the body struggles to process these oversized particles, much of the active compounds pass through without being utilized. Our proprietary nano fragmentation technology, developed by <strong>Ivy League PhD scientists</strong>, solves this problem by reducing particle size by 50-100x.</p>
+
+ <p>The result? <strong>3-8x better bioavailability</strong> compared to traditional hemp products. More of what you take actually reaches your system, which means you need less to achieve the desired effect. It's not just more efficient, it's smarter.</p>
+
+ <div class="intro-highlight">
+ <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
+ 50-100x smaller particles than traditional hemp
+ </div>
+ </div>
+
+ <!-- Stats Bar -->
+ <div class="stats-bar fade-in">
+ <div class="stat-item">
+ <div class="stat-number">&lt;100nm</div>
+ <div class="stat-label">Particle Size</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-number">3-8x</div>
+ <div class="stat-label">Better Absorption</div>
+ </div>
+ <div class="stat-item">
+ <div class="stat-number">4</div>
+ <div class="stat-label">Clean Ingredients</div>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- ==================== SECTION 2: THREE STAGES ==================== -->
+<section id="three-stages" class="stages-section section-padding" aria-labelledby="stages-heading">
+ <div class="container">
+ <div class="section-header fade-in">
+ <span class="section-label">The Process</span>
+ <h2 id="stages-heading" class="section-title">From Plant to Nano-Particle</h2>
+ <p class="section-subtitle">Four precise stages transform premium hemp into stable, encapsulated nano-hemp with maximum bioavailability.</p>
+ </div>
+ <div class="stages-grid">
+ <!-- Stage 1 -->
+ <article class="stage-card fade-in">
+ <div class="stage-number">1</div>
+ <h3 class="stage-title">Raw Hemp</h3>
+ <p class="stage-desc">We start with premium hemp, carefully selected for quality, purity, and potency. Every batch is traced from source to finished product.</p>
+ </article>
+ <!-- Stage 2 -->
+ <article class="stage-card fade-in">
+ <div class="stage-number">2</div>
+ <h3 class="stage-title">Proprietary Nano Fragmentation</h3>
+ <p class="stage-desc">Our breakthrough technology gently breaks down hemp particles to nano-size using a proprietary process developed by Ivy League PhD scientists.</p>
+ </article>
+ <!-- Stage 3 -->
+ <article class="stage-card fade-in">
+ <div class="stage-number">3</div>
+ <h3 class="stage-title">Nano-Encapsulation</h3>
+ <p class="stage-desc">Each nano-particle is individually coated with a protective layer using our clean carrier base. This encapsulation prevents particles from reassembling into large clusters, locking them at nano-size for maximum stability and absorption.</p>
+ </article>
+ <!-- Stage 4 -->
+ <article class="stage-card fade-in">
+ <div class="stage-number">4</div>
+ <h3 class="stage-title">Stable Suspension</h3>
+ <p class="stage-desc">The result is a uniform, water-compatible suspension of individually encapsulated nano-particles that remain stable over time. No shaking, no separation, just consistent potency in every drop.</p>
+ </article>
+ </div>
+ <!-- Process Visuals -->
+ <div style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+ <div class="science-visual fade-in" style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15); margin-bottom: 1.25rem;">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nano-fragmentation-encapsulation-process.jpg" alt="Four-step process: large hemp clusters are fragmented into nano-particles, then individually encapsulated to prevent reassembly, resulting in stable nano-particles" loading="lazy" style="width: 100%; display: block;">
+ </div>
+ <div class="science-visual fade-in" style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15); margin-bottom: 1.25rem;">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nano-encapsulation-warm.jpg" alt="Without encapsulation, nano-particles reassemble into large clusters. With encapsulation, each particle stays coated and stable at nano-size." loading="lazy" style="width: 100%; display: block;">
+ </div>
+ </div>
+</section>
+
+<!-- ==================== SECTION 3: COMPARISON TABLE ==================== -->
+<section id="comparison" class="compare-section section-padding" aria-labelledby="comparison-heading">
+ <div class="container">
+ <div class="section-header fade-in">
+ <span class="section-label">By The Numbers</span>
+ <h2 id="comparison-heading" class="section-title">Why Size Matters: The Numbers</h2>
+ <p class="section-subtitle">See how nano-hemp stacks up against traditional hemp products across every key metric.</p>
+ </div>
+
+ <!-- Desktop Table -->
+ <div class="compare-table-wrapper fade-in">
+ <table class="compare-table" role="table" aria-label="Comparison of Traditional Hemp vs Nano-Hemp">
+ <thead>
+ <tr>
+ <th scope="col">Factor</th>
+ <th scope="col">Traditional Hemp</th>
+ <th scope="col">Wild Roots Nano-Hemp</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Particle Size</td>
+ <td>5,000-10,000 nm</td>
+ <td>Under 100 nm <span class="highlight">50-100x smaller</span></td>
+ </tr>
+ <tr>
+ <td>Absorption Rate</td>
+ <td>6-10%</td>
+ <td>30-80% <span class="highlight">3-8x higher</span></td>
+ </tr>
+ <tr>
+ <td>Onset Time</td>
+ <td>45-90 minutes</td>
+ <td>15-30 minutes <span class="highlight">Faster</span></td>
+ </tr>
+ <tr>
+ <td>Duration</td>
+ <td>2-4 hours</td>
+ <td>4-6 hours <span class="highlight">Longer lasting</span></td>
+ </tr>
+ <tr>
+ <td>Bioavailability</td>
+ <td>Low</td>
+ <td><strong>3-8x higher</strong></td>
+ </tr>
+ <tr>
+ <td>Ingredient Count</td>
+ <td>Often 10+</td>
+ <td><strong>Just 4</strong> <span class="highlight">Clean</span></td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+
+ <!-- Mobile Cards -->
+ <div class="table-cards fade-in" role="region" aria-label="Mobile comparison cards">
+ <div class="table-card">
+ <div class="table-card-header">Particle Size</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">5,000-10,000 nm</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">Under 100 nm</span></div>
+ </div>
+ <div class="table-card">
+ <div class="table-card-header">Absorption Rate</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">6-10%</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">30-80%</span></div>
+ </div>
+ <div class="table-card">
+ <div class="table-card-header">Onset Time</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">45-90 min</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">15-30 min</span></div>
+ </div>
+ <div class="table-card">
+ <div class="table-card-header">Duration</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">2-4 hours</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">4-6 hours</span></div>
+ </div>
+ <div class="table-card">
+ <div class="table-card-header">Bioavailability</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">Low</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">3-8x Higher</span></div>
+ </div>
+ <div class="table-card">
+ <div class="table-card-header">Ingredient Count</div>
+ <div class="table-card-row"><span class="table-card-label">Traditional</span><span class="table-card-value">10+ ingredients</span></div>
+ <div class="table-card-row"><span class="table-card-label">Wild Roots</span><span class="table-card-value" style="color:var(--sage);font-weight:700;">Just 4</span></div>
+ </div>
+ </div>
+
+ <!-- Nanometer Scale Visual -->
+ <div class="science-visual fade-in" style="margin-top: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(156,175,136,0.15);">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/science-nanometer-scale.jpg" alt="Nanometer scale comparison showing nano-hemp particles at ~60nm are smaller than skin barrier pores, enabling direct passage into the body" loading="lazy" style="width: 100%; display: block;">
+ </div>
+ <p class="science-visual-caption" style="text-align: center; color: var(--science-muted); font-size: 0.85rem; margin-top: 1rem; font-style: italic;">At ~60nm, our nano-hemp particles are smaller than skin barrier pores (55-100nm), enabling direct passage into the body.</p>
+ </div>
+</section>
+
+<!-- ==================== SECTION 4: FOUR INGREDIENTS ==================== -->
+<section id="ingredients" class="ingredients-section section-padding" aria-labelledby="ingredients-heading">
+ <div class="container">
+ <div class="section-header fade-in">
+ <span class="section-label">Transparency</span>
+ <h2 id="ingredients-heading" class="section-title">Just Four Ingredients. Nothing Hidden.</h2>
+ <p class="section-subtitle">Every ingredient serves a purpose. No fillers, no artificial flavors, no preservatives.</p>
+ </div>
+
+ <div class="ingredients-grid">
+ <!-- Ingredient 1 -->
+ <article class="ingredient-card fade-in">
+ <div class="ingredient-icon" aria-hidden="true">
+ <svg viewBox="0 0 32 32"><path d="M16 26V10"/><path d="M16 17c-5.2 0-8.5-2.7-10-7 5.2-.5 8.7 1.8 10 7Z"/><path d="M16 12c4.1 0 7-2.1 8.8-6 2.5 4.7-.1 8.3-8.8 10"/><path d="M16 22c-3.4 0-5.8-1.6-7.1-4.6 3.7-.3 6 1.2 7.1 4.6Z"/></svg>
+ </div>
+ <div class="ingredient-info">
+ <h3>Nano-Hemp</h3>
+ <p>Our star ingredient. Premium hemp processed with proprietary nano fragmentation technology for maximum absorption and bioavailability.</p>
+ </div>
+ </article>
+ <!-- Ingredient 2 -->
+ <article class="ingredient-card fade-in">
+ <div class="ingredient-icon" aria-hidden="true">
+ <svg viewBox="0 0 32 32"><circle cx="9" cy="16" r="3.5"/><circle cx="23" cy="9" r="3.5"/><circle cx="23" cy="23" r="3.5"/><path d="m12.3 14.8 7.4-4.5M12.3 17.2l7.4 4.5"/><path d="M9 12.5V8m0 16v-4.5"/></svg>
+ </div>
+ <div class="ingredient-info">
+ <h3>Propylene Glycol</h3>
+ <p>A plant-derived compound that helps carry nano-particles and ensures consistent dispersion throughout every drop.</p>
+ </div>
+ </article>
+ <!-- Ingredient 3 -->
+ <article class="ingredient-card fade-in">
+ <div class="ingredient-icon" aria-hidden="true">
+ <svg viewBox="0 0 32 32"><path d="M8 25c8.3-.8 14-6 17-17-10.6.4-17.1 6.2-17 17Z"/><path d="M8 25c4.2-4.8 8.4-8.2 13-10.3"/><path d="M18 24c2.1 0 4 .7 5.5 2"/></svg>
+ </div>
+ <div class="ingredient-info">
+ <h3>Vegetable Glycerin</h3>
+ <p>A natural, plant-based sweetener and carrier that gives our tinctures their smooth, pleasant texture.</p>
+ </div>
+ </article>
+ <!-- Ingredient 4 -->
+ <article class="ingredient-card fade-in">
+ <div class="ingredient-icon" aria-hidden="true">
+ <svg viewBox="0 0 32 32"><path d="M16 5S8.5 14.1 8.5 20a7.5 7.5 0 0 0 15 0C23.5 14.1 16 5 16 5Z"/><path d="M12.5 21.5a4 4 0 0 0 3.5 2"/></svg>
+ </div>
+ <div class="ingredient-info">
+ <h3>Distilled Water</h3>
+ <p>Pure, clean water. No additives, no contaminants, just the highest quality H&#8322;O as a clean base.</p>
+ </div>
+ </article>
+ </div>
+
+ <div class="ingredients-cta fade-in">
+ <p>"Most hemp products contain 10+ ingredients with fillers, artificial flavors, and preservatives you can't pronounce. We chose simplicity because clean ingredients and advanced technology speak for themselves."</p>
+ </div>
+ <p class="ingredients-cta-note fade-in">
+ <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+ <strong>Note:</strong> Our Deep Rest Evening Formula also contains CBN Isolate, the only exception to our four-ingredient standard, specifically chosen to support restful sleep.
+ </p>
+ </div>
+</section>
+
+<!-- ==================== SECTION 5: THIRD-PARTY TESTING ==================== -->
+<section id="testing" class="testing-section section-padding" aria-labelledby="testing-heading">
+ <div class="container">
+ <div class="section-header fade-in">
+ <span class="section-label">Quality Assurance</span>
+ <h2 id="testing-heading" class="section-title">Verified. Tested. Trusted.</h2>
+ <p class="section-subtitle">Every batch undergoes rigorous independent testing. No exceptions, no shortcuts.</p>
+ </div>
+
+ <div class="testing-grid">
+ <!-- Test 1 -->
+ <article class="testing-card fade-in">
+ <div class="testing-icon" aria-hidden="true">
+ <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>
+ </div>
+ <h3>Potency Verification</h3>
+ <p>Independent labs confirm the exact concentration of hemp compounds in every batch.</p>
+ </article>
+ <!-- Test 2 -->
+ <article class="testing-card fade-in">
+ <div class="testing-icon" aria-hidden="true">
+ <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+ </div>
+ <h3>Purity Screening</h3>
+ <p>Comprehensive screening ensures every product is free from contaminants and unwanted compounds.</p>
+ </article>
+ <!-- Test 3 -->
+ <article class="testing-card fade-in">
+ <div class="testing-icon" aria-hidden="true">
+ <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" /></svg>
+ </div>
+ <h3>Heavy Metals</h3>
+ <p>Rigorous testing for lead, arsenic, mercury, and cadmium at parts-per-billion sensitivity.</p>
+ </article>
+ <!-- Test 4 -->
+ <article class="testing-card fade-in">
+ <div class="testing-icon" aria-hidden="true">
+ <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+ </div>
+ <h3>Pesticides & Microbials</h3>
+ <p>Full screening for pesticide residues, mold, bacteria, and other microbial contaminants.</p>
+ </article>
+ </div>
+
+ <div class="testing-cta fade-in">
+ <div>
+ <div class="testing-cta-text">We publish our results.</div>
+ <div class="testing-cta-sub">Because families deserve transparency. View Certificates of Analysis.</div>
+ </div>
+ <a href="/pages/contact" class="testing-cta-btn">Request COA<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>
+ </div>
+ </div>
+</section>
+
+<!-- ==================== SECTION 6: FAQ ==================== -->
+<section id="faq-science" class="faq-section section-padding" aria-labelledby="faq-heading">
+ <div class="container">
+ <div class="section-header fade-in">
+ <span class="section-label">Common Questions</span>
+ <h2 id="faq-heading" class="section-title">Science FAQ</h2>
+ <p class="section-subtitle">Everything you wanted to know about nano-hemp technology.</p>
+ </div>
+
+ <div class="faq-container">
+ <!-- FAQ 1 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>How does nano-technology improve absorption?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>Nano-technology reduces hemp particle size to under 100 nanometers, allowing them to pass efficiently through biological membranes in the mouth and digestive tract. Traditional hemp particles measure 5,000-10,000nm, too large for efficient absorption. Our nano-hemp achieves 30-80% absorption rates compared to just 6-10% for traditional products, meaning your body actually uses more of what you take.</p>
+ </div>
+ </article>
+ <!-- FAQ 2 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>What does "proprietary nano fragmentation" mean?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>Proprietary nano fragmentation is our breakthrough technology, developed by Ivy League PhD scientists at a powerful West Coast biotech company, that gently breaks down hemp particles to nano-size. This proprietary process is exclusive to our products and represents a significant advancement in hemp delivery technology, achieving particle sizes under 100nm without compromising compound integrity.</p>
+ </div>
+ </article>
+ <!-- FAQ 3 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>Are your products third-party tested?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>Yes, every batch is independently lab tested for potency verification, purity screening, heavy metals, pesticides, and microbial contaminants. We manufacture in a GMP-certified facility and publish Certificates of Analysis (COAs) because we believe families deserve complete transparency about what they're putting in their bodies.</p>
+ </div>
+ </article>
+ <!-- FAQ 4 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>Why only four ingredients?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>We believe simplicity equals quality. Most hemp products contain 10+ ingredients with fillers, artificial flavors, and preservatives you can't pronounce. We chose four clean ingredients, Nano-Hemp, Propylene Glycol, Vegetable Glycerin, and Distilled Water, because our nano-fragmentation technology is so effective that nothing else is needed. Every ingredient serves a clear purpose.</p>
+ </div>
+ </article>
+ <!-- FAQ 5 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>What is CBN and why is it in the Deep Rest formula?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>CBN (cannabinol) is a hemp-derived compound known for its calming and sleep-supporting properties. Our Deep Rest Evening Formula is our only product that includes CBN Isolate, specifically chosen to support evening relaxation and restful sleep. It's the single exception to our four-ingredient standard, included because it meaningfully enhances the formula's purpose.</p>
+ </div>
+ </article>
+ <!-- FAQ 6 -->
+ <article class="faq-item fade-in">
+ <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+ <span>How should I store nano-hemp products?</span>
+ <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></span>
+ </button>
+ <div class="faq-answer">
+ <p>Store in a cool, dry place away from direct sunlight. Avoid extreme heat or freezing temperatures. The nano-encapsulation helps maintain stability, but proper storage ensures maximum potency throughout the product's shelf life. Always check the expiration date on your bottle.</p>
+ </div>
+ </article>
+ </div>
+ </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+{% render 'wr-site-footer' %}
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+
+// ============================================
+// Mobile Menu Toggle (Firefox Mobile Compatible)
+// ============================================
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-list a');
+
+function toggleMobileMenu() {
+  menuToggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  var isOpen = mobileNav.classList.contains('active');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function handleMenuTouch(e) {
+  e.preventDefault();
+  toggleMobileMenu();
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('touchstart', handleMenuTouch, {passive: false});
+  menuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+mobileNavLinks.forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (mobileNav.classList.contains('active')) toggleMobileMenu();
+  });
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+window.addEventListener('resize', function() {
+  if (window.innerWidth >= 768 && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+// ============================================
+// SCROLL REVEAL (fade-in elements)
+// ============================================
+const fadeElements = document.querySelectorAll('.fade-in');
+
+if ('IntersectionObserver' in window) {
+  const fadeObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -50px 0px',
+    threshold: 0.1
+  });
+  fadeElements.forEach(function(el) { fadeObserver.observe(el); });
+} else {
+  fadeElements.forEach(function(el) { el.classList.add('visible'); });
+}
+
+// ============================================
+// SMOOTH SCROLL FOR ANCHOR LINKS
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    var targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    var targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      e.preventDefault();
+      var headerHeight = document.getElementById('header').offsetHeight;
+      var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    }
+  });
+});
+
+</script>
+
+<!-- Hero Video Boomerang -->
+<script>
+(function() {
+  var video = document.querySelector('.hero-video-legacy-disabled');
+  if (!video) return;
+  video.playbackRate = 0.5;
+  var forward = true;
+  var lastTime = 0;
+  var PAD = 0.06;
+
+  function playForward() {
+    forward = true;
+    lastTime = 0;
+    video.play().catch(function(){});
+  }
+
+  function seekLoop(timestamp) {
+    if (forward) return;
+    if (!lastTime) lastTime = timestamp;
+    var elapsed = (timestamp - lastTime) / 2000;
+    lastTime = timestamp;
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(seekLoop); return; }
+    video.currentTime = Math.max(video.currentTime - elapsed, PAD);
+    if (video.currentTime <= PAD) {
+      playForward();
+    } else {
+      requestAnimationFrame(seekLoop);
+    }
+  }
+
+  function monitor() {
+    if (!forward) { requestAnimationFrame(monitor); return; }
+    var duration = video.duration;
+    if (!duration || isNaN(duration)) { requestAnimationFrame(monitor); return; }
+    if (video.currentTime >= duration - PAD) {
+      forward = false;
+      lastTime = 0;
+      video.pause();
+      requestAnimationFrame(seekLoop);
+    } else {
+      requestAnimationFrame(monitor);
+    }
+  }
+
+  function start() {
+    video.play().then(function(){ requestAnimationFrame(monitor); }).catch(function(){ requestAnimationFrame(monitor); });
+  }
+
+  if (video.readyState >= 1) {
+    start();
+  } else {
+    video.addEventListener('loadedmetadata', start);
+  }
+
+  // ============================================
+  // FAQ Accordion Toggle
+  // ============================================
+  window.toggleFaq = function(btn) {
+    var item = btn.closest('.faq-item');
+    var isOpen = item.classList.contains('active');
+    // Close all other items
+    document.querySelectorAll('.faq-item.active').forEach(function(openItem) {
+      openItem.classList.remove('active');
+      openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Toggle current item
+    if (!isOpen) {
+      item.classList.add('active');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  };
+})();
+</script>
+
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}

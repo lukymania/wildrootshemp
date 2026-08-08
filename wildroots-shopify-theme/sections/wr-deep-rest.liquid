@@ -1,0 +1,2591 @@
+<style>
+    /* ============================================
+       CSS VARIABLES & RESET
+    ============================================ */
+    :root {
+  --header-height: 80px;
+      --max-width: 1280px;
+      --deep-forest: #1a3a2f;
+      --forest: #1a3a2f;
+      --terra-cotta: #c17c5b;
+      --sage-mist: #8b9a7d;
+      --raw-umber: #8a8278;
+      --light-sage: #e5e8e0;
+      --font-headline: 'Cormorant Garamond', Georgia, serif;
+      --font-accent: 'Playfair Display', Georgia, serif;
+      --forest-deep: #0f241c;
+      --forest-light: #2d5a48;
+      --sage: #a8b5a0;
+      --cream: #f5f0e8;
+      --linen: #faf8f3;
+      --warm-white: #fdfcf9;
+      --charcoal: #2c2c2c;
+      --charcoal-light: #4a4a4a;
+      --stone: #8a8278;
+      --border: #e5e0d8;
+      --border-light: #f0ece5;
+      --lavender: #b8a9c9;
+      --lavender-light: #e8e0f0;
+      --lavender-deep: #8b7aa0;
+      --evening-accent: #9b8db0;
+      --gold: #c9a84c;
+      --gold-light: #e0c97a;
+      --glow: rgba(155, 141, 176, 0.08);
+      --transition: 0.3s ease;
+      --shadow: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.08);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--warm-white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { text-decoration: none; color: inherit; }
+
+    ul { list-style: none; }
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background-color: var(--cream);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+  transition: var(--transition);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 68px;
+  width: auto;
+  display: block;
+}
+
+.nav-desktop {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav-list a {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--dark-brown);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-list a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--terra-cotta);
+  transition: width 0.3s ease;
+}
+
+.nav-list a:hover::after {
+  width: 100%;
+}
+
+.nav-list a:hover {
+  color: var(--terra-cotta);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cart-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.cart-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--deep-forest);
+  transition: stroke 0.3s ease;
+}
+
+.cart-btn:hover svg {
+  stroke: var(--terra-cotta);
+}
+
+.cart-count {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  background-color: var(--terra-cotta);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--deep-forest);
+  transition: var(--transition);
+  transform-origin: center;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--cream);
+  z-index: 999;
+  padding: 2rem;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+}
+
+.mobile-nav.active {
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-nav-list a {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--deep-forest);
+  display: block;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--light-sage);
+}
+
+.mobile-nav-list a:hover {
+  color: var(--terra-cotta);
+}
+
+/* ============================================
+       HERO SECTION
+    ============================================ */
+    .product-hero {
+      padding-top: 64px;
+      min-height: 100vh;
+      background: var(--warm-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, var(--lavender-light) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--glow) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 40px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* Hero Left: Product Image */
+    .hero-image-col {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .hero-product-img {
+      width: 100%;
+      height: 400px;
+      object-fit: contain;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image-wrapper:hover .hero-product-img { transform: scale(1.02); }
+
+    .hero-image-badge {
+      position: absolute;
+      top: 20px; left: -12px;
+      background: var(--evening-accent);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 0 8px 8px 0;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 4px 12px rgba(155, 141, 176, 0.3);
+    }
+
+    /* Hero Right: Details */
+    .hero-details {
+      padding-left: 20px;
+    }
+
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 0.75rem;
+      color: var(--stone);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-breadcrumb a { color: var(--stone); transition: var(--transition); }
+    .hero-breadcrumb a:hover { color: var(--forest); }
+
+    .hero-breadcrumb .sep { opacity: 0.4; }
+
+    .hero-product-name {
+      font-family: var(--font-display);
+      font-size: 3.25rem;
+      font-weight: 600;
+      color: var(--forest);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-product-subtitle {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--evening-accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .hero-stars {
+      display: flex;
+      gap: 2px;
+    }
+
+    .hero-stars svg { width: 16px; height: 16px; fill: var(--gold); }
+
+    .hero-rating-text {
+      font-size: 0.8125rem;
+      color: var(--stone);
+    }
+
+    .hero-rating-text strong { color: var(--charcoal); font-weight: 500; }
+
+    .hero-price {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 6px;
+    }
+
+    .hero-price-note {
+      font-size: 0.8125rem;
+      color: var(--stone);
+      margin-bottom: 32px;
+    }
+
+    /* Specs */
+    .hero-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .spec-item {
+      background: var(--linen);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .spec-icon {
+      width: 28px; height: 28px;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spec-icon svg { width: 100%; height: 100%; stroke: var(--evening-accent); stroke-width: 1.5; fill: none; }
+
+    .spec-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--charcoal-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .spec-value {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--stone);
+      margin-top: 2px;
+    }
+
+    /* Quantity & Add to Cart */
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .qty-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .qty-btn {
+      width: 44px;
+      height: 52px;
+      background: none;
+      border: none;
+      font-size: 1.125rem;
+      color: var(--charcoal);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .qty-btn:hover { background: var(--cream); }
+
+    .qty-input {
+      width: 50px;
+      height: 52px;
+      border: none;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      -moz-appearance: textfield;
+    }
+
+    .qty-input::-webkit-inner-spin-button,
+    .qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .btn-primary {
+      flex: 1;
+      height: 52px;
+      background: var(--forest);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--forest-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(26, 58, 47, 0.25);
+    }
+
+    .hero-disclaimer {
+      font-size: 0.6875rem;
+      color: var(--stone);
+      line-height: 1.5;
+    }
+
+    .hero-disclaimer a { color: var(--evening-accent); text-decoration: underline; }
+
+    /* ============================================
+       SECTION: HOW IT WORKS
+    ============================================ */
+    .how-it-works {
+      padding: 100px 0;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--evening-accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 600;
+      color: var(--forest);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1.0625rem;
+      color: var(--stone);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .how-step {
+      text-align: center;
+      padding: 40px 32px;
+      background: var(--warm-white);
+      border-radius: 16px;
+      border: 1px solid var(--border-light);
+      transition: var(--transition);
+    }
+
+    .how-step:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .how-step-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      background: var(--lavender-light);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .how-step-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--evening-accent);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .how-step-title {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 12px;
+    }
+
+    .how-step-text {
+      font-size: 0.9375rem;
+      color: var(--stone);
+      line-height: 1.65;
+    }
+
+    /* Connection arrows between steps */
+    .how-steps { position: relative; }
+
+    .step-connector {
+      position: absolute;
+      top: 72px;
+      left: 33.33%;
+      width: 33.33%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--lavender-light), var(--evening-accent), var(--lavender-light));
+      opacity: 0.3;
+      z-index: 0;
+    }
+    .how-step { position: relative; z-index: 1; }
+
+    /* ============================================
+       SECTION: KEY FEATURES
+    ============================================ */
+    .key-features {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      padding: 36px 28px;
+      background: var(--linen);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      background: var(--warm-white);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      background: var(--lavender-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--evening-accent);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       SECTION: INGREDIENTS
+    ============================================ */
+    .ingredients {
+      padding: 100px 0;
+      background: var(--cream);
+    }
+
+    .ingredients-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .ingredients-image-col {
+      position: relative;
+    }
+
+    .ingredients-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .ingredients-content h2 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .ingredients-content .lead {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.125rem;
+      color: var(--evening-accent);
+      margin-bottom: 24px;
+    }
+
+    .ingredients-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .ingredient-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--warm-white);
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+    }
+
+    .ingredient-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--evening-accent);
+      flex-shrink: 0;
+    }
+
+    .ingredient-dot.highlight {
+      background: var(--evening-accent);
+      box-shadow: 0 0 0 4px var(--lavender-light);
+    }
+
+    .ingredient-name {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .ingredient-note {
+      font-size: 0.8125rem;
+      color: var(--stone);
+    }
+
+    .cbn-highlight {
+      background: linear-gradient(135deg, var(--lavender-light), rgba(155, 141, 176, 0.12));
+      border: 1px solid var(--lavender);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 8px;
+    }
+
+    .cbn-highlight-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--evening-accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .cbn-highlight-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .cbn-highlight-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+
+    .cbn-highlight-text {
+      font-size: 0.9375rem;
+      color: var(--charcoal-light);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       SECTION: HOW TO USE
+    ============================================ */
+    .how-to-use {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+
+    .usage-with-image {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: stretch;
+      max-width: 1200px;
+      margin: 48px auto 0;
+    }
+
+    .usage-image {
+      flex: 0 0 380px;
+      max-width: 380px;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    .usage-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: block;
+    }
+
+    .usage-steps-col {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: space-between;
+    }
+
+    .usage-steps-col .step-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 20px 24px;
+      background: var(--linen);
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      text-align: left;
+      flex: 1 1 0;
+      min-height: 0;
+    }
+
+    .usage-steps-col .step-row .use-step-num {
+      margin: 0;
+      flex-shrink: 0;
+      position: static;
+      transform: none;
+      width: 44px;
+      height: 44px;
+      font-size: 1.05rem;
+    }
+
+    .usage-steps-col .step-row .step-text h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--deep-forest);
+      margin: 0 0 4px 0;
+    }
+
+    .usage-steps-col .step-row .step-text p {
+      font-size: 0.875rem;
+      color: rgba(61, 43, 31, 0.75);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .use-step:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .use-step-num {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: var(--evening-accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(155, 141, 176, 0.3);
+    }
+
+    .use-step-icon {
+      width: 52px;
+      height: 52px;
+      margin: 8px auto 16px;
+      background: var(--lavender-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .use-step-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--evening-accent);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .use-step-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+
+    .use-step-desc {
+      font-size: 0.8125rem;
+      color: var(--stone);
+      line-height: 1.55;
+    }
+
+    /* ============================================
+       SECTION: NANO-HEMP DIFFERENCE
+    ============================================ */
+    .nano-difference {
+      padding: 100px 0;
+      background: linear-gradient(180deg, var(--forest-deep) 0%, var(--forest) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nano-difference::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 30% 50%, rgba(155, 141, 176, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .nano-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nano-difference .section-eyebrow { color: var(--lavender); }
+    .nano-difference .section-title { color: var(--cream); }
+    .nano-difference .section-desc { color: rgba(245, 240, 232, 0.7); }
+
+    .nano-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 48px;
+    }
+
+    .nano-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .nano-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .nano-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .nano-card.active {
+      border-color: var(--evening-accent);
+      background: rgba(155, 141, 176, 0.1);
+    }
+
+    .nano-card-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(245, 240, 232, 0.6);
+      margin-bottom: 12px;
+    }
+
+    .nano-card.active .nano-card-label { color: var(--lavender); }
+
+    .nano-card-time {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .nano-card-desc {
+      font-size: 0.8125rem;
+      color: rgba(245, 240, 232, 0.5);
+    }
+
+    .nano-card.active .nano-card-desc { color: rgba(245, 240, 232, 0.7); }
+
+    .nano-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+
+    .nano-text p {
+      font-size: 1rem;
+      color: rgba(245, 240, 232, 0.7);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .nano-text ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .nano-text ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9375rem;
+      color: rgba(245, 240, 232, 0.75);
+    }
+
+    .nano-text ul li svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--lavender);
+      stroke-width: 2;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       SECTION: PRODUCT FAQ
+    ============================================ */
+    .product-faq {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 48px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--linen);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--forest);
+      text-align: left;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover { color: var(--evening-accent); }
+
+    .faq-question svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--evening-accent);
+      stroke-width: 2;
+      flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+
+    .faq-item.open .faq-question svg { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding: 0 24px 20px;
+    }
+
+    .faq-answer p {
+      font-size: 0.9375rem;
+      color: var(--charcoal-light);
+      line-height: 1.65;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .site-footer {
+      background: var(--forest-deep);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 72px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+        .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover { background: rgba(255,255,255,0.1); border-color: var(--lavender); }
+
+    .footer-socials a svg { width: 16px; height: 16px; stroke: var(--cream); stroke-width: 1.5; fill: none; }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.6);
+      transition: var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--lavender); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.6875rem;
+      color: rgba(245, 240, 232, 0.35);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.4);
+    }
+
+    /* ============================================
+       STICKY ADD TO CART BAR
+    ============================================ */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(253, 252, 249, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-light);
+      padding: 12px 0;
+      z-index: 900;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+
+    .sticky-bar.visible { transform: translateY(0); }
+
+    .sticky-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sticky-product {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .sticky-product img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--linen);
+    }
+
+    .sticky-product-info h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .sticky-product-info span {
+      font-size: 0.75rem;
+      color: var(--stone);
+    }
+
+    .sticky-actions { display: flex; align-items: center; gap: 16px; }
+
+    .sticky-price {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .sticky-btn {
+      padding: 12px 32px;
+      background: var(--forest);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .sticky-btn:hover { background: var(--forest-light); }
+
+    /* ============================================
+       CART DRAWER
+    ============================================ */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 1100;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 420px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--warm-white);
+      z-index: 1101;
+      transform: translate3d(100%, 0, 0);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open { transform: translate3d(0, 0, 0); }
+
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .cart-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .cart-close svg { width: 20px; height: 20px; stroke: var(--charcoal); stroke-width: 2; }
+
+    .cart-items { flex: 1; overflow-y: auto; padding: 24px; }
+
+    .cart-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--stone);
+    }
+
+    .cart-empty svg { width: 56px; height: 56px; stroke: var(--border); stroke-width: 1; margin: 0 auto 16px; }
+
+    .cart-empty p { font-size: 1rem; }
+
+    .cart-footer {
+      padding: 24px;
+      border-top: 1px solid var(--border-light);
+      background: var(--linen);
+    }
+
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .cart-subtotal span:last-child {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .cart-note {
+      font-size: 0.6875rem;
+      color: var(--stone);
+      margin-bottom: 16px;
+    }
+
+    .cart-checkout-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--forest);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .cart-checkout-btn:hover { background: var(--forest-light); }
+
+    /* Cart Item */
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .cart-item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--linen);
+      border: 1px solid var(--border-light);
+    }
+
+    .cart-item-details { flex: 1; }
+
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 2px;
+    }
+
+    .cart-item-variant {
+      font-size: 0.75rem;
+      color: var(--stone);
+      margin-bottom: 8px;
+    }
+
+    .cart-item-qty-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-item-qty button {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-qty span {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    .cart-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      align-self: flex-start;
+    }
+
+    .cart-item-remove svg { width: 14px; height: 14px; stroke: var(--stone); stroke-width: 1.5; }
+
+    /* ============================================
+       TOAST NOTIFICATION
+    ============================================ */
+    .toast {
+      position: fixed;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--forest);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 32px rgba(26, 58, 47, 0.3);
+      white-space: nowrap;
+    }
+
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .hero-inner { gap: 40px; }
+      .hero-product-name { font-size: 2.75rem; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .mobile-menu-btn { display: block; }
+      .header-inner { padding: 0 20px; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 40px 20px 60px;
+        text-align: center;
+      }
+      .hero-image-col { order: -1; }
+      .hero-image-wrapper { max-width: 320px; }
+      .hero-details { padding-left: 0; }
+      .hero-product-name { font-size: 2.5rem; }
+      .hero-specs { max-width: 400px; margin: 0 auto 32px; }
+      .hero-actions { max-width: 400px; margin: 0 auto 20px; }
+      .hero-rating { justify-content: center; }
+
+      .how-steps { grid-template-columns: 1fr; }
+      .step-connector { display: none; }
+
+      .features-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      .ingredients-layout { grid-template-columns: 1fr; }
+      .ingredients-image-col { order: -1; }
+
+      .use-steps { grid-template-columns: 1fr 1fr; }
+
+      .nano-content { grid-template-columns: 1fr; }
+
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .section-inner { padding: 0 20px; }
+      .section-title { font-size: 2.25rem; }
+
+      .sticky-inner { padding: 0 20px; }
+      .sticky-product { display: none; }
+      .sticky-actions { width: 100%; justify-content: space-between; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-product-name { font-size: 2rem; }
+      .hero-price { font-size: 2rem; }
+      .section-title { font-size: 1.875rem; }
+      .use-steps { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-specs { grid-template-columns: 1fr; }
+      .nano-comparison { grid-template-columns: 1fr; }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .product-hero-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .product-hero {
+    padding: 5rem 0;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .nano-difference-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .ingredients-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================
+   UNIFIED PRODUCT CHECKOUT
+   ============================================ */
+.product-checkout { margin-top: var(--header-height); background: linear-gradient(135deg, var(--cream) 0%, rgba(156,175,136,0.15) 100%); padding: 4rem 0; min-height: calc(100vh - var(--header-height)); display: flex; align-items: center; }
+.checkout-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.checkout-image-wrap { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.checkout-image-main { max-width: 400px; width: 100%; filter: drop-shadow(0 20px 40px rgba(45,74,62,0.2)); transition: transform 0.5s ease; }
+.checkout-image-main:hover { transform: scale(1.03); }
+.checkout-content { display: flex; flex-direction: column; gap: 1rem; }
+.checkout-category { display: inline-flex; align-items: center; gap: 8px; }
+.checkout-category svg { width: 16px; height: 16px; flex-shrink: 0; }
+.checkout-category { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-accent); font-style: italic; font-size: 1rem; color: var(--terra-cotta); }
+.checkout-title { font-family: var(--font-headline); font-weight: 900; font-size: clamp(2rem,4vw,3rem); color: var(--deep-forest); line-height: 1.1; margin: 0; }
+.checkout-subtitle { font-family: var(--font-body); font-weight: 300; font-size: 1.15rem; color: var(--sage-mist); margin-top: -0.25rem; }
+    .nano-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(156,175,136,0.15) 0%, rgba(45,74,62,0.08) 100%);
+      border: 1.5px solid rgba(156,175,136,0.4);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--deep-forest);
+      margin-bottom: 14px;
+    }
+    .nano-badge svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+.checkout-rating { display: flex; align-items: center; gap: 10px; }
+.checkout-stars { display: flex; gap: 2px; }
+.checkout-stars svg { width: 18px; height: 18px; fill: #D4A843; }
+.checkout-rating-text { font-size: 0.85rem; color: var(--raw-umber); }
+.checkout-rating-text strong { color: var(--deep-forest); }
+.checkout-price-wrap { display: flex; align-items: baseline; gap: 16px; margin: 0.5rem 0; }
+.checkout-price { font-family: var(--font-headline); font-size: 2.5rem; font-weight: 700; color: var(--deep-forest); letter-spacing: -0.02em; }
+.checkout-price-note { font-size: 0.85rem; color: var(--raw-umber); }
+.checkout-specs { display: flex; gap: 24px; margin: 0.5rem 0; }
+.checkout-spec { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.checkout-spec-value { font-family: var(--font-headline); font-size: 1.3rem; font-weight: 700; color: var(--deep-forest); }
+.checkout-spec-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--raw-umber); }
+.checkout-spec-divider { width: 1px; background: var(--light-sage); align-self: stretch; min-height: 40px; }
+.checkout-actions { display: flex; align-items: center; gap: 16px; margin: 0.75rem 0; flex-wrap: wrap; }
+.quantity-selector { display: flex; align-items: center; border: 1px solid var(--light-sage); border-radius: 8px; overflow: hidden; background: #fff; }
+.qty-btn { width: 44px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 500; color: var(--raw-umber); transition: all 0.2s; background: transparent; border: none; cursor: pointer; }
+.qty-btn:hover { background: var(--cream); color: var(--deep-forest); }
+.qty-value { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; border-left: 1px solid var(--light-sage); border-right: 1px solid var(--light-sage); }
+.btn-add-cart { flex: 1; height: 52px; min-width: 200px; background: linear-gradient(135deg, var(--sage-mist) 0%, #7A8F6A 100%); color: #fff; font-family: var(--font-body); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(122,143,106,0.3); border: none; cursor: pointer; }
+.btn-add-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(122,143,106,0.4); }
+.btn-add-cart svg { width: 18px; height: 18px; flex-shrink: 0; }
+.checkout-guarantee { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--raw-umber); }
+.checkout-guarantee svg { width: 16px; height: 16px; stroke: var(--sage-mist); stroke-width: 2; fill: none; }
+.checkout-payment-icons { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--light-sage); }
+.checkout-payment-icons span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--raw-umber); }
+@media (max-width: 768px) { .checkout-inner { grid-template-columns: 1fr; gap: 2rem; } .checkout-price { font-size: 2rem; } .checkout-actions { justify-content: center; } }
+
+/* ============================================
+   FAMILY SECTION
+   ============================================ */
+.family-section { padding: 100px 0; background: linear-gradient(180deg, var(--forest-deep) 0%, var(--forest) 100%); position: relative; overflow: hidden; }
+.family-section::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 70% 30%, rgba(155, 141, 176, 0.1) 0%, transparent 50%); pointer-events: none; }
+.family-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+.family-header { text-align: center; margin-bottom: 60px; }
+.family-eyebrow { font-family: var(--font-body); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--lavender); margin-bottom: 12px; }
+.family-title { font-family: var(--font-display); font-size: 2.75rem; font-weight: 600; color: var(--cream); line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 16px; }
+.family-desc { font-size: 1.0625rem; color: rgba(245, 240, 232, 0.7); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+.family-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 800px; margin: 0 auto; }
+.family-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px 32px; text-align: center; transition: var(--transition); text-decoration: none; color: inherit; display: block; }
+.family-card:hover { background: rgba(155, 141, 176, 0.12); border-color: var(--evening-accent); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+.family-card-icon { width: 64px; height: 64px; margin: 0 auto 24px; background: var(--lavender-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+.family-card-icon svg { width: 28px; height: 28px; stroke: var(--evening-accent); stroke-width: 1.5; fill: none; }
+.family-card-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--cream); margin-bottom: 12px; }
+.family-card-text { font-size: 0.9375rem; color: rgba(245, 240, 232, 0.7); line-height: 1.65; }
+.family-card-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; font-size: 0.8125rem; font-weight: 600; color: var(--lavender); text-transform: uppercase; letter-spacing: 0.08em; transition: var(--transition); }
+.family-card:hover .family-card-cta { color: var(--gold-light); }
+.family-card-cta svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+.family-message { text-align: center; margin-top: 48px; font-family: var(--font-serif); font-style: italic; font-size: 1.125rem; color: rgba(245, 240, 232, 0.5); }
+@media (max-width: 768px) { .family-grid { grid-template-columns: 1fr; max-width: 400px; } .family-title { font-size: 2.25rem; } }
+
+    .product-gallery { margin-top: 2.5rem; }
+    .gallery-label { font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; color: var(--raw-umber); margin-bottom: 0.75rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .gallery-grid img { width: 100%; border-radius: 8px; object-fit: cover; aspect-ratio: 4/3; transition: transform 0.3s ease; cursor: pointer; }
+    .gallery-grid img:hover { transform: scale(1.03); }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; } }
+
+/* Product Thumbnail Gallery */
+.product-thumbnails {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.product-thumbnails .thumb {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  background: var(--cream);
+  padding: 2px;
+}
+.product-thumbnails .thumb:hover,
+.product-thumbnails .thumb.active {
+  border-color: var(--terra-cotta);
+  opacity: 1;
+  transform: scale(1.05);
+}
+@media (max-width: 768px) {
+  .usage-with-image {
+    flex-direction: column;
+  }
+  .usage-image {
+    flex: 0 0 auto;
+    max-width: 300px;
+  }
+  .usage-steps-col .step-row {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  .product-thumbnails .thumb {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* ===================== RELATED PRODUCTS ===================== */
+.related-products {
+  padding: 100px 0;
+  background: #ffffff;
+}
+.related-products .section-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 56px;
+  text-align: center;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.related-card {
+  background: #faf8f5;
+  border-radius: 12px;
+  border: 1px solid rgba(44,44,44,0.1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: block;
+}
+.related-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  border-color: rgba(44,44,44,0.2);
+}
+.related-card-img {
+  height: 220px;
+  background: #f5f2ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.related-card-img img {
+  max-height: 180px;
+  width: auto;
+  transition: transform 0.5s ease;
+}
+.related-card:hover .related-card-img img { transform: scale(1.05); }
+.related-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.related-card-badge.rollon { background: #C17A5F; color: #fff; }
+.related-card-badge.spray { background: #9CAF88; color: #fff; }
+.related-card-badge.strength { background: #2D4A3E; color: #fff; }
+.related-card-badge.evening { background: #7B6BA8; color: #fff; }
+.related-card-badge.daily { background: #C8913A; color: #fff; }
+.related-card-badge.pet { background: #A67C52; color: #fff; }
+.related-card-content { padding: 28px; }
+.related-card-content h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 6px;
+}
+.related-card-content .related-desc {
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  margin-bottom: 16px;
+}
+.related-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.related-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c2c2c;
+}
+.related-btn {
+  padding: 8px 20px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1.5px solid #9caf88;
+  color: #7a8f6a;
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.related-btn:hover {
+  background: #9caf88;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .related-grid { grid-template-columns: 1fr; }
+}
+
+  </style>
+
+
+  <!-- ====== HEADER ====== -->
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
+        <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+      </a>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/#products">Shop</a></li>
+          <li><a href="/pages/the-science">The Science</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/family">Family</a></li>
+        <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="cart-btn" id="cartToggle" aria-label="Shopping cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12L6 6z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+            <path d="M6 6L5 3H2"/>
+          </svg>
+          <span class="cart-count" id="cartCount" style="display:none;">0</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== MOBILE NAV ====== -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <ul class="mobile-nav-list">
+      <li><a href="/pages/our-story">Our Story</a></li>
+      <li><a href="/#products">Shop</a></li>
+      <li><a href="/pages/the-science">The Science</a></li>
+      <li><a href="/blogs/news">Journal</a></li>
+      <li><a href="/pages/family">Family</a></li>
+      <li><a href="/pages/faq">FAQ</a></li>
+      <li><a href="/pages/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ====== UNIFIED PRODUCT CHECKOUT ====== -->
+  <section class="product-checkout">
+    <div class="checkout-inner">
+      <!-- Image Column -->
+      <div class="checkout-image-wrap animate-in delay-1">
+        <img id="mainProductImage" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" alt="Deep Rest Evening Formula" class="checkout-image-main">
+        <div class="product-thumbnails">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" alt="Deep Rest Evening Formula" class="thumb active" onclick="swapMainImage(this)">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-deep-rest-bedside-v2.jpg" alt="Deep Rest at bedside" class="thumb" onclick="swapMainImage(this)">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-deep-rest-bathtub-v3.jpg" alt="Deep Rest by bathtub" class="thumb" onclick="swapMainImage(this)">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-deep-rest-reading-v3.jpg" alt="Deep Rest while reading" class="thumb" onclick="swapMainImage(this)">
+        </div>
+      </div>
+      <!-- Content Column -->
+      <div class="checkout-content animate-in delay-2">
+        <div class="checkout-category">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Tincture, Evening Formula
+        </div>
+
+        <h1 class="checkout-title">Deep Rest Evening Formula</h1>
+        <p class="checkout-subtitle" itemprop="description">150MG CBN + 150MG Nano-Hemp. Restful Support</p>
+<div class="nano-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-8.5-6.5l2.8-2.8m11.4 0l2.8 2.8M2 12h4m12 0h4M5.5 5.5l2.8 2.8m7.4 0l2.8-2.8"/></svg>
+          Nano-Enhanced
+        </div>
+
+        <div class="checkout-rating">
+          <div class="checkout-stars" aria-label="4.9 out of 5 stars">
+            <svg viewBox="0 0 16 16"><path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 0l2.47 5.01L16 5.8l-4 3.9.94 5.5L8 12.26l-4.94 2.94.94-5.5L0 5.8l5.53-.79z"/></svg>
+          </div>
+          <span class="checkout-rating-text"><strong>4.9</strong> (98 reviews)</span>
+        </div>
+
+        <div class="checkout-price-wrap">
+          <span class="checkout-price">$70.00</span>
+
+        </div>
+
+        <div class="checkout-specs">
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">150MG + 150MG</span>
+            <span class="checkout-spec-label">CBN + Nano-Hemp</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">30ml</span>
+            <span class="checkout-spec-label">1 fl oz</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">10MG</span>
+            <span class="checkout-spec-label">Per Serving</span>
+          </div>
+          <div class="checkout-spec-divider"></div>
+          <div class="checkout-spec">
+            <span class="checkout-spec-value">CBN</span>
+            <span class="checkout-spec-label">Isolate</span>
+          </div>
+        </div>
+
+        <div class="checkout-actions">
+          <div class="quantity-selector">
+            <button class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
+            <span class="qty-value" id="qtyValue">1</span>
+            <button class="qty-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn-add-cart" id="addToCart" data-product="Deep Rest Evening Formula" data-price="70.00" data-image="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" data-variant="150MG CBN + 150MG Nano-Hemp / 30ml">
+            <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+            Add to Cart $70.00
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FAMILY SECTION ====== -->
+  <section class="section-padding" style="background: #FFFFFF;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.75rem); color: #2D4A3E; margin-bottom: 0.5rem;">An Evening Routine for the Whole Family</h2>
+      <p style="color: #8B7355; max-width: 600px; margin: 0 auto;">Deep Rest is part of our family's evening wind-down.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; max-width: 900px; margin: 0 auto;">
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="padding: 1.5rem; background: #F5F0E8; border-radius: 12px; border-left: 4px solid #7B6BA8;">
+          <p style="font-style: italic; color: #3D3D3D; margin: 0;">"After a long day of work, kids, and life, Deep Rest helps me actually unwind. I take it about 30 minutes before bed and the difference is noticeable."</p>
+          <p style="font-weight: 700; color: #2D4A3E; margin: 0.5rem 0 0; font-size: 0.9rem;">- Nick & Lucy</p>
+        </div>
+        <p style="color: #8B7355; font-size: 0.95rem; line-height: 1.6; margin: 0;">Our evening formula with CBN isolate is designed for the whole family. Whether you are unwinding after work or seeking calm after a busy day, Deep Rest helps everyone find their path to restful nights.</p>
+      </div>
+      <div style="text-align: center;">
+        <a href="/pages/lucy" style="display: block; text-decoration: none;">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/deep-rest-couple-bedtime-v2.jpg" alt="Nick and Lucy in pajamas heading to bed with Deep Rest" style="max-width: 400px; width: 100%; border-radius: 16px; margin: 0 auto; display: block; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15');" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1');">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ====== NANO-HEMP DIFFERENCE ====== -->
+  <section class="nano-difference" id="nano-science">
+    <div class="section-inner nano-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">The Science</p>
+        <h2 class="section-title">The Nano-Hemp Difference</h2>
+        <p class="section-desc">Why nano-delivery matters especially for an evening formula. Fast onset means you spend less time waiting and more time resting.</p>
+      </div>
+      <div class="nano-content">
+        <div class="nano-visual">
+          <div class="nano-comparison">
+            <div class="nano-card">
+              <div class="nano-card-label">Standard Oil Tinctures</div>
+              <div class="nano-card-time">45-90 min</div>
+              <div class="nano-card-desc">Oil-based delivery must pass through digestion before absorption begins.</div>
+            </div>
+            <div class="nano-card active">
+              <div class="nano-card-label">Nano-Enhanced (Ours)</div>
+              <div class="nano-card-time">5-15 min</div>
+              <div class="nano-card-desc">Nano-fragmented particles bypass digestion for rapid absorption.</div>
+            </div>
+          </div>
+        </div>
+        <div class="nano-text">
+          <h3>Why Nano Matters at Night</h3>
+          <p>When you are ready for rest, you do not want to wait. Our proprietary nano-fragmentation technology, developed by a powerful West Coast biotech company, breaks hemp compounds into nano-sized particles that your body can absorb quickly and efficiently.</p>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Absorbs up to 5x faster than standard oil-based tinctures</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Nano-particles bypass the digestive system for direct absorption</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Water-soluble formula mixes seamlessly into any beverage</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Higher bioavailability means more of each serving reaches your system</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== HOW IT WORKS ====== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">How It Works</p>
+        <h2 class="section-title">CBN Meets Nano-Hemp</h2>
+        <p class="section-desc">Two powerful compounds working together to support your evening wellness ritual. CBN promotes restful nights while nano-particles ensure fast absorption.</p>
+      </div>
+      <div class="how-steps">
+        <div class="step-connector"></div>
+        <div class="how-step">
+          <div class="how-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m-9-9h1m16 0h1M5.64 5.64l.7.7m12.02 12.02l.7.7M5.64 18.36l.7-.7m12.02-12.02l.7-.7"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <h3 class="how-step-title">CBN Isolate</h3>
+          <p class="how-step-text">Our pure CBN Isolate is a hemp-derived compound popularly used in evening and rest-focused formulas to support your natural rest cycle.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-step-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4"/></svg>
+          </div>
+          <h3 class="how-step-title">Nano-Hemp</h3>
+          <p class="how-step-text">Proprietary nano-fragmentation technology from a powerful West Coast biotech company breaks down hemp particles for rapid absorption.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-step-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h3 class="how-step-title">Wake Refreshed</h3>
+          <p class="how-step-text">Designed to support your natural rest cycle so you wake up feeling refreshed and ready for the day ahead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== KEY FEATURES ====== -->
+  <section class="key-features" id="features">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Why Choose Deep Rest</p>
+        <h2 class="section-title">Key Features</h2>
+        <p class="section-desc">A precisely formulated evening tincture designed for your nightly wellness ritual.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="feature-title">150MG CBN + 150MG Nano-Hemp</h3>
+          <p class="feature-desc">A balanced 1:1 ratio of CBN Isolate and Nano-Hemp for a targeted evening formula.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3 class="feature-title">Nano-Enhanced Fast Onset</h3>
+          <p class="feature-desc">Nano-fragmentation technology enables rapid absorption so you feel the effects sooner.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m-9-9h1m16 0h1M5.64 5.64l.7.7m12.02 12.02l.7.7M5.64 18.36l.7-.7m12.02-12.02l.7-.7"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <h3 class="feature-title">Wake Up Refreshed</h3>
+          <p class="feature-desc">Formulated to support natural rest so you can greet the morning feeling renewed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </div>
+          <h3 class="feature-title">Evening Formula</h3>
+          <p class="feature-desc">Specifically crafted for your nighttime ritual with CBN, our only evening-specific product.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== INGREDIENTS ====== -->
+  <section class="ingredients" id="ingredients">
+    <div class="section-inner">
+      <div class="ingredients-layout">
+        <div class="ingredients-image-col">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-deep-rest.jpg" alt="Deep Rest Evening Formula lifestyle mockup with amber glass bottle" class="ingredients-img">
+        </div>
+        <div class="ingredients-content">
+          <h2>What's Inside</h2>
+          <p class="lead">Only 5 ingredients. Nothing hidden, nothing extra.</p>
+          <div class="ingredients-list">
+            <div class="ingredient-item">
+              <div class="ingredient-dot highlight"></div>
+              <div>
+                <div class="ingredient-name">CBN Isolate</div>
+                <div class="ingredient-note">Pure hemp-derived CBN for evening support</div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Nano-Hemp</div>
+                <div class="ingredient-note">Nano-fragmented for fast absorption</div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Distilled Water</div>
+                <div class="ingredient-note">Pure, clean base</div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Vegetable Glycerin</div>
+                <div class="ingredient-note">Natural, plant-derived carrier</div>
+              </div>
+            </div>
+            <div class="ingredient-item">
+              <div class="ingredient-dot"></div>
+              <div>
+                <div class="ingredient-name">Propelene Glycol</div>
+                <div class="ingredient-note">For even distribution and stability</div>
+              </div>
+            </div>
+          </div>
+          <div class="cbn-highlight">
+            <div class="cbn-highlight-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4 class="cbn-highlight-title">This is the ONLY product with CBN</h4>
+            <p class="cbn-highlight-text">Deep Rest is unique in our line as the only formula that includes CBN Isolate. If you are looking for evening-specific support, this is your product. All other Wild Roots products are CBN-free.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== HOW TO USE ====== -->
+  <section class="how-to-use" id="how-to-use">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Directions</p>
+        <h2 class="section-title">How to Use Deep Rest</h2>
+        <p class="section-desc">Simple steps to incorporate Deep Rest into your nightly ritual.</p>
+      </div>
+<div class="usage-with-image">
+  <div class="usage-image">
+    <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nick-cartoon-v3.png" alt="Nick in pajamas adding Deep Rest dropper to water before bed">
+  </div>
+  <div class="usage-steps-col">
+    <div class="step-row">
+      <div class="use-step-num">1</div>
+      <div class="step-text">
+        <h4>Timing</h4>
+        <p>Take 30 minutes before your desired rest time to allow for optimal absorption.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="use-step-num">2</div>
+      <div class="step-text">
+        <h4>Place or Mix</h4>
+        <p>Place desired amount under tongue for 30-60 seconds, or add to warm tea and enjoy.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="use-step-num">3</div>
+      <div class="step-text">
+        <h4>Start with 1 Dropper</h4>
+        <p>Begin with one full dropper and adjust as needed to find your ideal amount.</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <!-- ====== NANO-HEMP DIFFERENCE ====== -->
+<!-- ===== RELATED PRODUCTS ===== -->
+<section class="related-products" id="related">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px;margin-right:8px;vertical-align:middle;">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        Complete Your Routine
+      </div>
+      <h2 class="section-title">You Might Also Love</h2>
+    </div>
+    <div class="related-grid">
+      <a href="/products/daily-roots" class="related-card fade-up reveal-delay-1">
+        <div class="related-card-img">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png" alt="Daily Roots Standard Strength" loading="lazy">
+          <span class="related-card-badge daily">Daily Strength</span>
+        </div>
+        <div class="related-card-content">
+          <h3>Daily Roots Standard Strength</h3>
+          <p class="related-desc">300MG nano-hemp for consistent, everyday support.</p>
+          <div class="related-meta">
+            <span class="related-price">$65.00</span>
+            <span class="related-btn">View Product</span>
+          </div>
+        </div>
+      </a>
+      <a href="/products/wild-relief" class="related-card fade-up reveal-delay-2">
+        <div class="related-card-img">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-mist-cutout.png" alt="Wild Relief Botanical Spray" loading="lazy">
+          <span class="related-card-badge spray">Botanical Spray</span>
+        </div>
+        <div class="related-card-content">
+          <h3>Wild Relief Botanical Spray</h3>
+          <p class="related-desc">300MG nano-hemp botanical spray for fast-absorbing, targeted relief.</p>
+          <div class="related-meta">
+            <span class="related-price">$70.00</span>
+            <span class="related-btn">View Product</span>
+          </div>
+        </div>
+      </a>
+      <a href="/products/root-relief" class="related-card fade-up reveal-delay-3">
+        <div class="related-card-img">
+          <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-rollon-cutout.png" alt="Root Relief Roll-On" loading="lazy">
+          <span class="related-card-badge rollon">Roll-On</span>
+        </div>
+        <div class="related-card-content">
+          <h3>Root Relief Roll-On</h3>
+          <p class="related-desc">100MG nano-hemp for targeted, on-the-go topical relief.</p>
+          <div class="related-meta">
+            <span class="related-price">$35.00</span>
+            <span class="related-btn">View Product</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+  <!-- ====== PRODUCT FAQ ====== -->
+  <section class="product-faq" id="faq">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Common Questions</p>
+        <h2 class="section-title">Product FAQ</h2>
+        <p class="section-desc">Everything you need to know about Deep Rest.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What is CBN?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>CBN (Cannabinol) is a hemp-derived compound that is popularly used in evening and rest-focused formulas. It is one of many naturally occurring compounds found in hemp. Our CBN Isolate is combined with Nano-Hemp in the Deep Rest formula to create a targeted evening tincture designed to support your nightly wellness ritual.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Will this make me groggy?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Deep Rest is designed to support your natural rest cycle so you wake up feeling refreshed, not groggy. Start with one dropper to find your ideal amount. Every person is different, so we recommend beginning with the suggested serving and adjusting as needed.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How is this different from Deep Roots?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Deep Roots is our anytime nano-hemp tincture, while Deep Rest is our evening-specific formula that includes CBN Isolate for restful nights. Both use our nano-enhanced delivery technology for fast absorption. If you are looking for general daily wellness support, choose Deep Roots. If you want evening-specific support, Deep Rest is your formula.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Can I take it every night?
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, Deep Rest is made with just 5 simple ingredients and is designed for daily evening use as part of your nightly ritual. Many customers incorporate it into their routine every evening about 30 minutes before their desired rest time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@wild.roots.hemp" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:#F5F0E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v10.5a4.5 4.5 0 1 1-3-4.24"/><path d="M15 4c.5 3 2.3 4.8 5 5"/></svg></a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="/products/daily-roots">Daily Roots</a></li>
+            <li><a href="/products/deep-roots">Deep Roots Extra Strength</a></li>
+            <li><a href="/products/deep-rest">Deep Rest Evening</a></li>
+            <li><a href="/products/root-relief">Root Relief Roll-On</a></li>
+            <li><a href="/products/wild-relief">Wild Relief Botanical Spray</a></li>
+            <li><a href="/products/paw-root">Paw &amp; Root Pet Drops</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/our-story">Our Story</a></li>
+            <li><a href="/pages/family">Family</a></li>
+            <li><a href="/pages/the-science">The Science</a></li>
+            <li><a href="/blogs/news">Journal</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/pages/contact">Contact Us</a></li>
+            <li><a href="/policies/shipping-policy">Shipping Info</a></li>
+            <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+            <li><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">
+          <strong>FDA Disclaimer:</strong> These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before use if you are pregnant, nursing, or taking any medications.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Wild Roots Hemp. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== STICKY BAR ====== -->
+  <div class="sticky-bar" id="stickyBar">
+    <div class="sticky-inner">
+      <div class="sticky-product">
+        <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" alt="Deep Rest">
+        <div class="sticky-product-info">
+          <h4>Deep Rest</h4>
+          <span>Evening Formula &middot; $70.00</span>
+        </div>
+      </div>
+      <div class="sticky-actions">
+        <span class="sticky-price">$70.00</span>
+        <button class="sticky-btn" id="stickyAddToCart">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== CART DRAWER ====== -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">$0.00</span>
+      </div>
+      <p class="cart-note">Shipping and taxes calculated at checkout.</p>
+      <button class="cart-checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- ====== TOAST ====== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ====== JAVASCRIPT ====== -->
+  <script>
+
+// ============================================
+// Mobile Menu Toggle (Firefox Mobile Compatible)
+// ============================================
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-list a');
+
+function toggleMobileMenu() {
+  menuToggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  var isOpen = mobileNav.classList.contains('active');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function handleMenuTouch(e) {
+  e.preventDefault();
+  toggleMobileMenu();
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('touchstart', handleMenuTouch, {passive: false});
+  menuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+mobileNavLinks.forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (mobileNav.classList.contains('active')) toggleMobileMenu();
+  });
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+window.addEventListener('resize', function() {
+  if (window.innerWidth >= 768 && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+// ============================================
+// FAQ Accordion Toggle
+// ============================================
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    // Close all other items
+    document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+      openItem.classList.remove('open');
+      openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Toggle current item
+    if (!isOpen) {
+      item.classList.add('open');
+      this.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// Product Image Gallery - Thumbnail Swap
+function swapMainImage(thumb) {
+  var main = document.getElementById('mainProductImage');
+  if (main && thumb.src) {
+    main.src = thumb.src;
+    main.alt = thumb.alt;
+    document.querySelectorAll('.product-thumbnails .thumb').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    thumb.classList.add('active');
+  }
+}
+
+</script>
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}

@@ -19,18 +19,79 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
   {%- endunless -%}
 
-  <title>
-    {{ page_title }}
-    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-  </title>
+  {%- if request.page_type == 'index' -%}
+    {%- assign seo_title = 'Wild Roots Hemp | Nano-Hemp Wellness' -%}
+    {%- assign seo_description = 'Shop nano-hemp wellness products for daily balance, evening routines, targeted topical use, recovery, and pets. Simple formulas and third-party testing.' -%}
+  {%- elsif request.page_type == 'page' and page.handle == 'the-science' -%}
+    {%- assign seo_title = 'Nano-Hemp Science & Absorption | Wild Roots Hemp' -%}
+    {%- assign seo_description = 'Learn how Wild Roots nano-fragmentation creates particles under 100 nanometers for faster absorption, consistent delivery, and cleaner hemp wellness.' -%}
+  {%- elsif request.page_type == 'page' and page.handle == 'our-story' -%}
+    {%- assign seo_title = 'Our Story | Wild Roots Hemp' -%}
+    {%- assign seo_description = 'Meet the family behind Wild Roots Hemp and discover how Midwest values, West Coast living, and nano-science shaped our transparent wellness brand.' -%}
+  {%- elsif request.page_type == 'blog' and blog.handle == 'news' -%}
+    {%- assign seo_title = 'The Root Journal | Wild Roots Hemp' -%}
+    {%- assign seo_description = 'Explore practical guides on nano-hemp science, product use, family wellness routines, ingredients, testing, and transparency from Wild Roots Hemp.' -%}
+  {%- elsif request.page_type == 'collection' and collection.handle == 'all' -%}
+    {%- assign seo_title = 'Shop All Nano-Hemp Products | Wild Roots Hemp' -%}
+    {%- assign seo_description = 'Shop the complete Wild Roots Hemp collection, including nano-hemp drops, evening support, topical roll-ons and sprays, and pet wellness products.' -%}
+  {%- else -%}
+    {%- capture seo_title -%}
+      {{ page_title }}
+      {%- if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} | {{ shop.name }}{% endunless -%}
+    {%- endcapture -%}
+    {%- assign seo_title = seo_title | strip -%}
+    {%- assign seo_description = page_description | default: shop.description | strip_html | strip_newlines | truncate: 155 -%}
+  {%- endif -%}
 
-  {% if page_description %}
-    <meta name="description" content="{{ page_description | escape }}">
+  <title>{{ seo_title | escape }}</title>
+  <meta name="description" content="{{ seo_description | escape }}">
+
+  {% render 'meta-tags', seo_title: seo_title, seo_description: seo_description %}
+
+  {% render 'wr-product-jsonld' %}
+
+  {% if request.page_type == 'index' %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "{{ shop.url }}/#organization",
+          "name": {{ shop.name | json }},
+          "alternateName": "Wild Roots",
+          "url": {{ shop.url | json }},
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png"
+          },
+          "description": {{ seo_description | json }},
+          "areaServed": {"@type": "Country", "name": "United States"},
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "email": {{ shop.email | json }},
+            "availableLanguage": "English"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ shop.url }}/#website",
+          "url": {{ shop.url | json }},
+          "name": {{ shop.name | json }},
+          "publisher": {"@id": "{{ shop.url }}/#organization"},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {"@type": "EntryPoint", "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"},
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
   {% endif %}
-
-  {% render 'meta-tags' %}
 
   {{ content_for_header }}
 
@@ -39,45 +100,244 @@
 
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+  {% if template contains 'wr-' %}
+    <style>
+      #MainContent,
+      #MainContent > .shopify-section:first-child,
+      #MainContent > .shopify-section:first-child > div:first-child,
+      #MainContent .page-hero,
+      #MainContent .family-hero,
+      #MainContent [class$="-hero"] { margin-top: 0 !important; }
+      #MainContent { padding-top: 0 !important; }
+    </style>
+  {% endif %}
+
+  {% if request.page_type == 'page' and page.handle == 'family' %}
+    <style>
+      #MainContent .family-hero { min-height: 50vh !important; padding: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+      #MainContent .family-hero > .container { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+      #MainContent .family-hero h1 { color: #fff !important; }
+    </style>
+  {% endif %}
+
+  {% if request.page_type == 'page' and page.handle == 'the-science' or request.page_type == 'product' and product.handle == 'deep-rest' %}
+    <style>
+      .announcement-bar-section, #shopify-section-announcement-bar, #shopify-section-header, .shopify-section-group-header-group { display: none !important; }
+    </style>
+  {% endif %}
+
+  {% if request.page_type == 'page' and page.handle == 'the-science' %}
+    <style>.skip-to-content-link { display: none !important; }</style>
+  {% endif %}
+
+  <style id="wr-accessibility-policy-fix">
+    .skip-to-content-link.visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .skip-to-content-link.visually-hidden:focus {
+      position: fixed !important;
+      top: 12px !important;
+      left: 12px !important;
+      width: auto !important;
+      height: auto !important;
+      padding: 10px 14px !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      clip: auto !important;
+      clip-path: none !important;
+      white-space: normal !important;
+      background: #ffffff !important;
+      color: #2D4A3E !important;
+      border: 2px solid #2D4A3E !important;
+      border-radius: 4px !important;
+      z-index: 10000 !important;
+    }
+
+    body.template-product #MainContent .product-checkout {
+      min-height: auto !important;
+      padding-top: 0 !important;
+    }
+
+    body.template-policy #MainContent {
+      padding-top: 80px !important;
+      background: #FAF8F3;
+    }
+    body.template-policy #MainContent .shopify-policy__container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 40px 88px;
+      color: #3D2B1F;
+    }
+    body.template-policy #MainContent .shopify-policy__title {
+      margin: 0 0 32px;
+      text-align: left;
+    }
+    body.template-policy #MainContent .shopify-policy__title h1 {
+      margin: 0;
+      color: #2D4A3E;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+    body.template-policy #MainContent .shopify-policy__body {
+      color: #3D2B1F;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    body.template-policy #MainContent .shopify-policy__body h2 {
+      margin: 2.6rem 0 1rem;
+      color: #2D4A3E;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    body.template-policy #MainContent .shopify-policy__body h3 {
+      margin: 2rem 0 .75rem;
+      color: #2D4A3E;
+      font-family: 'Lato', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    body.template-policy #MainContent .shopify-policy__body p {
+      margin: 0 0 1.1rem;
+      color: #3D2B1F;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    body.template-policy #MainContent .shopify-policy__body ul,
+    body.template-policy #MainContent .shopify-policy__body ol {
+      margin: 0 0 1.5rem 1.35rem;
+      padding-left: .5rem;
+    }
+    body.template-policy #MainContent .shopify-policy__body li {
+      margin: 0 0 .55rem;
+      line-height: 1.7;
+    }
+    body.template-policy #MainContent .shopify-policy__body a {
+      color: #2D4A3E;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    @media (max-width: 749px) {
+      body.template-policy #MainContent .shopify-policy__container {
+        padding: 40px 24px 64px;
+      }
+      body.template-policy #MainContent .shopify-policy__title {
+        margin-bottom: 24px;
+      }
+      body.template-policy #MainContent .shopify-policy__title h1 {
+        font-size: 2.4rem;
+      }
+      body.template-policy #MainContent .shopify-policy__body h2 {
+        margin-top: 2.2rem;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+
 </head>
 
 <body class="template-{{ request.page_type }} {{ template | replace: '.', ' ' | prepend: 'template-' }}">
-  <a class="skip-to-content-link visually-hidden" href="#MainContent">
-    {{ 'accessibility.skip_to_text' | t }}
-  </a>
+  <a class="skip-to-content-link visually-hidden" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
-  {% section 'announcement-bar' %}
-  {% section 'header' %}
+  {% assign wr_custom_shell = false %}
+  {% if template contains 'wr-' or request.page_type == 'index' or request.page_type == 'cart' or request.page_type == 'policy' %}
+    {% assign wr_custom_shell = true %}
+  {% endif %}
+
+  {% assign wr_custom_footer = wr_custom_shell %}
+  {% if request.page_type == 'collection' %}
+    {% assign wr_custom_footer = true %}
+  {% endif %}
+
+  {% unless wr_custom_shell %}
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+  {% endunless %}
+
+  {% if request.page_type == 'cart' or request.page_type == 'policy' %}{% render 'wr-site-header' %}{% endif %}
 
   <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-    {{ content_for_layout }}
+    {% if request.page_type == 'product' %}
+      {% render 'wr-product-microdata-source-fix', page_content: content_for_layout %}
+    {% elsif request.page_type == 'index' %}
+      {% render 'wr-homepage-render-cleanup', page_content: content_for_layout %}
+    {% else %}
+      {% capture wr_rendered_content %}{{ content_for_layout }}{% endcapture %}
+      {% assign wr_rendered_content = wr_rendered_content
+        | replace: 'href="faq-/pages/contact">FAQ</a>', 'href="/pages/faq">FAQ</a>'
+        | replace: 'href="faq-/pages/contact">Contact Us</a>', 'href="/pages/contact">Contact Us</a>'
+        | replace: 'href="faq-/pages/contact">Shipping Info</a>', 'href="/pages/faq">Shipping Info</a>'
+        | replace: 'href="faq-/pages/contact">Privacy Policy</a>', 'href="/policies/privacy-policy">Privacy Policy</a>'
+        | replace: 'href="faq-/pages/contact"', 'href="/pages/contact"'
+      %}
+      {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/journal.html"', 'href="/blogs/news"' %}
+      {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/journal"', 'href="/blogs/news"' %}
+      {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/blogs/journal/', 'href="/blogs/news/' %}
+      {% if template contains 'wr-' %}
+        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/#products"', 'href="/collections/all"' %}
+        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="#products"', 'href="/collections/all"' %}
+      {% endif %}
+      {% if request.page_type == 'page' and page.handle == 'the-science' %}
+        {% assign wr_rendered_content = wr_rendered_content | replace: 'alt="" aria-hidden="true"', 'alt="Decorative hemp root illustration"' %}
+      {% endif %}
+      {{ wr_rendered_content }}
+    {% endif %}
   </main>
 
-  {% section 'footer' %}
+  {% if request.page_type == 'cart' or request.page_type == 'collection' or request.page_type == 'policy' %}{% render 'wr-site-footer' %}{% endif %}
 
+  <style>
+    #MainContent h1 { font-size: clamp(2.75rem, 5.5vw, 4.75rem); line-height: 1.05; letter-spacing: -0.035em; text-wrap: balance; }
+    #MainContent h2 { font-size: clamp(2.15rem, 4vw, 3.5rem); line-height: 1.12; letter-spacing: -0.025em; text-wrap: balance; }
+    #MainContent h3 { font-size: clamp(1.35rem, 2.2vw, 1.85rem); line-height: 1.22; letter-spacing: -0.012em; text-wrap: balance; }
+    #MainContent h4 { font-size: clamp(1.05rem, 1.4vw, 1.3rem); line-height: 1.3; text-wrap: balance; }
+    #MainContent .article-title { font-size: clamp(2.5rem, 5vw, 4.25rem); line-height: 1.08; }
+    #MainContent .section-label, #MainContent .section-eyebrow { display: inline-block; font-size: clamp(0.9rem, 1.2vw, 1.1rem); line-height: 1.3; letter-spacing: 0.13em; margin-bottom: 0.85rem; }
+    #MainContent .site-footer h4 { font-size: 0.75rem; line-height: 1.3; letter-spacing: 0.12em; }
+    @media (max-width: 749px) {
+      #MainContent h1 { font-size: clamp(2.4rem, 11vw, 3.25rem); }
+      #MainContent h2 { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+      #MainContent h3 { font-size: clamp(1.25rem, 5.5vw, 1.6rem); }
+    }
+  </style>
+
+  {% unless wr_custom_footer %}{% section 'footer' %}{% endunless %}
+
+  {% unless wr_custom_shell %}
   <div id="cart-drawer" class="cart-drawer" aria-hidden="true">
     <div class="cart-drawer-overlay" onclick="WildRoots.cart.close()"></div>
     <div class="cart-drawer-panel">
       <div class="cart-drawer-header">
         <h3>Your Cart</h3>
-        <button class="cart-drawer-close" onclick="WildRoots.cart.close()" aria-label="Close cart">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <button class="cart-drawer-close" onclick="WildRoots.cart.close()" aria-label="Close cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
-      <div class="cart-drawer-body" id="cart-drawer-items">
-        <p class="cart-empty-msg">Your cart is empty</p>
-      </div>
+      <div class="cart-drawer-body" id="cart-drawer-items"><p class="cart-empty-msg">Your cart is empty</p></div>
       <div class="cart-drawer-footer" id="cart-drawer-footer" style="display:none;">
-        <div class="cart-subtotal">
-          <span>Subtotal</span>
-          <span id="cart-subtotal-amount">$0.00</span>
-        </div>
+        <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-amount">$0.00</span></div>
         <a href="/cart" class="btn btn-primary cart-view-btn">View Cart</a>
-        <form action="/cart" method="post" novalidate>
-          <button type="submit" name="checkout" class="btn btn-accent cart-checkout-btn">Checkout</button>
-        </form>
+        <form action="/cart" method="post" novalidate><button type="submit" name="checkout" class="btn btn-accent cart-checkout-btn">Checkout</button></form>
       </div>
     </div>
   </div>
+  {% endunless %}
 </body>
 </html>
