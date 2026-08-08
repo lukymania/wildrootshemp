@@ -1,0 +1,200 @@
+{% comment %}
+  FAQ repair layer. This section is intentionally scoped to page.wr-faq.
+  It centers the trust cards, replaces the legacy form with Shopify's
+  native contact form, repairs malformed routes, and neutralizes the
+  legacy header-scroll null reference.
+{% endcomment %}
+
+<style>
+  #MainContent .trust-bar-grid {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: clamp(2rem, 6vw, 5rem) !important;
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    flex-wrap: wrap !important;
+  }
+
+  #MainContent .trust-bar-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  #wr-faq-native-form-source {
+    display: none;
+  }
+
+  .faq-native-form .form-status {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border-radius: 8px;
+    color: #fff;
+    background: rgba(156, 175, 136, 0.22);
+    border: 1px solid rgba(156, 175, 136, 0.45);
+  }
+
+  .faq-native-form .form-status--error {
+    background: rgba(193, 122, 95, 0.2);
+    border-color: rgba(193, 122, 95, 0.5);
+  }
+</style>
+
+<div class="header" hidden aria-hidden="true"></div>
+
+<div id="wr-faq-native-form-source" aria-hidden="true">
+  <div class="faq-native-form">
+    {% form 'contact', id: 'faq-contact-form', class: 'faq-contact-form' %}
+      {% if form.posted_successfully? %}
+        <div class="form-status" role="status">Thank you. Your message has been sent to our family team.</div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="form-status form-status--error" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <label for="faq-contact-name" class="form-label">Your Name</label>
+        <input
+          type="text"
+          id="faq-contact-name"
+          name="contact[name]"
+          class="form-input"
+          value="{{ form.name | escape }}"
+          placeholder="Jane Doe"
+          required
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="faq-contact-email" class="form-label">Email Address</label>
+        <input
+          type="email"
+          id="faq-contact-email"
+          name="contact[email]"
+          class="form-input"
+          value="{{ form.email | escape }}"
+          placeholder="jane@example.com"
+          required
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="faq-contact-subject" class="form-label">Subject</label>
+        <select id="faq-contact-subject" name="contact[subject]" class="form-select" required>
+          <option value="" disabled selected>Choose a topic...</option>
+          <option value="Order Question">Order Question</option>
+          <option value="Product Question">Product Question</option>
+          <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+          <option value="General">General</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="faq-contact-message" class="form-label">Your Message</label>
+        <textarea
+          id="faq-contact-message"
+          name="contact[body]"
+          class="form-textarea"
+          placeholder="How can we help you?"
+          required
+        >{{ form.body }}</textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+    {% endform %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    function repairFaqPage() {
+      var source = document.getElementById('wr-faq-native-form-source');
+      var target = document.querySelector('#MainContent .contact-form-wrapper');
+
+      if (source && target) {
+        var nativeForm = source.querySelector('.faq-native-form');
+        if (nativeForm) {
+          target.innerHTML = '';
+          target.appendChild(nativeForm);
+          source.remove();
+        }
+      }
+
+      document.querySelectorAll('a[href="faq-/pages/contact"]').forEach(function (link) {
+        var label = (link.textContent || '').trim().toLowerCase();
+        if (label === 'faq') {
+          link.setAttribute('href', '/pages/faq');
+        } else if (label === 'contact us') {
+          link.setAttribute('href', '/pages/contact');
+        } else if (label === 'shipping info') {
+          link.setAttribute('href', '/pages/faq#shipping-returns');
+        } else if (label === 'privacy policy') {
+          link.setAttribute('href', '/policies/privacy-policy');
+        } else {
+          link.setAttribute('href', '/pages/faq');
+        }
+      });
+
+      document.querySelectorAll('link[itemprop="item"][href="faq-/pages/contact"]').forEach(function (link) {
+        link.setAttribute('href', '/pages/faq');
+      });
+
+      document.querySelectorAll('a[href^="mailto:hello@wildrootshemp.com"]').forEach(function (link) {
+        link.setAttribute('href', 'mailto:info@wildrootshemp.com');
+        link.textContent = 'info@wildrootshemp.com';
+      });
+
+      var shippingHeading = Array.from(document.querySelectorAll('.faq-category-title')).find(function (heading) {
+        return heading.textContent.trim() === 'Shipping & Returns';
+      });
+      if (shippingHeading && shippingHeading.parentElement) {
+        shippingHeading.parentElement.id = 'shipping-returns';
+      }
+
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(function (script) {
+        if (!script.textContent || script.textContent.indexOf('faq-contact') === -1) return;
+
+        var updated = script.textContent
+          .replaceAll('/pages/faq-contact', '/pages/faq')
+          .replaceAll('hello@wildrootshemp.com', 'info@wildrootshemp.com');
+
+        try {
+          var data = JSON.parse(updated);
+          var graph = data['@graph'] || [];
+          graph.forEach(function (node) {
+            if (node['@type'] === 'Organization') {
+              node.sameAs = [
+                'https://www.instagram.com/wildrootshemp',
+                'https://www.linkedin.com/company/wrhemp'
+              ];
+            }
+          });
+          script.textContent = JSON.stringify(data);
+        } catch (error) {
+          script.textContent = updated;
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', repairFaqPage);
+    } else {
+      repairFaqPage();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ repair",
+  "settings": []
+}
+{% endschema %}
