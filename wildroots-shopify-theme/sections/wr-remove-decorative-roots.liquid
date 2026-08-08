@@ -1,0 +1,22 @@
+{% comment %}
+  Removes the unintended root-illustration background from the FAQ contact
+  section and homepage newsletter section while preserving each section's
+  gradient, spacing, content, and layout.
+{% endcomment %}
+
+<style>
+  #MainContent .contact-section::before,
+  #MainContent .newsletter-section::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    background-image: none !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Remove decorative roots",
+  "settings": []
+}
+{% endschema %}
