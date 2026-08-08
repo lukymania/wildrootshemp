@@ -1,0 +1,2181 @@
+<style>
+ /* ============================================
+ CSS CUSTOM PROPERTIES
+ ============================================ */
+ :root {
+ --deep-forest: #2D4A3E;
+ --sage-mist: #9CAF88;
+ --raw-umber: #6B4226;
+ --terra-cotta: #C17A5F;
+ --cream: #F5F0E8;
+ --dark-brown: #3D2B1F;
+ --light-sage: #C5D4B8;
+ --kraft-brown: #C4A882;
+ 
+ --font-headline: 'Playfair Display', serif;
+ --font-body: 'Lato', sans-serif;
+ --font-accent: 'Cormorant Garamond', serif;
+ 
+ --max-width: 1200px;
+ --header-height: 80px;
+ --transition: all 0.3s ease;
+ --shadow-sm: 0 2px 8px rgba(45, 74, 62, 0.08);
+ --shadow-md: 0 8px 24px rgba(45, 74, 62, 0.12);
+ --shadow-lg: 0 16px 48px rgba(45, 74, 62, 0.16);
+      --forest-deep: #0f241c;
+    }
+ 
+ /* ============================================
+ RESET & BASE
+ ============================================ */
+ *, *::before, *::after {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+ 
+ html {
+ scroll-behavior: smooth;
+ font-size: 16px;
+ }
+ 
+ body {
+ font-family: var(--font-body);
+ font-weight: 400;
+ color: var(--dark-brown);
+ background-color: var(--cream);
+ line-height: 1.6;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ overflow-x: hidden;
+ }
+ 
+ h1, h2, h3, h4 {
+ font-family: var(--font-headline);
+ font-weight: 700;
+ line-height: 1.2;
+ color: var(--deep-forest);
+ }
+ 
+ h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+ h2 { font-size: clamp(2rem, 4vw, 3rem); }
+ h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+ h4 { font-size: 1.25rem; }
+ 
+ p {
+ margin-bottom: 1rem;
+ font-size: 1rem;
+ line-height: 1.7;
+ }
+ 
+ a {
+ color: var(--terra-cotta);
+ text-decoration: none;
+ transition: var(--transition);
+ }
+ 
+ a:hover { color: var(--raw-umber); }
+ 
+ img {
+ max-width: 100%;
+ height: auto;
+ display: block;
+ }
+ 
+ .container {
+ max-width: var(--max-width);
+ margin: 0 auto;
+ padding: 0 1.5rem;
+ }
+ 
+ .section-padding { padding: 5rem 0; }
+ 
+ /* Skip Link */
+ .skip-link {
+ position: absolute;
+ top: -100px;
+ left: 0;
+ background: var(--terra-cotta);
+ color: #fff;
+ padding: 8px;
+ z-index: 10000;
+ transition: top 0.3s;
+ }
+ 
+ .skip-link:focus { top: 0; }
+ 
+ /* Scroll Reveal Animation */
+ .reveal {
+  opacity: 1;
+ transform: translateY(30px);
+ transition: opacity 0.8s ease, transform 0.8s ease;
+ }
+ 
+ .reveal.active {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ 
+ .reveal-delay-1 { transition-delay: 0.1s; }
+ .reveal-delay-2 { transition-delay: 0.2s; }
+ .reveal-delay-3 { transition-delay: 0.3s; }
+ .reveal-delay-4 { transition-delay: 0.4s; }
+ .reveal-delay-5 { transition-delay: 0.5s; }
+ 
+ /* Section Label */
+ .section-label {
+ font-family: var(--font-accent);
+ font-style: italic;
+ font-size: 1.15rem;
+ color: var(--terra-cotta);
+ margin-bottom: 0.75rem;
+ display: block;
+ }
+ 
+ /* Buttons */
+ .btn {
+ display: inline-block;
+ padding: 1rem 2.5rem;
+ font-family: var(--font-body);
+ font-weight: 700;
+ font-size: 0.95rem;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ border: none;
+ cursor: pointer;
+ transition: var(--transition);
+ text-align: center;
+ }
+ 
+ .btn-primary {
+ background-color: var(--terra-cotta);
+ color: #fff;
+ border-radius: 4px;
+ }
+ 
+ .btn-primary:hover {
+ background-color: var(--raw-umber);
+ color: #fff;
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-md);
+ }
+ 
+ .btn-secondary {
+ background-color: transparent;
+ color: var(--deep-forest);
+ border: 2px solid var(--deep-forest);
+ border-radius: 4px;
+ }
+ 
+ .btn-secondary:hover {
+ background-color: var(--deep-forest);
+ color: var(--cream);
+ transform: translateY(-2px);
+ }
+ 
+ /* ============================================
+ HEADER
+ ============================================ */
+ .site-header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ height: var(--header-height);
+ background-color: var(--cream);
+ z-index: 1000;
+ border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+ transition: var(--transition);
+ }
+ 
+ .header-inner {
+ max-width: var(--max-width);
+ margin: 0 auto;
+ padding: 0 1.5rem;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ }
+ 
+ .logo {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ text-decoration: none;
+ }
+ 
+ .logo-img {
+ height: 68px;
+ width: auto;
+ display: block;
+ }
+ 
+ .nav-desktop { display: none; }
+ 
+ .nav-list {
+ display: flex;
+ list-style: none;
+ gap: 2.5rem;
+ }
+ 
+ .nav-list a {
+ font-family: var(--font-body);
+ font-weight: 400;
+ font-size: 0.9rem;
+ color: var(--dark-brown);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ position: relative;
+ padding-bottom: 4px;
+ }
+ 
+ .nav-list a::after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ width: 0;
+ height: 2px;
+ background-color: var(--terra-cotta);
+ transition: width 0.3s ease;
+ }
+ 
+ .nav-list a:hover::after { width: 100%; }
+ .nav-list a:hover { color: var(--terra-cotta); }
+ 
+ .nav-list a.active {
+ color: var(--terra-cotta);
+ font-weight: 700;
+ }
+ 
+ .nav-list a.active::after {
+ width: 100%;
+ background-color: var(--terra-cotta);
+ }
+ 
+ .header-actions {
+ display: flex;
+ align-items: center;
+ gap: 1.5rem;
+ }
+ 
+ .cart-btn {
+ position: relative;
+ background: none;
+ border: none;
+ cursor: pointer;
+ padding: 0.5rem;
+ }
+ 
+ .cart-btn svg {
+ width: 24px;
+ height: 24px;
+ stroke: var(--deep-forest);
+ fill: none;
+ stroke-width: 2;
+ transition: stroke 0.3s ease;
+ }
+ 
+ .cart-btn:hover svg { stroke: var(--terra-cotta); }
+ 
+ .cart-count {
+ position: absolute;
+ top: -2px;
+ right: -6px;
+ background-color: var(--terra-cotta);
+ color: #fff;
+ font-size: 0.65rem;
+ font-weight: 700;
+ width: 18px;
+ height: 18px;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+ 
+ /* Mobile Menu Toggle */
+ .menu-toggle {
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ width: 28px;
+ height: 20px;
+ background: none;
+ border: none;
+ cursor: pointer;
+ padding: 0;
+  z-index: 1001;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+ }
+ 
+ .menu-toggle span {
+ display: block;
+ width: 100%;
+ height: 2px;
+ background-color: var(--deep-forest);
+ transition: var(--transition);
+ transform-origin: center;
+ }
+ 
+ .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+ .menu-toggle.active span:nth-child(2) { opacity: 0; }
+ .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+ 
+ /* Mobile Navigation */
+ .mobile-nav {
+ position: fixed;
+ top: var(--header-height);
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: var(--cream);
+ z-index: 999;
+ padding: 2rem;
+ transform: translate3d(100%, 0, 0);
+ transition: transform 0.4s ease;
+ overflow-y: auto;
+ }
+ 
+ .mobile-nav.active { transform: translate3d(0, 0, 0); }
+ 
+ .mobile-nav-list {
+ list-style: none;
+ display: flex;
+ flex-direction: column;
+ gap: 1.5rem;
+ }
+ 
+ .mobile-nav-list a {
+ font-family: var(--font-headline);
+ font-weight: 700;
+ font-size: 1.5rem;
+ color: var(--deep-forest);
+ display: block;
+ padding: 0.5rem 0;
+ border-bottom: 1px solid var(--light-sage);
+ }
+ 
+ .mobile-nav-list a:hover,
+ .mobile-nav-list a.active { color: var(--terra-cotta); }
+ 
+ /* ============================================
+ PAGE HERO
+ ============================================ */
+ .page-hero {
+ position: relative;
+ width: 100%;
+ min-height: 420px;
+ display: flex;
+ align-items: flex-end;
+ overflow: hidden;
+ margin-top: var(--header-height);
+ }
+ 
+ .page-hero-bg {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ z-index: 1;
+ }
+ 
+ .page-hero-overlay {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: linear-gradient(to top, rgba(45, 74, 62, 0.92) 0%, rgba(45, 74, 62, 0.6) 50%, rgba(45, 74, 62, 0.3) 100%);
+ z-index: 2;
+ }
+ 
+ .page-hero-content {
+ position: relative;
+ z-index: 3;
+ width: 100%;
+ max-width: var(--max-width);
+ margin: 0 auto;
+ padding: 0 1.5rem 3.5rem;
+ }
+ 
+ .page-hero-label {
+ font-family: var(--font-accent);
+ font-style: italic;
+ font-size: 1.15rem;
+ color: rgba(255, 255, 255, 0.7);
+ margin-bottom: 0.75rem;
+ display: block;
+ }
+ 
+ .page-hero h1 {
+ font-family: var(--font-headline);
+ font-weight: 900;
+ font-size: clamp(2.25rem, 5.5vw, 4rem);
+ color: #fff;
+ margin-bottom: 1rem;
+ max-width: 700px;
+ text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+ }
+ 
+ .page-hero p {
+ font-family: var(--font-body);
+ font-weight: 300;
+ font-size: clamp(1rem, 2vw, 1.25rem);
+ color: rgba(255, 255, 255, 0.85);
+ max-width: 550px;
+ margin-bottom: 0;
+ line-height: 1.6;
+ }
+ 
+ /* Breadcrumb */
+ .breadcrumb {
+ padding: 1.25rem 0;
+ background-color: var(--cream);
+ border-bottom: 1px solid rgba(45, 74, 62, 0.08);
+ }
+ 
+ .breadcrumb ol {
+ list-style: none;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ flex-wrap: wrap;
+ }
+ 
+ .breadcrumb li {
+ font-size: 0.85rem;
+ color: rgba(61, 43, 31, 0.5);
+ }
+ 
+ .breadcrumb a {
+ color: var(--deep-forest);
+ font-weight: 400;
+ }
+ 
+ .breadcrumb a:hover { color: var(--terra-cotta); }
+ 
+ .breadcrumb-separator {
+ color: rgba(61, 43, 31, 0.3);
+ margin: 0 0.25rem;
+ }
+ 
+ .breadcrumb-current { color: var(--terra-cotta); font-weight: 700; }
+ 
+ /* ============================================
+ FAQ SECTION
+ ============================================ */
+ .faq-section {
+ background-color: var(--cream);
+ padding: 4rem 0 5rem;
+ }
+ 
+ .faq-header {
+ text-align: center;
+ margin-bottom: 3rem;
+ }
+ 
+ .faq-header h2 { margin-bottom: 0.75rem; }
+ 
+ .faq-header p {
+ color: rgba(61, 43, 31, 0.7);
+ font-size: 1.05rem;
+ max-width: 550px;
+ margin: 0 auto;
+ }
+ 
+ /* FAQ Category */
+ .faq-category {
+ margin-bottom: 3rem;
+ }
+ 
+ .faq-category:last-child { margin-bottom: 0; }
+ 
+ .faq-category-title {
+ font-family: var(--font-headline);
+ font-weight: 700;
+ font-size: 1.5rem;
+ color: var(--terra-cotta);
+ margin-bottom: 1.25rem;
+ padding-bottom: 0.75rem;
+ border-bottom: 2px solid var(--terra-cotta);
+ display: inline-block;
+ }
+ 
+ /* Accordion */
+ .accordion {
+ border: 1px solid rgba(45, 74, 62, 0.12);
+ border-radius: 12px;
+ overflow: hidden;
+ background-color: #fff;
+ }
+ 
+ .accordion-item {
+ border-bottom: 1px solid rgba(45, 74, 62, 0.1);
+ }
+ 
+ .accordion-item:last-child { border-bottom: none; }
+ 
+ .accordion-trigger {
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 1.25rem 1.5rem;
+ background-color: #fff;
+ border: none;
+ cursor: pointer;
+ text-align: left;
+ transition: background-color 0.3s ease;
+ }
+ 
+ .accordion-trigger:hover { background-color: rgba(245, 240, 232, 0.5); }
+ 
+ .accordion-trigger:focus-visible {
+ outline: 3px solid var(--terra-cotta);
+ outline-offset: -3px;
+ }
+ 
+ .accordion-question {
+ font-family: var(--font-headline);
+ font-weight: 700;
+ font-size: 1.05rem;
+ color: var(--deep-forest);
+ line-height: 1.4;
+ padding-right: 1rem;
+ }
+ 
+ .accordion-icon {
+ width: 24px;
+ height: 24px;
+ flex-shrink: 0;
+ transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ 
+ .accordion-trigger[aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
+ 
+ .accordion-icon svg {
+ width: 100%;
+ height: 100%;
+ stroke: var(--terra-cotta);
+ stroke-width: 2.5;
+ fill: none;
+ stroke-linecap: round;
+ stroke-linejoin: round;
+ }
+ 
+ .accordion-panel {
+ max-height: 0;
+ overflow: hidden;
+ transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+ background-color: rgba(245, 240, 232, 0.3);
+ }
+ 
+ .accordion-panel.open {
+ max-height: 600px;
+ padding: 0 1.5rem 1.5rem;
+ }
+ 
+ .accordion-answer {
+ font-family: var(--font-body);
+ font-size: 1rem;
+ line-height: 1.75;
+ color: var(--dark-brown);
+ }
+ 
+ .accordion-answer p {
+ margin-bottom: 0.75rem;
+ }
+ 
+ .accordion-answer p:last-child { margin-bottom: 0; }
+ 
+ .accordion-answer strong {
+ color: var(--deep-forest);
+ font-weight: 700;
+ }
+ 
+ .accordion-answer ul {
+ margin: 0.75rem 0 0.75rem 1.5rem;
+ padding-left: 0;
+ }
+ 
+ .accordion-answer li {
+ margin-bottom: 0.4rem;
+ line-height: 1.6;
+ }
+ 
+ .accordion-answer .ingredient-list {
+ list-style: none;
+ margin: 0.75rem 0;
+ padding: 0;
+ }
+ 
+ .accordion-answer .ingredient-list li {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ margin-bottom: 0.6rem;
+ }
+ 
+ .ingredient-dot {
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ background-color: var(--sage-mist);
+ flex-shrink: 0;
+ }
+ 
+ /* ============================================
+ CONTACT SECTION
+ ============================================ */
+ .contact-section {
+ background: linear-gradient(135deg, var(--deep-forest) 0%, #1e362d 100%);
+ padding: 5rem 0;
+ position: relative;
+ overflow: hidden;
+ }
+ 
+ .contact-section::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ right: 0;
+ width: 100%;
+ max-width: 400px;
+ height: 100%;
+ background: url('https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/root-illustration.jpg') no-repeat center right;
+ background-size: contain;
+ opacity: 0.05;
+ pointer-events: none;
+ }
+ 
+ .contact-header {
+ text-align: center;
+ margin-bottom: 3rem;
+ position: relative;
+ z-index: 2;
+ }
+ 
+ .contact-header h2 {
+ color: #fff;
+ margin-bottom: 0.75rem;
+ }
+ 
+ .contact-header p {
+ color: rgba(255, 255, 255, 0.7);
+ font-size: 1.05rem;
+ max-width: 500px;
+ margin: 0 auto;
+ }
+ 
+ .contact-layout {
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 3rem;
+ position: relative;
+ z-index: 2;
+ }
+ 
+ /* Contact Form */
+ .contact-form-wrapper {
+ background-color: rgba(255, 255, 255, 0.06);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ border-radius: 16px;
+ padding: 2.5rem;
+ backdrop-filter: blur(10px);
+ }
+ 
+ .form-group {
+ margin-bottom: 1.5rem;
+ }
+ 
+ .form-group:last-of-type { margin-bottom: 0; }
+ 
+ .form-label {
+ display: block;
+ font-family: var(--font-body);
+ font-weight: 700;
+ font-size: 0.85rem;
+ color: rgba(255, 255, 255, 0.85);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ margin-bottom: 0.5rem;
+ }
+ 
+ .form-input,
+ .form-textarea,
+ .form-select {
+ width: 100%;
+ padding: 0.85rem 1rem;
+ font-family: var(--font-body);
+ font-size: 1rem;
+ color: var(--dark-brown);
+ background-color: #fff;
+ border: 2px solid rgba(255, 255, 255, 0.2);
+ border-radius: 8px;
+ transition: var(--transition);
+ }
+ 
+ .form-input:focus,
+ .form-textarea:focus,
+ .form-select:focus {
+ outline: none;
+ border-color: var(--sage-mist);
+ box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.2);
+ }
+ 
+ .form-textarea {
+ min-height: 140px;
+ resize: vertical;
+ }
+ 
+ .form-select {
+ cursor: pointer;
+ appearance: none;
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233D2B1F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right 1rem center;
+ padding-right: 2.5rem;
+ }
+ 
+ .form-select option {
+ color: var(--dark-brown);
+ }
+ 
+ .form-submit {
+ width: 100%;
+ margin-top: 0.5rem;
+ }
+ 
+ /* Contact Info */
+ .contact-info-wrapper {
+ display: flex;
+ flex-direction: column;
+ gap: 2rem;
+ }
+ 
+ .contact-info-card {
+ background-color: rgba(255, 255, 255, 0.06);
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ border-radius: 16px;
+ padding: 2rem;
+ }
+ 
+ .contact-info-card h3 {
+ color: #fff;
+ font-size: 1.25rem;
+ margin-bottom: 1.25rem;
+ }
+ 
+ .contact-info-item {
+ display: flex;
+ align-items: flex-start;
+ gap: 1rem;
+ margin-bottom: 1.25rem;
+ }
+ 
+ .contact-info-item:last-child { margin-bottom: 0; }
+ 
+ .contact-info-icon {
+ width: 44px;
+ height: 44px;
+ background-color: rgba(156, 175, 136, 0.2);
+ border-radius: 10px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-shrink: 0;
+ }
+ 
+ .contact-info-icon svg {
+ width: 22px;
+ height: 22px;
+ stroke: var(--sage-mist);
+ fill: none;
+ stroke-width: 2;
+ }
+ 
+ .contact-info-content h4 {
+ color: #fff;
+ font-size: 1rem;
+ font-family: var(--font-body);
+ font-weight: 700;
+ margin-bottom: 0.25rem;
+ }
+ 
+ .contact-info-content p {
+ color: rgba(255, 255, 255, 0.7);
+ font-size: 0.95rem;
+ line-height: 1.6;
+ margin-bottom: 0;
+ }
+ 
+ .contact-info-content a {
+ color: var(--sage-mist);
+ font-weight: 700;
+ }
+ 
+ .contact-info-content a:hover { color: #fff; }
+ 
+ /* Family Note */
+ .family-note {
+ background-color: rgba(193, 122, 95, 0.12);
+ border: 1px solid rgba(193, 122, 95, 0.25);
+ border-radius: 16px;
+ padding: 2rem;
+ text-align: center;
+ }
+ 
+ .family-note-image {
+ max-width: 200px;
+ margin: 0 auto 1.25rem;
+ }
+ 
+ .family-note-image img {
+ border-radius: 12px;
+ }
+ 
+ .family-note h3 {
+ color: #fff;
+ font-size: 1.15rem;
+ margin-bottom: 0.75rem;
+ }
+ 
+ .family-note p {
+ color: rgba(255, 255, 255, 0.75);
+ font-size: 0.95rem;
+ line-height: 1.7;
+ margin-bottom: 0;
+ }
+ 
+ .family-note-highlight {
+ color: var(--terra-cotta);
+ font-weight: 700;
+ }
+ 
+ /* ============================================
+ TRUST BAR
+ ============================================ */
+ .trust-bar {
+ background-color: var(--cream);
+ border-top: 1px solid rgba(45, 74, 62, 0.08);
+ padding: 2.5rem 0;
+ }
+ 
+ .trust-bar-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 1.5rem;
+ max-width: 640px;
+ margin: 0 auto;
+ }
+
+ .trust-bar-item {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.75rem;
+ }
+ 
+ .trust-bar-icon {
+ width: 40px;
+ height: 40px;
+ background-color: rgba(156, 175, 136, 0.2);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-shrink: 0;
+ }
+ 
+ .trust-bar-icon svg {
+ width: 20px;
+ height: 20px;
+ stroke: var(--deep-forest);
+ fill: none;
+ stroke-width: 2;
+ }
+ 
+ .trust-bar-text {
+ font-size: 0.9rem;
+ font-weight: 700;
+ color: var(--deep-forest);
+ line-height: 1.3;
+ }
+ 
+ /* ============================================
+ FOOTER
+ ============================================ */
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .family-badge {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ background-color: rgba(156, 175, 136, 0.2);
+ padding: 0.5rem 1rem;
+ border-radius: 20px;
+ margin-top: 0.5rem;
+ }
+ 
+ .family-badge svg {
+ width: 18px;
+ height: 18px;
+ stroke: var(--sage-mist);
+ fill: none;
+ stroke-width: 1.5;
+ }
+ 
+ .family-badge span {
+ font-size: 0.8rem;
+ color: var(--sage-mist);
+ font-weight: 700;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ .show-mobile { display: inline; }
+ 
+ .payment-icons {
+ display: flex;
+ gap: 0.75rem;
+ align-items: center;
+ }
+ 
+ .payment-icon {
+ width: 40px;
+ height: 26px;
+ background-color: rgba(255, 255, 255, 0.1);
+ border-radius: 4px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+ 
+ .payment-icon svg {
+ width: 28px;
+ height: 18px;
+ fill: rgba(255, 255, 255, 0.5);
+ }
+ 
+ .social-icons {
+ display: flex;
+ gap: 1rem;
+ align-items: center;
+ }
+ 
+ .social-icon {
+ width: 36px;
+ height: 36px;
+ border-radius: 50%;
+ background-color: rgba(255, 255, 255, 0.08);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: var(--transition);
+ color: #fff;
+ }
+ 
+ .social-icon:hover {
+ background-color: var(--sage-mist);
+ transform: translateY(-2px);
+ }
+ 
+ .social-icon svg {
+ width: 18px;
+ height: 18px;
+ stroke: currentColor;
+ fill: none;
+ stroke-width: 2;
+ }
+ 
+ /* ============================================
+ FDA DISCLAIMER
+ ============================================ */
+ 
+ 
+ 
+ 
+ /* ============================================
+ RESPONSIVE STYLES
+ ============================================ */
+ @media (min-width: 768px) {
+ .nav-desktop { display: block; }
+ .menu-toggle { display: none; }
+ 
+ .page-hero { min-height: 480px; }
+ 
+ .faq-section { padding: 5rem 0 6rem; }
+ 
+ .accordion-trigger { padding: 1.5rem 2rem; }
+ .accordion-question { font-size: 1.15rem; }
+ .accordion-panel.open { padding: 0 2rem 2rem; }
+ 
+ .trust-bar-grid {
+ grid-template-columns: repeat(2, 1fr);
+ }
+ 
+ 
+ }
+ 
+ @media (min-width: 1024px) {
+ .container { padding: 0 2rem; }
+ .section-padding { padding: 6rem 0; }
+ 
+ .page-hero-content { padding-bottom: 4rem; }
+ 
+ .contact-layout {
+ grid-template-columns: 1.2fr 1fr;
+ gap: 3rem;
+ }
+ 
+ 
+ 
+ 
+ 
+ .show-mobile { display: none; }
+ }
+ 
+ /* ============================================
+ ACCESSIBILITY
+ ============================================ */
+ @media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after {
+ animation-duration: 0.01ms !important;
+ animation-iteration-count: 1 !important;
+ transition-duration: 0.01ms !important;
+ scroll-behavior: auto !important;
+ }
+ 
+ .reveal {
+ opacity: 1;
+ transform: none;
+ }
+ }
+ 
+ a:focus-visible,
+ button:focus-visible,
+ input:focus-visible,
+ textarea:focus-visible,
+ select:focus-visible {
+ outline: 3px solid var(--terra-cotta);
+ outline-offset: 2px;
+ }
+ 
+    /* FOOTER */
+    .site-footer {
+      background: var(--deep-forest);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 72px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+        .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover { background: rgba(255,255,255,0.1); border-color: var(--lavender); }
+
+    .footer-socials a svg { width: 16px; height: 16px; stroke: var(--cream); stroke-width: 1.5; fill: none; }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.6);
+      transition: var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--lavender); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.6875rem;
+      color: rgba(245, 240, 232, 0.35);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.4);
+    }
+
+    @media (min-width: 768px) {
+      .footer-top {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+</style>
+
+ <!-- Skip to content -->
+ <a href="#main-content" class="skip-link">Skip to main content</a>
+
+ <!-- ============================================
+ HEADER
+ ============================================ -->
+ <header class="site-header" id="header">
+ <div class="header-inner">
+ <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
+ <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+ </a>
+ <nav class="nav-desktop" aria-label="Main navigation">
+ <ul class="nav-list">
+ <li><a href="/pages/our-story">Our Story</a></li>
+ <li><a href="/#products">Shop</a></li>
+ <li><a href="/pages/the-science">The Science</a></li>
+ <li><a href="/blogs/news">Journal</a></li>
+ <li><a href="/pages/family">Family</a></li>
+        <li><a href="faq-/pages/contact">FAQ</a></li>
+ <li><a href="/pages/contact">Contact</a></li>
+ </ul>
+ </nav>
+ <div class="header-actions">
+ <button class="cart-btn" id="cartBtn" aria-label="Shopping cart">
+ <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M6 6h15l-1.5 9h-12L6 6z"/>
+ <circle cx="9" cy="20" r="1"/>
+ <circle cx="18" cy="20" r="1"/>
+ <path d="M6 6L5 3H2"/>
+ </svg>
+ <span class="cart-count" id="cartCount" style="display:none;">0</span>
+ </button>
+ <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+ <span></span><span></span><span></span>
+ </button>
+ </div>
+ </div>
+ </header>
+ 
+ <!-- Mobile Navigation -->
+ <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+ <ul class="mobile-nav-list">
+ <li><a href="/pages/our-story">Our Story</a></li>
+ <li><a href="/#products">Shop</a></li>
+ <li><a href="/pages/the-science">The Science</a></li>
+ <li><a href="/blogs/news">Journal</a></li>
+ <li><a href="/pages/family">Family</a></li>
+ <li><a href="faq-/pages/contact">FAQ</a></li>
+ <li><a href="/pages/contact">Contact</a></li>
+ </ul>
+ </nav>
+
+ <!-- ============================================
+ PAGE HERO
+ ============================================ -->
+ <section class="page-hero" aria-label="FAQ and Contact page hero">
+ <img 
+ src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/hero-landscape.jpg" 
+ alt="Serene hemp farm landscape at golden hour" 
+ class="page-hero-bg"
+ loading="eager"
+ >
+ <div class="page-hero-overlay" aria-hidden="true"></div>
+ <div class="page-hero-content">
+ <span class="page-hero-label">We're here for you</span>
+ <h1>Questions? We're Here to Help.</h1>
+ <p>From our family to yours, straight answers about nano-hemp wellness.</p>
+ </div>
+ </section>
+
+ <!-- ============================================
+ BREADCRUMB NAVIGATION
+ ============================================ -->
+ <nav class="breadcrumb" aria-label="Breadcrumb">
+ <div class="container">
+ <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+ <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+ <a itemprop="item" href="/"><span itemprop="name">Home</span></a>
+ <meta itemprop="position" content="1">
+ </li>
+ <li class="breadcrumb-separator" aria-hidden="true">/</li>
+ <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+ <span itemprop="name" class="breadcrumb-current">FAQ &amp; Contact</span>
+ <meta itemprop="position" content="2">
+ <link itemprop="item" href="faq-/pages/contact">
+ </li>
+ </ol>
+ </div>
+ </nav>
+
+ <!-- ============================================
+ MAIN CONTENT
+ ============================================ -->
+ <main id="main-content">
+
+ <!-- ============================================
+ FAQ SECTION
+ ============================================ -->
+ <section class="faq-section" id="faq" aria-labelledby="faq-heading" itemscope itemtype="https://schema.org/FAQPage">
+ <div class="container">
+ <div class="faq-header reveal">
+ <span class="section-label">Common Questions</span>
+ <h2 id="faq-heading">Frequently Asked Questions</h2>
+ <p>Everything you need to know about our nano-hemp products, from the science behind them to shipping and returns.</p>
+ </div>
+
+ <!-- Category: About Nano-Hemp -->
+ <div class="faq-category reveal">
+ <h3 class="faq-category-title">About Nano-Hemp</h3>
+ <div class="accordion" role="region" aria-label="About Nano-Hemp frequently asked questions">
+ 
+ <!-- FAQ 1 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-1"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">What is nano-hemp and how is it different from regular hemp?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-1">
+ <div class="accordion-answer">
+ <p>Nano-hemp is hemp that has been processed using our proprietary nano fragmentation technology to create particles smaller than 100 nanometers. To put that in perspective, traditional hemp particles range from 5,000 to 10,000 nanometers in size.</p>
+ <p>Because nano-hemp particles are so much smaller, your body can absorb them <strong>3-8 times more efficiently</strong> than regular hemp. That means:</p>
+ <ul>
+ <li><strong>Faster onset</strong>, you may notice effects within 15-30 minutes instead of 45-90 minutes</li>
+ <li><strong>Better bioavailability</strong>, more of the active compounds reach your system</li>
+ <li><strong>Longer duration</strong>, effects tend to last longer due to efficient cellular uptake</li>
+ <li><strong>Smaller serving sizes</strong>, you need less product to achieve the desired result</li>
+ </ul>
+ <p>Think of it like this: traditional hemp particles are like trying to push a beach ball through a keyhole, while nano-hemp particles are like pouring sand through it. Our technology breaks those beach balls into grains of sand.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 2 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-2"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">How does proprietary nano fragmentation technology work?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-2">
+ <div class="accordion-answer">
+ <p>Our proprietary nano fragmentation and encapsulation technology was developed by PhD scientists at a <strong>powerful West Coast biotech company</strong>. While the exact process is protected intellectual property, we can share the science at a high level:</p>
+ <ul>
+ <li>The process begins with premium, lab-tested hemp extract sourced from quality-grown hemp plants</li>
+ <li>Through advanced engineering, the hemp particles are broken down to nano-size, less than 100 nanometers in diameter, this is the fragmentation step</li>
+ <li>Each nano-particle is then individually encapsulated with a protective coating using our clean carrier ingredients</li>
+ <li>This encapsulation step is critical: without it, the tiny nano-particles would naturally reassemble into large clusters, undoing the fragmentation</li>
+ <li>The coating locks each particle at nano-size, preventing reassembly and maintaining maximum bioavailability</li>
+ <li>The result is a stable, water-compatible formula that your body can absorb 3-8x more efficiently</li>
+ </ul>
+ <p>What makes our technology different is the two-step approach: fragmentation creates the small particles, and encapsulation keeps them small. Both steps are essential, and both are validated through third-party laboratory testing on every batch we produce.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 3 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-3"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">How long does it take to feel the effects?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-3">
+ <div class="accordion-answer">
+ <p>Most people begin to feel the effects of our nano-hemp products within <strong>15-30 minutes</strong>. This is significantly faster than traditional hemp products, which typically take 45-90 minutes to take effect.</p>
+ <p>Several factors can influence how quickly you feel the effects:</p>
+ <ul>
+ <li><strong>Your metabolism</strong>, faster metabolisms may notice effects sooner</li>
+ <li><strong>Body weight</strong>, serving size can be adjusted based on individual needs</li>
+ <li><strong>Empty vs. full stomach</strong>, taking nano-hemp on an empty stomach may lead to faster absorption</li>
+ <li><strong>Consistency of use</strong>, many people report that effects build and improve with regular daily use over 1-2 weeks</li>
+ </ul>
+ <p>We always recommend being consistent with your routine for at least two weeks to give your body time to fully respond. Individual results vary, and finding your ideal serving size may take a little experimentation.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 4 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-4"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">Will nano-hemp show up on a drug test?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-4">
+ <div class="accordion-answer">
+ <p>Our products contain <strong>No THC</strong>. They are made with pure hemp extract that has been refined to remove all detectable levels of THC.</p>
+ <p>Every batch is <strong>third-party lab tested</strong> to verify THC content and ensure purity. These lab reports are available upon request.</p>
+ <p>However, we always recommend that if you are subject to drug testing for work or other reasons, you should inform your employer or testing administrator that you use hemp-based wellness products. While our products contain no THC, some highly sensitive tests may detect other hemp compounds. We want you to feel confident and informed in your choices.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Category: Products -->
+ <div class="faq-category reveal">
+ <h3 class="faq-category-title">Products</h3>
+ <div class="accordion" role="region" aria-label="Product frequently asked questions">
+ 
+ <!-- FAQ 5 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-5"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">What are the ingredients in your products?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-5">
+ <div class="accordion-answer">
+ <p>We believe in radical transparency. Every Wild Roots product contains exactly these four ingredients:</p>
+ <ul class="ingredient-list">
+ <li><span class="ingredient-dot"></span><strong>Nano-Hemp</strong>, Our proprietary nano-fragmented hemp extract</li>
+ <li><span class="ingredient-dot"></span><strong>Propylene Glycol</strong>, USP-grade carrier agent</li>
+ <li><span class="ingredient-dot"></span><strong>Vegetable Glycerin</strong>, Plant-derived base</li>
+ <li><span class="ingredient-dot"></span><strong>Distilled Water</strong>, Pure, clean hydration</li>
+ </ul>
+ <p>Our <strong>Deep Rest</strong> formula also contains <strong>CBN Isolate</strong> for evening support.</p>
+ <p>Nothing hidden, nothing extra. No artificial flavors, no fillers, no preservatives, no mystery ingredients. Just clean, effective nano-hemp wellness.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 6 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-6"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">How do I use the tinctures?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-6">
+ <div class="accordion-answer">
+ <p>Our tinctures are designed to be simple and flexible. Here are the two best ways to use them:</p>
+ <ul>
+ <li><strong>Sublingual (under the tongue):</strong> Fill the dropper to your desired amount, place the oil under your tongue, and hold it there for 30-60 seconds before swallowing. This allows the nano-hemp to absorb quickly through the tissues in your mouth.</li>
+ <li><strong>Add to a beverage:</strong> You can also add your serving to any drink of your choice, coffee, tea, smoothie, or even water. Because our nano-hemp is water-compatible, it mixes easily.</li>
+ </ul>
+ <p>Start with the recommended serving size listed on the bottle. Everyone's body is different, so feel free to adjust up or down based on how you feel. Consistency is key, we recommend taking your tincture at the same time each day for best results.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 7 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-7"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">Which product is right for me?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-7">
+ <div class="accordion-answer">
+ <p>With six products to choose from, there's something for everyone. Here's a quick guide:</p>
+ <ul>
+ <li><strong>Daily Roots</strong>, Our standard-strength tincture, perfect for everyday wellness and beginners just starting their nano-hemp journey</li>
+ <li><strong>Deep Roots</strong>, Our extra-strength formula for those who want maximum support and have experience with nano-hemp</li>
+ <li><strong>Deep Rest</strong>, Our evening formula with added CBN Isolate, designed for restful nights and evening routines</li>
+ <li><strong>Root Relief</strong>, A targeted roll-on for localized application where you need it most</li>
+ <li><strong>Wild Relief</strong>, An oil-based botanical spray for targeted topical relief</li>
+ <li><strong>Paw &amp; Root</strong>, Specifically formulated for your four-legged family members</li>
+ </ul>
+ <p>Not sure where to start? <strong>Daily Roots</strong> is our most popular choice for first-time users. You can always reach out to our family team for personalized recommendations.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 8 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-8"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">Are your products safe for pets?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-8">
+ <div class="accordion-answer">
+ <p>Yes, <strong>Paw &amp; Root Pet Drops</strong> are specifically formulated for pets with appropriate serving sizes and concentrations tailored for animals.</p>
+ <p>Our other products are designed and dosed for human use. We don't recommend giving human-formulated nano-hemp products to your pets, as the serving sizes and concentrations are not appropriate for them.</p>
+ <p>As with any new supplement for your pet, we recommend consulting your veterinarian before starting Paw &amp; Root. Every pet is different, and your vet knows your furry family member's health history best.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Category: Shipping & Returns -->
+ <div class="faq-category reveal">
+ <h3 class="faq-category-title">Shipping &amp; Returns</h3>
+ <div class="accordion" role="region" aria-label="Shipping and returns frequently asked questions">
+ 
+ <!-- FAQ 9 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-9"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">What are your shipping policies?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-9">
+ <div class="accordion-answer">
+ <p>We ship to all 50 states and offer several shipping options:</p>
+ <ul>
+
+ <li><strong>Standard shipping:</strong> 5-7 business days (calculated at checkout for orders under $50)</li>
+ <li><strong>Express shipping:</strong> Available at checkout for faster delivery</li>
+ </ul>
+ <p>All orders are processed within 1-2 business days. You'll receive a tracking number via email as soon as your order ships. We ship to all 50 states, and every package is carefully packed to ensure your products arrive in perfect condition.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 10 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-10"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">What is your return policy?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-10">
+ <div class="accordion-answer">
+ <p>We stand behind our products with a <strong>30-day satisfaction guarantee</strong>. If you're not completely satisfied with your purchase for any reason, contact our customer service team within 30 days of delivery for a full refund.</p>
+ <p>No hoops to jump through, no restocking fees. We simply want you to love your Wild Roots experience. To initiate a return, reach out to us at <a href="mailto:hello@wildrootshemp.com">hello@wildrootshemp.com</a> with your order number, and we'll take care of the rest.</p>
+ <p>Your satisfaction is our family's promise to you.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Category: Company -->
+ <div class="faq-category reveal">
+ <h3 class="faq-category-title">Company</h3>
+ <div class="accordion" role="region" aria-label="Company frequently asked questions">
+ 
+ <!-- FAQ 11 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-11"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">Where are your products made?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-11">
+ <div class="accordion-answer">
+ <p>All Wild Roots Hemp products are proudly <strong>Made in the USA</strong> in a <strong>GMP-certified facility</strong>. Every single batch is third-party lab tested for purity, potency, and safety before it ever reaches your doorstep.</p>
+ <p>Our hemp is sourced from premium, carefully selected growers who meet our rigorous standards for quality and sustainability. From raw material to finished bottle, every step of our process meets or exceeds industry best practices.</p>
+ <p>We started with roots in the Midwest and found our wild on the West Coast. Our values, hard work, honesty, doing right by family, come from the heartland. Our products are crafted with that same spirit, wherever the coast may find us.</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- FAQ 12 -->
+ <div class="accordion-item">
+ <button 
+ class="accordion-trigger" 
+ aria-expanded="false" 
+ aria-controls="faq-panel-12"
+ onclick="toggleAccordion(this)"
+ >
+ <span class="accordion-question">Do you partner with a biotech company?</span>
+ <span class="accordion-icon" aria-hidden="true">
+ <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+ </span>
+ </button>
+ <div class="accordion-panel" id="faq-panel-12">
+ <div class="accordion-answer">
+ <p>Yes! We partner with a <strong>West Coast biotech company</strong>. Here's how it works:</p>
+ <p>Our West Coast biotech partner is where the science happens, a team of PhD scientists and nano-technology experts who developed our proprietary nano fragmentation technology. They focus on research, innovation, and pushing the boundaries of what's possible with hemp science.</p>
+ <p><strong>Wild Roots Hemp</strong> is where that science meets your family. We're the consumer-facing brand that takes their groundbreaking technology and crafts it into the premium, easy-to-use products you know and love. Same technology, same rigorous standards, just wrapped in a family-friendly package.</p>
+ <p>Think of our biotech partner as the brilliant scientist in the lab, and Wild Roots as the family bringing that brilliance to your home. Two companies, one mission: helping people live better through the power of nano-hemp.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ </div>
+ </section>
+
+ <!-- ============================================
+ TRUST BAR
+ ============================================ -->
+ <section class="trust-bar" aria-label="Trust and guarantee badges">
+ <div class="container">
+ <div class="trust-bar-grid reveal">
+ <div class="trust-bar-item">
+ <div class="trust-bar-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+ </svg>
+ </div>
+ <span class="trust-bar-text">No THC<br>Guaranteed</span>
+ </div>
+ <div class="trust-bar-item">
+ <div class="trust-bar-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+ <polyline points="14 2 14 8 20 8"/>
+ <line x1="16" y1="13" x2="8" y2="13"/>
+ <line x1="16" y1="17" x2="8" y2="17"/>
+ </svg>
+ </div>
+ <span class="trust-bar-text">Third-Party<br>Lab Tested</span>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- ============================================
+ CONTACT SECTION
+ ============================================ -->
+ <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+ <div class="container">
+ <div class="contact-header reveal">
+ <span class="section-label" style="color: rgba(255,255,255,0.7);">Get in Touch</span>
+ <h2 id="contact-heading">Contact Our Family</h2>
+ <p>Have a question we didn't answer? Send us a message. We'd love to hear from you.</p>
+ </div>
+ 
+ <div class="contact-layout">
+ <!-- Contact Form -->
+ <div class="contact-form-wrapper reveal">
+ <form action="/contact" method="post" accept-charset="UTF-8" novalidate>
+ <div class="form-group">
+ <label for="contact-name" class="form-label">Your Name</label>
+ <input 
+ type="text" 
+ id="contact-name" 
+ name="contact[name]" 
+ class="form-input" 
+ placeholder="Jane Doe"
+ required
+ autocomplete="name"
+ >
+ </div>
+ 
+ <div class="form-group">
+ <label for="contact-email" class="form-label">Email Address</label>
+ <input 
+ type="email" 
+ id="contact-email" 
+ name="contact[email]" 
+ class="form-input" 
+ placeholder="jane@example.com"
+ required
+ autocomplete="email"
+ >
+ </div>
+ 
+ <div class="form-group">
+ <label for="contact-subject" class="form-label">Subject</label>
+ <select id="contact-subject" name="contact[subject]" class="form-select" required>
+ <option value="" disabled selected>Choose a topic...</option>
+ <option value="Order Question">Order Question</option>
+ <option value="Product Question">Product Question</option>
+ <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+ <option value="General">General</option>
+ </select>
+ </div>
+ 
+ <div class="form-group">
+ <label for="contact-message" class="form-label">Your Message</label>
+ <textarea 
+ id="contact-message" 
+ name="contact[body]" 
+ class="form-textarea" 
+ placeholder="How can we help you?"
+ required
+ ></textarea>
+ </div>
+ 
+ <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+ </form>
+ </div>
+ 
+ <!-- Contact Info & Family Note -->
+ <div class="contact-info-wrapper">
+ <!-- Contact Info Card -->
+ <div class="contact-info-card reveal reveal-delay-1">
+ <h3>Contact Information</h3>
+ 
+ <div class="contact-info-item">
+ <div class="contact-info-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+ <polyline points="22,6 12,13 2,6"/>
+ </svg>
+ </div>
+ <div class="contact-info-content">
+ <h4>Email Us</h4>
+ <p><a href="mailto:hello@wildrootshemp.com">hello@wildrootshemp.com</a></p>
+ </div>
+ </div>
+ 
+ <div class="contact-info-item">
+ <div class="contact-info-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <circle cx="12" cy="12" r="10"/>
+ <polyline points="12 6 12 12 16 14"/>
+ </svg>
+ </div>
+ <div class="contact-info-content">
+ <h4>Business Hours</h4>
+ <p>Monday - Friday<br>9:00 AM - 5:00 PM CST</p>
+ </div>
+ </div>
+ 
+ <div class="contact-info-item">
+ <div class="contact-info-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+ <circle cx="12" cy="12" r="3"/>
+ </svg>
+ </div>
+ <div class="contact-info-content">
+ <h4>Response Time</h4>
+ <p>Within 24 hours during business days</p>
+ </div>
+ </div>
+ 
+ <div class="contact-info-item">
+ <div class="contact-info-icon">
+ <svg viewBox="0 0 24 24" aria-hidden="true">
+ <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+ <circle cx="9" cy="7" r="4"/>
+ <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+ <path d="M16 3.13a4 4 0 010 7.75"/>
+ </svg>
+ </div>
+ <div class="contact-info-content">
+ <h4>Who You'll Hear From</h4>
+ <p>We're a small family team, please be patient!</p>
+ </div>
+ </div>
+ </div>
+ 
+ <!-- Family Note -->
+ <div class="family-note reveal reveal-delay-2">
+ <div class="family-note-image">
+ <img 
+ src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-cartoon-group.jpg" 
+ alt="Cartoon illustration of the Wild Roots family founders"
+ loading="lazy"
+ >
+ </div>
+ <h3>We Read Every Email. Seriously.</h3>
+ <p>Nick and Lucy personally answer customer questions. Your message goes <span class="family-note-highlight">straight to our family inbox</span>. We're not a call center, we're a family, and we treat every customer like one of our own.</p>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ </main>
+
+ <!-- ============================================
+ FOOTER
+ ============================================ -->
+ <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@wild.roots.hemp" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:#F5F0E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v10.5a4.5 4.5 0 1 1-3-4.24"/><path d="M15 4c.5 3 2.3 4.8 5 5"/></svg></a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="/products/daily-roots">Daily Roots</a></li>
+            <li><a href="/products/deep-roots">Deep Roots Extra Strength</a></li>
+            <li><a href="/products/deep-rest">Deep Rest Evening</a></li>
+            <li><a href="/products/root-relief">Root Relief Roll-On</a></li>
+            <li><a href="/products/wild-relief">Wild Relief Botanical Spray</a></li>
+            <li><a href="/products/paw-root">Paw &amp; Root Pet Drops</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/our-story">Our Story</a></li>
+            <li><a href="/pages/family">Family</a></li>
+            <li><a href="/pages/the-science">The Science</a></li>
+            <li><a href="/blogs/news">Journal</a></li>
+            <li><a href="faq-/pages/contact">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq-/pages/contact">Contact Us</a></li>
+            <li><a href="faq-/pages/contact">Shipping Info</a></li>
+            <li><a href="faq-/pages/contact">Privacy Policy</a></li>
+            <li><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">
+          <strong>FDA Disclaimer:</strong> These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before use if you are pregnant, nursing, or taking any medications.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Wild Roots Hemp. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+ <!-- ============================================
+ JAVASCRIPT
+ ============================================ -->
+ <script>
+ // ============================================
+ // ============================================
+// Mobile Menu Toggle (Firefox Mobile Compatible)
+// ============================================
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-list a');
+
+function toggleMobileMenu() {
+  menuToggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  var isOpen = mobileNav.classList.contains('active');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+// Touch handler for Firefox mobile (prevents 300ms delay)
+function handleMenuTouch(e) {
+  e.preventDefault();
+  toggleMobileMenu();
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('touchstart', handleMenuTouch, {passive: false});
+  menuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+mobileNavLinks.forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (mobileNav.classList.contains('active')) toggleMobileMenu();
+  });
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+window.addEventListener('resize', function() {
+  if (window.innerWidth >= 768 && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+// Close mobile menu on resize to desktop
+ window.addEventListener('resize', function() {
+ if (window.innerWidth >= 768) {
+ const menuToggle = document.querySelector('.menu-toggle');
+ const mobileNav = document.querySelector('.mobile-nav');
+ menuToggle.classList.remove('active');
+ mobileNav.classList.remove('active');
+ menuToggle.setAttribute('aria-expanded', 'false');
+ document.body.style.overflow = '';
+ }
+ });
+ 
+ // ============================================
+ // Accordion
+ // ============================================
+ function toggleAccordion(trigger) {
+ const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+ const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+ 
+ // Close all other accordions in the same accordion container
+ const parentAccordion = trigger.closest('.accordion');
+ if (parentAccordion) {
+ parentAccordion.querySelectorAll('.accordion-trigger[aria-expanded="true"]').forEach(function(openTrigger) {
+ if (openTrigger !== trigger) {
+ const openPanel = document.getElementById(openTrigger.getAttribute('aria-controls'));
+ openTrigger.setAttribute('aria-expanded', 'false');
+ openPanel.classList.remove('open');
+ }
+ });
+ }
+ 
+ // Toggle current accordion
+ trigger.setAttribute('aria-expanded', !isExpanded);
+ panel.classList.toggle('open');
+ }
+ 
+ // ============================================
+ // Scroll Reveal Animation
+ // ============================================
+ const revealElements = document.querySelectorAll('.reveal');
+ 
+ const revealObserver = new IntersectionObserver(function(entries) {
+ entries.forEach(function(entry) {
+ if (entry.isIntersecting) {
+ entry.target.classList.add('active');
+ revealObserver.unobserve(entry.target);
+ }
+ });
+ }, {
+ threshold: 0.1,
+ rootMargin: '0px 0px -50px 0px'
+ });
+ 
+ revealElements.forEach(function(el) {
+ revealObserver.observe(el);
+ });
+ 
+ // ============================================
+ // Header scroll behavior
+ // ============================================
+ const header = document.querySelector('.header');
+ let lastScrollY = window.scrollY;
+ 
+ window.addEventListener('scroll', function() {
+ if (window.scrollY > 100) {
+ header.style.boxShadow = '0 4px 20px rgba(45, 74, 62, 0.15)';
+ } else {
+ header.style.boxShadow = '';
+ }
+ lastScrollY = window.scrollY;
+ });
+ </script>
+
+ <!-- ============================================
+ SCHEMA.ORG JSON-LD
+ ============================================ -->
+ <script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@graph": [
+ {
+ "@type": "FAQPage",
+ "@id": "https://wildrootshemp.com/pages/faq-contact#faqpage",
+ "mainEntity": [
+ {
+ "@type": "Question",
+ "name": "What is nano-hemp and how is it different from regular hemp?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Nano-hemp is hemp that has been processed using proprietary nano fragmentation technology to create particles smaller than 100 nanometers. Traditional hemp particles range from 5,000 to 10,000 nanometers. Nano-hemp absorbs 3-8 times more efficiently than regular hemp, with faster onset (15-30 minutes vs 45-90 minutes), better bioavailability, longer duration, and smaller serving sizes needed."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "How does proprietary nano fragmentation technology work?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Our proprietary nano fragmentation and encapsulation technology was developed by PhD scientists at our West Coast biotech partner. Premium hemp extract is broken down to nano-size particles (less than 100 nanometers) through fragmentation, then each particle is individually encapsulated with a protective coating to prevent reassembly into large clusters. The result is a stable, water-compatible formula with 3-8x better absorption. Every batch is third-party lab tested."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "How long does it take to feel the effects?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Most people feel effects within 15-30 minutes. Factors include metabolism, body weight, empty vs full stomach, and consistency of use. Effects may build and improve with regular daily use over 1-2 weeks. Individual results vary."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "Will nano-hemp show up on a drug test?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Our products contain No THC and are third-party lab tested to verify. Every batch is tested for purity. We recommend informing your employer or testing administrator if you are subject to drug testing."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "What are the ingredients in your products?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "All products contain four ingredients: Nano-Hemp, Propylene Glycol, Vegetable Glycerin, and Distilled Water. Deep Rest also contains CBN Isolate. Nothing hidden, nothing extra. No artificial flavors, fillers, or preservatives."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "How do I use the tinctures?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Place the oil under your tongue and hold for 30-60 seconds before swallowing for fast absorption. Alternatively, add to any beverage. Start with the recommended serving size and adjust as needed. Consistency is key, take at the same time each day."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "Which product is right for me?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Daily Roots: everyday wellness for beginners. Deep Roots: maximum strength support. Deep Rest: evening formula with CBN for rest. Root Relief: targeted roll-on application. Wild Relief: on-the-go spray. Paw & Root: pet wellness formula."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "Are your products safe for pets?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Paw & Root Pet Drops are specifically formulated for pets with appropriate serving sizes. Other products are designed for human use. Consult your veterinarian before starting any pet supplement."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "What are your shipping policies?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Standard shipping: 5-7 business days. Express shipping available. Ships to all 50 states. Orders processed within 1-2 business days with tracking number provided."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "What is your return policy?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "30-day satisfaction guarantee with full refund if not satisfied. No restocking fees. Contact customer service at hello@wildrootshemp.com to initiate a return."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "Where are your products made?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "All products are Made in the USA in a GMP-certified facility. Every batch is third-party lab tested for purity, potency, and safety. Hemp is sourced from premium growers."
+ }
+ },
+ {
+ "@type": "Question",
+ "name": "Do you partner with a biotech company?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "Yes, our West Coast biotech partner is our technology partner. Our biotech partner focuses on nano-technology research and development with PhD scientists. Wild Roots Hemp brings that science to families as a consumer-focused brand using the same proprietary technology."
+ }
+ }
+ ]
+ },
+ {
+ "@type": "ContactPage",
+ "@id": "https://wildrootshemp.com/pages/faq-contact#contactpage",
+ "url": "https://wildrootshemp.com/pages/faq-contact",
+ "name": "Contact Wild Roots Hemp",
+ "description": "Contact our family team for questions about nano-hemp products, orders, wholesale, and general inquiries.",
+ "mainEntity": {
+ "@type": "Organization",
+ "name": "Wild Roots Hemp",
+ "email": "hello@wildrootshemp.com",
+ "contactPoint": {
+ "@type": "ContactPoint",
+ "contactType": "Customer Service",
+ "email": "hello@wildrootshemp.com",
+ "availableLanguage": "English",
+ "hoursAvailable": {
+ "@type": "OpeningHoursSpecification",
+ "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+ "opens": "09:00",
+ "closes": "17:00",
+ "timeZone": "America/Chicago"
+ }
+ }
+ }
+ },
+ {
+ "@type": "Organization",
+ "@id": "https://wildrootshemp.com/#organization",
+ "name": "Wild Roots Hemp",
+ "alternateName": "Wild Roots",
+ "url": "https://wildrootshemp.com",
+ "logo": {
+ "@type": "ImageObject",
+ "url": "https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png"
+ },
+ "description": "Family-founded premium nano-enhanced hemp wellness company. Midwest roots, West Coast wild. Proprietary nano fragmentation technology for 3-8x better absorption.",
+ "founder": [
+ {
+ "@type": "Person",
+ "name": "Nick and Lucy"
+ }
+ ],
+ "areaServed": {
+ "@type": "Country",
+ "name": "United States"
+ },
+ "sameAs": [
+ "https://instagram.com/wildrootshemp",
+ "https://facebook.com/wildrootshemp",
+ "https://twitter.com/wildrootshemp",
+ "https://pinterest.com/wildrootshemp"
+ ]
+ },
+ {
+ "@type": "BreadcrumbList",
+ "@id": "https://wildrootshemp.com/pages/faq-contact#breadcrumb",
+ "itemListElement": [
+ {
+ "@type": "ListItem",
+ "position": 1,
+ "name": "Home",
+ "item": "https://wildrootshemp.com/"
+ },
+ {
+ "@type": "ListItem",
+ "position": 2,
+ "name": "FAQ & Contact",
+ "item": "https://wildrootshemp.com/pages/faq-contact"
+ }
+ ]
+ }
+ ]
+ }
+ </script>
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}
