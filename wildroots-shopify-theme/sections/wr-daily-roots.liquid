@@ -1,0 +1,1823 @@
+<style>
+    :root {
+  --header-height: 80px;
+      --color-bg: #F7F5F0;
+      --color-bg-alt: #EAE6DC;
+      --color-sage: #9CAF88;
+      --color-sage-light: #B8C9A9;
+      --color-sage-dark: #7A8F6A;
+      --color-charcoal: #2C2C2C;
+      --color-charcoal-light: #3D3D3D;
+      --color-amber: #C8913A;
+      --color-amber-light: #D4A55A;
+      --color-amber-dark: #A6742E;
+      --color-cream: #FAF8F3;
+      --color-white: #FFFFFF;
+      --color-text: #2C2C2C;
+      --color-text-muted: #6B6B6B;
+      --color-text-light: #999999;
+      --color-border: rgba(44,44,44,0.1);
+      --color-border-hover: rgba(44,44,44,0.2);
+      --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-headline: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.3s ease;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --shadow-xl: 0 20px 60px rgba(0,0,0,0.12);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      /* Site-wide shared variables (used by header/footer/nav) */
+      --cream: #FAF8F3;
+      --deep-forest: #2D4A3E;
+      --sage-mist: #9CAF88;
+      --raw-umber: #6B4226;
+      --terra-cotta: #C17A5F;
+      --dark-brown: #3D2B1F;
+      --light-sage: #C5D4B8;
+      --max-width: 1200px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; transition: var(--transition-base); }
+    ul, ol { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button { border: none; background: none; cursor: pointer; font-family: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container-sm { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===================== HEADER ===================== */
+    .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background-color: var(--cream);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+  transition: var(--transition);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 68px;
+  width: auto;
+  display: block;
+}
+
+.nav-desktop {
+  display: none;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav-list a {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--dark-brown);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-list a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--terra-cotta);
+  transition: width 0.3s ease;
+}
+
+.nav-list a:hover::after {
+  width: 100%;
+}
+
+.nav-list a:hover {
+  color: var(--terra-cotta);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cart-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.cart-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--deep-forest);
+  transition: stroke 0.3s ease;
+}
+
+.cart-btn:hover svg {
+  stroke: var(--terra-cotta);
+}
+
+.cart-count {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  background-color: var(--terra-cotta);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--deep-forest);
+  transition: var(--transition);
+  transform-origin: center;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--cream);
+  z-index: 999;
+  padding: 2rem;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+}
+
+.mobile-nav.active {
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-nav-list a {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--deep-forest);
+  display: block;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--light-sage);
+}
+
+.mobile-nav-list a:hover {
+  color: var(--terra-cotta);
+}
+
+/* ===================== HERO ===================== */
+    .product-hero {
+      padding-top: 112px; padding-bottom: 0;
+      background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-cream) 100%);
+    }
+    .product-hero-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+    .product-hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      min-height: calc(100vh - 112px);
+    }
+    /* Product Image */
+    .hero-image-col {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .hero-image-wrapper {
+      position: relative; width: 100%; max-width: 520px;
+    }
+    .hero-image-bg {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(156,175,136,0.15) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .hero-product-img {
+      position: relative; z-index: 1; width: 100%;
+      height: 400px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .hero-product-img:hover { transform: scale(1.03); }
+    .hero-badges {
+      position: absolute; z-index: 2;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-badge.sage { background: rgba(156,175,136,0.2); color: var(--color-sage-dark); border: 1px solid rgba(156,175,136,0.3); }
+    .hero-badge.amber { background: rgba(200,145,58,0.15); color: var(--color-amber-dark); border: 1px solid rgba(200,145,58,0.25); }
+    .hero-badge svg { width: 12px; height: 12px; }
+
+    /* Content */
+    .hero-content-col { padding-left: 20px; }
+    .hero-category {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-sage-dark);
+      margin-bottom: 20px;
+    }
+    .hero-category svg { width: 16px; height: 16px; }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 600; line-height: 1.1;
+      color: var(--color-charcoal); letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .hero-subtitle {
+      font-family: var(--font-serif); font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--color-sage-dark); font-weight: 400;
+      margin-bottom: 24px;
+    }
+    .nano-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(156,175,136,0.15) 0%, rgba(45,74,62,0.08) 100%);
+      border: 1.5px solid rgba(156,175,136,0.4);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--deep-forest);
+      margin-bottom: 14px;
+    }
+    .nano-badge svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .hero-rating {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+    }
+    .hero-stars { display: flex; gap: 2px; }
+    .hero-stars svg { width: 18px; height: 18px; fill: var(--color-amber); }
+    .hero-rating-text {
+      font-size: 0.85rem; color: var(--color-text-muted);
+    }
+    .hero-rating-text strong { color: var(--color-charcoal); }
+    .hero-price-wrap {
+      display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px;
+    }
+    .hero-price {
+      font-family: var(--font-serif); font-size: 2.5rem;
+      font-weight: 600; color: var(--color-charcoal); letter-spacing: -0.02em;
+    }
+    .hero-price-note {
+      font-size: 0.85rem; color: var(--color-text-muted);
+    }
+    .hero-specs {
+      display: flex; gap: 24px; margin-bottom: 32px;
+    }
+    .hero-spec {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 4px;
+    }
+    .hero-spec-value {
+      font-family: var(--font-serif); font-size: 1.3rem;
+      font-weight: 600; color: var(--color-charcoal);
+    }
+    .hero-spec-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-text-muted);
+    }
+    .hero-spec-divider {
+      width: 1px; background: var(--color-border); align-self: stretch; min-height: 40px;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+    }
+    .quantity-selector {
+      display: flex; align-items: center; border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); overflow: hidden; background: var(--color-white);
+    }
+    .qty-btn {
+      width: 44px; height: 48px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 500; color: var(--color-text-muted);
+      transition: var(--transition-base); background: transparent;
+    }
+    .qty-btn:hover { background: var(--color-bg); color: var(--color-charcoal); }
+    .qty-value {
+      width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 0.95rem; border-left: 1px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
+    }
+    .btn-add-cart {
+      flex: 1; height: 52px;
+      background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-dark) 100%);
+      color: var(--color-white); font-family: var(--font-sans); font-size: 0.9rem;
+      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: var(--transition-base);
+      box-shadow: 0 4px 16px rgba(122,143,106,0.3);
+    }
+    .btn-add-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(122,143,106,0.4);
+    }
+    .btn-add-cart:active { transform: translateY(0); }
+    .btn-add-cart svg { width: 18px; height: 18px; }
+    .hero-guarantee {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8rem; color: var(--color-text-muted);
+    }
+    .hero-guarantee svg { width: 16px; height: 16px; stroke: var(--color-sage-dark); stroke-width: 2; }
+    .hero-payment-icons {
+      display: flex; align-items: center; gap: 12px; margin-top: 20px;
+      padding-top: 20px; border-top: 1px solid var(--color-border);
+    }
+    .hero-payment-icons span {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-text-light);
+    }
+    .hero-payment-icons img {
+      height: 20px; opacity: 0.5; filter: grayscale(1);
+    }
+
+    /* ===================== HOW IT WORKS ===================== */
+    .how-it-works {
+      padding: 100px 0; background: var(--color-white);
+      position: relative;
+    }
+    .section-header {
+      text-align: center; margin-bottom: 60px;
+    }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--color-sage-dark);
+      margin-bottom: 16px;
+    }
+    .section-eyebrow svg { width: 14px; height: 14px; }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 600; line-height: 1.2;
+      color: var(--color-charcoal); letter-spacing: -0.01em;
+      max-width: 600px; margin: 0 auto;
+    }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .how-card {
+      text-align: center; padding: 40px 24px;
+      border-radius: var(--radius-lg);
+      background: var(--color-cream);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-base); position: relative;
+    }
+    .how-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-border-hover);
+    }
+    .how-card-num {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-sage); color: var(--color-white);
+      font-size: 0.75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .how-card-icon {
+      width: 56px; height: 56px; margin: 0 auto 20px;
+      background: rgba(156,175,136,0.12); border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .how-card-icon svg { width: 28px; height: 28px; stroke: var(--color-sage-dark); stroke-width: 1.5; fill: none; }
+    .how-card h3 {
+      font-family: var(--font-serif); font-size: 1.2rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 10px;
+    }
+    .how-card p {
+      font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6;
+    }
+    .how-highlight {
+      margin-top: 48px; padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(156,175,136,0.08) 0%, rgba(200,145,58,0.06) 100%);
+      border-radius: var(--radius-lg); border: 1px solid rgba(156,175,136,0.2);
+      display: flex; align-items: center; gap: 16px; max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .how-highlight svg { width: 32px; height: 32px; flex-shrink: 0; stroke: var(--color-sage-dark); stroke-width: 1.5; fill: none; }
+    .how-highlight p {
+      font-size: 0.95rem; color: var(--color-text); line-height: 1.5;
+    }
+    .how-highlight strong { color: var(--color-sage-dark); }
+
+    /* ===================== KEY FEATURES ===================== */
+    .key-features {
+      padding: 100px 0; background: var(--color-bg);
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+    }
+    .feature-card {
+      text-align: center; padding: 40px 24px;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-base);
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-sage-light);
+    }
+    .feature-icon {
+      width: 64px; height: 64px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(156,175,136,0.15) 0%, rgba(156,175,136,0.05) 100%);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feature-icon svg { width: 30px; height: 30px; stroke: var(--color-sage-dark); stroke-width: 1.5; fill: none; }
+    .feature-card h3 {
+      font-family: var(--font-serif); font-size: 1.15rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5;
+    }
+
+    /* ===================== INGREDIENTS ===================== */
+    .ingredients {
+      padding: 100px 0; background: var(--color-white);
+    }
+    .ingredients-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      margin-bottom: 40px;
+    }
+    .ingredient-card {
+      text-align: center; padding: 36px 20px;
+      background: var(--color-cream);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-base); position: relative; overflow: hidden;
+    }
+    .ingredient-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--color-sage); opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .ingredient-card:hover::before { opacity: 1; }
+    .ingredient-card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow-md);
+    }
+    .ingredient-num {
+      font-family: var(--font-serif); font-size: 2.5rem;
+      font-weight: 700; color: #5F7453;
+      line-height: 1; margin-bottom: 12px;
+    }
+    .ingredient-card h3 {
+      font-family: var(--font-serif); font-size: 1.1rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 8px;
+    }
+    .ingredient-card p {
+      font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.5;
+    }
+    .ingredients-clean {
+      text-align: center; padding: 28px;
+      background: linear-gradient(135deg, rgba(156,175,136,0.06) 0%, rgba(200,145,58,0.04) 100%);
+      border-radius: var(--radius-lg); border: 1px dashed rgba(156,175,136,0.3);
+    }
+    .ingredients-clean p {
+      font-size: 0.9rem; color: var(--color-text-muted);
+    }
+    .ingredients-clean strong { color: var(--color-sage-dark); }
+
+    /* ===================== HOW TO USE ===================== */
+    .how-to-use {
+      padding: 100px 0; background: var(--color-bg);
+    }
+    .use-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      margin-bottom: 60px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .use-step {
+      position: relative; text-align: center;
+    }
+    .use-step:not(:last-child)::after {
+      content: ''; position: absolute; top: 32px; right: -24px;
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, var(--color-sage-light), transparent);
+    }
+    .use-step-num {
+      width: 64px; height: 64px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-sage-dark) 100%);
+      color: var(--color-white); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700;
+      box-shadow: 0 6px 20px rgba(122,143,106,0.3);
+    }
+    .use-step h3 {
+      font-family: var(--font-serif); font-size: 1.15rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 8px;
+    }
+    .use-step p {
+      font-size: 0.88rem; color: var(--color-text-muted); line-height: 1.6;
+    }
+    .use-lifestyle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-radius: var(--radius-xl); overflow: hidden;
+      box-shadow: var(--shadow-lg); background: var(--color-white);
+    }
+    .use-lifestyle-img {
+      min-height: 400px;
+      background: url('https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-daily-roots.jpg') center/cover no-repeat;
+      position: relative;
+    }
+    .use-lifestyle-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 70%, rgba(255,255,255,0.3));
+    }
+    .use-lifestyle-content {
+      padding: 60px 48px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .use-lifestyle-content h3 {
+      font-family: var(--font-serif); font-size: 1.5rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 16px;
+    }
+    .use-lifestyle-content p {
+      font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.7; margin-bottom: 20px;
+    }
+    .use-lifestyle-content ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    .use-lifestyle-content li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.9rem; color: var(--color-text);
+    }
+    .use-lifestyle-content li svg {
+      width: 18px; height: 18px; flex-shrink: 0;
+      stroke: var(--color-sage); stroke-width: 2; fill: none; margin-top: 2px;
+    }
+    .suggested-use-box {
+      margin-top: 28px; padding: 20px 24px;
+      background: var(--color-cream); border-radius: var(--radius-md);
+      border-left: 3px solid var(--color-sage);
+    }
+    .suggested-use-box h4 {
+      font-family: var(--font-serif); font-size: 0.9rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 6px;
+    }
+    .suggested-use-box p {
+      font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; margin: 0;
+    }
+
+    /* ===================== NANO DIFFERENCE ===================== */
+    .nano-difference {
+      padding: 100px 0; background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+    .nano-difference .section-eyebrow { color: var(--color-sage-light); }
+    .nano-difference .section-title { color: var(--color-white); }
+    .nano-comparison {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+      max-width: 900px; margin: 0 auto 48px;
+    }
+    .nano-card {
+      padding: 40px 36px; border-radius: var(--radius-lg);
+      position: relative; overflow: hidden;
+    }
+    .nano-card.nano {
+      background: linear-gradient(135deg, rgba(156,175,136,0.15) 0%, rgba(156,175,136,0.05) 100%);
+      border: 1px solid rgba(156,175,136,0.25);
+    }
+    .nano-card.traditional {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      opacity: 0.7;
+    }
+    .nano-card-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .nano-card.nano .nano-card-badge { background: rgba(156,175,136,0.2); color: var(--color-sage-light); }
+    .nano-card.traditional .nano-card-badge { background: rgba(255,255,255,0.06); color: var(--color-text-light); }
+    .nano-card h3 {
+      font-family: var(--font-serif); font-size: 1.4rem;
+      font-weight: 600; margin-bottom: 20px; color: var(--color-white);
+    }
+    .nano-card.traditional h3 { color: rgba(255,255,255,0.6); }
+    .nano-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .nano-card li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.9rem; line-height: 1.5;
+    }
+    .nano-card li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+    .nano-card.nano li { color: rgba(255,255,255,0.85); }
+    .nano-card.nano li svg { stroke: var(--color-sage-light); stroke-width: 2; fill: none; }
+    .nano-card.traditional li { color: rgba(255,255,255,0.4); }
+    .nano-card.traditional li svg { stroke: rgba(255,255,255,0.2); stroke-width: 2; }
+
+    .nano-vs-badge {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-amber); color: var(--color-white);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; display: flex; align-items: center; justify-content: center;
+      z-index: 2; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .nano-bottom-note {
+      text-align: center; max-width: 700px; margin: 0 auto;
+      padding: 28px 32px;
+      background: rgba(156,175,136,0.08); border-radius: var(--radius-lg);
+      border: 1px solid rgba(156,175,136,0.15);
+    }
+    .nano-bottom-note p {
+      font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7;
+    }
+    .nano-bottom-note strong { color: var(--color-sage-light); }
+
+    /* ===================== RELATED PRODUCTS ===================== */
+    .related-products {
+      padding: 100px 0; background: var(--color-white);
+    }
+    .related-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .related-card {
+      background: var(--color-cream); border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border); overflow: hidden;
+      transition: var(--transition-base);
+    }
+    .related-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-border-hover);
+    }
+    .related-card-img {
+      height: 220px; background: var(--color-bg);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .related-card-img img {
+      max-height: 180px; width: auto;
+      transition: transform 0.5s ease;
+    }
+    .related-card:hover .related-card-img img { transform: scale(1.05); }
+    .related-card-badge {
+      position: absolute; top: 12px; left: 12px;
+      padding: 4px 10px; border-radius: var(--radius-full);
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .related-card-badge.rollon { background: #C17A5F; color: #fff; }
+    .related-card-badge.spray { background: #9CAF88; color: #fff; }
+    .related-card-badge.strength { background: #2D4A3E; color: #fff; }
+    .related-card-badge.evening { background: #7B6BA8; color: #fff; }
+    .related-card-badge.daily { background: #C8913A; color: #fff; }
+    .related-card-badge.pet { background: #A67C52; color: #fff; }
+    .related-card-content { padding: 28px; }
+    .related-card-content h3 {
+      font-family: var(--font-serif); font-size: 1.15rem;
+      font-weight: 600; color: var(--color-charcoal); margin-bottom: 6px;
+    }
+    .related-card-content .related-desc {
+      font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 16px;
+    }
+    .related-meta {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .related-price {
+      font-family: var(--font-serif); font-size: 1.3rem;
+      font-weight: 600; color: var(--color-charcoal);
+    }
+    .related-btn {
+      padding: 8px 20px; border-radius: var(--radius-md);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; border: 1.5px solid var(--color-sage);
+      color: var(--color-sage-dark); background: transparent;
+      transition: var(--transition-base);
+    }
+    .related-btn:hover {
+      background: var(--color-sage); color: var(--color-white);
+    }
+
+    /* ===================== PRODUCT FAQ ===================== */
+    .product-faq {
+      padding: 100px 0; background: var(--color-bg);
+    }
+    .faq-list {
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .faq-item {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+    .faq-item:hover { border-color: var(--color-border-hover); }
+    .faq-item.active { border-color: var(--color-sage-light); }
+    .faq-question {
+      width: 100%; padding: 22px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      text-align: left; background: none; border: none; cursor: pointer;
+    }
+    .faq-question h3 {
+      font-family: var(--font-sans); font-size: 1rem;
+      font-weight: 600; color: var(--color-charcoal); padding-right: 20px;
+    }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-cream); display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0; transition: var(--transition-base);
+    }
+    .faq-icon svg { width: 14px; height: 14px; stroke: var(--color-sage-dark); stroke-width: 2; transition: transform 0.3s ease; }
+    .faq-item.active .faq-icon { background: var(--color-sage); }
+    .faq-item.active .faq-icon svg { stroke: var(--color-white); transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px; padding: 0 28px 22px;
+    }
+    .faq-answer p {
+      font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.65;
+    }
+
+    #MainContent .product-faq .faq-question h3 {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+    .faq-cta {
+      text-align: center; margin-top: 48px;
+      padding: 32px; background: var(--color-white);
+      border-radius: var(--radius-lg); border: 1px solid var(--color-border);
+    }
+    .faq-cta p {
+      font-size: 1rem; color: var(--color-text-muted); margin-bottom: 16px;
+    }
+    .faq-cta a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: var(--radius-md);
+      background: var(--color-charcoal); color: var(--color-white);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+      transition: var(--transition-base);
+    }
+    .faq-cta a:hover { background: var(--color-charcoal-light); transform: translateY(-2px); }
+
+    /* ===================== FOOTER ===================== */
+    .site-footer {
+      background: var(--color-charcoal); color: var(--color-white); padding-top: 80px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .footer-logo {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .footer-brand .footer-logo img {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 2px solid var(--color-sage); object-fit: cover;
+    }
+    .footer-brand .footer-logo span {
+      font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600;
+    }
+    .footer-brand p {
+      font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-col h4 {
+      font-family: var(--font-sans); font-size: 0.8rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 24px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      font-size: 0.9rem; color: rgba(255,255,255,0.6);
+      transition: var(--transition-base); display: inline-block;
+    }
+    .footer-col a:hover { color: var(--color-white); transform: translateX(4px); }
+    .footer-contact p {
+      font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .footer-contact a { color: var(--color-sage-light); }
+    .footer-contact a:hover { color: var(--color-white); }
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+    .footer-social a {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition-base);
+    }
+    .footer-social a:hover {
+      background: var(--color-sage); border-color: var(--color-sage);
+      transform: translateY(-2px);
+    }
+    .footer-social a svg { width: 16px; height: 16px; fill: none; stroke: rgba(255,255,255,0.6); stroke-width: 1.5; }
+    .footer-social a:hover svg { stroke: var(--color-white); }
+    .footer-disclaimer {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-disclaimer p {
+      font-size: 0.75rem; color: rgba(255,255,255,0.35); line-height: 1.7;
+      text-align: center; max-width: 900px; margin: 0 auto;
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem; color: rgba(255,255,255,0.35);
+    }
+    .footer-payment { display: flex; align-items: center; gap: 8px; }
+    .footer-payment img { height: 22px; opacity: 0.4; filter: grayscale(1) brightness(2); }
+
+    /* ===================== ANIMATIONS ===================== */
+    .fade-up {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 1024px) {
+      .header-nav { display: none; }
+      .mobile-menu-btn { display: block; }
+      .product-hero-grid { grid-template-columns: 1fr; gap: 40px; min-height: auto; }
+      .hero-image-col { order: -1; }
+      .hero-content-col { padding-left: 0; text-align: center; }
+      .hero-specs { justify-content: center; }
+      .hero-actions { justify-content: center; flex-wrap: wrap; }
+      .hero-rating { justify-content: center; }
+      .hero-price-wrap { justify-content: center; }
+      .hero-payment-icons { justify-content: center; }
+      .hero-guarantee { justify-content: center; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .ingredients-grid { grid-template-columns: repeat(2, 1fr); }
+      .use-steps { grid-template-columns: repeat(2, 1fr); }
+      .use-step:nth-child(2)::after { display: none; }
+      .use-lifestyle { grid-template-columns: 1fr; }
+      .use-lifestyle-img { min-height: 280px; }
+      .nano-comparison { grid-template-columns: 1fr; }
+      .nano-vs-badge { display: none; }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .how-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 20px; height: 64px; }
+      .product-hero-inner { padding: 0 20px; }
+      .product-hero { padding-top: 80px; }
+      .hero-title { font-size: 2rem; }
+      .hero-price { font-size: 2rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .ingredients-grid { grid-template-columns: 1fr; }
+      .use-steps { grid-template-columns: 1fr; }
+      .use-step::after { display: none !important; }
+      .related-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .hero-image-bg { width: 260px; height: 260px; }
+      .use-lifestyle-content { padding: 36px 24px; }
+    }
+
+    /* ===================== SCROLLBAR ===================== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--color-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--color-sage-light); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-sage); }
+  
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .product-hero-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .product-hero {
+    padding: 5rem 0;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .nano-difference-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .ingredients-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+    .product-gallery { margin-top: 2.5rem; }
+    .gallery-label { font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; color: var(--raw-umber); margin-bottom: 0.75rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .gallery-grid img { width: 100%; border-radius: 8px; object-fit: cover; aspect-ratio: 4/3; transition: transform 0.3s ease; cursor: pointer; }
+    .gallery-grid img:hover { transform: scale(1.03); }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; } }
+
+    /* Product Thumbnail Gallery */
+    .product-thumbnails {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .product-thumbnails .thumb {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+      background: var(--cream);
+      padding: 2px;
+    }
+    .product-thumbnails .thumb:hover,
+    .product-thumbnails .thumb.active {
+      border-color: var(--terra-cotta);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    @media (max-width: 768px) {
+      .product-thumbnails .thumb {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+  </style>
+
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
+        <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+      </a>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/pages/our-story">Our Story</a></li>
+          <li><a href="/#products">Shop</a></li>
+          <li><a href="/pages/the-science">The Science</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+          <li><a href="/pages/family">Family</a></li>
+        <li><a href="faq-/pages/contact">FAQ</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="cart-btn" id="cartBtn" aria-label="Shopping cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12L6 6z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+            <path d="M6 6L5 3H2"/>
+          </svg>
+          <span class="cart-count" id="cartCount" style="display:none;">0</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MOBILE NAV ===================== -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <ul class="mobile-nav-list">
+      <li><a href="/pages/our-story">Our Story</a></li>
+      <li><a href="/#products">Shop</a></li>
+      <li><a href="/pages/the-science">The Science</a></li>
+      <li><a href="/blogs/news">Journal</a></li>
+      <li><a href="/pages/family">Family</a></li>
+      <li><a href="faq-/pages/contact">FAQ</a></li>
+      <li><a href="/pages/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="product-hero" id="hero">
+    <div class="product-hero-inner">
+      <div class="product-hero-grid">
+        <div class="hero-image-col">
+          <div class="hero-image-wrapper">
+            <div class="hero-image-bg"></div>
+            <img id="mainProductImage" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png" alt="Daily Roots Nano-Hemp Standard Strength - 300MG amber glass dropper bottle" class="hero-product-img" loading="eager">
+            <div class="product-thumbnails">
+              <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png" alt="Daily Roots Standard Strength" class="thumb active" onclick="swapMainImage(this)">
+              <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-daily-roots-morning.jpg" alt="Daily Roots morning routine" class="thumb" onclick="swapMainImage(this)">
+              <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-daily-roots-entryway.jpg" alt="Daily Roots in entryway" class="thumb" onclick="swapMainImage(this)">
+              <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/mockup-daily-roots-office.jpg" alt="Daily Roots in office" class="thumb" onclick="swapMainImage(this)">
+            </div>
+            <div class="hero-badges" style="top: 20px; right: -10px;">
+              <span class="hero-badge sage">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                No THC
+              </span>
+              <span class="hero-badge amber">300MG</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-content-col">
+          <div class="hero-category">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Tincture, Standard Strength
+          </div>
+          <h1 class="hero-title">Daily Roots Nano-Hemp</h1>
+          <p class="hero-subtitle" itemprop="description">Standard Strength. Daily Wellness</p>
+<div class="nano-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-8.5-6.5l2.8-2.8m11.4 0l2.8 2.8M2 12h4m12 0h4M5.5 5.5l2.8 2.8m7.4 0l2.8-2.8"/></svg>
+          Nano-Enhanced
+        </div>
+          <div class="hero-rating">
+            <div class="hero-stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <span class="hero-rating-text"><strong>4.9</strong> (127 reviews)</span>
+          </div>
+          <div class="hero-price-wrap">
+            <span class="hero-price">$65.00</span>
+
+          </div>
+          <div class="hero-specs">
+            <div class="hero-spec">
+              <span class="hero-spec-value">300MG</span>
+              <span class="hero-spec-label">Total Nano-Hemp</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec">
+              <span class="hero-spec-value">30ml</span>
+              <span class="hero-spec-label">1 fl oz</span>
+            </div>
+            <div class="hero-spec-divider"></div>
+            <div class="hero-spec">
+              <span class="hero-spec-value">10MG</span>
+              <span class="hero-spec-label">Per Serving</span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <div class="quantity-selector">
+              <button class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
+              <span class="qty-value" id="qtyValue">1</span>
+              <button class="qty-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+            </div>
+            <button class="btn-add-cart" id="addToCart" aria-label="Add Daily Roots to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              Add to Cart $65.00
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAMILY USAGE ===================== -->
+  <section class="family-usage" id="family-usage" style="background: linear-gradient(135deg, #fff 0%, var(--color-cream) 100%); padding: 5rem 0; border-top: 1px solid rgba(196, 168, 130, 0.2);">
+    <div style="max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-family: var(--font-headline); font-weight: 900; font-size: clamp(1.75rem, 3vw, 2.5rem); color: #2D4A3E; margin-bottom: 0.5rem;">How Our Family Uses Daily Roots</h2>
+        <p style="font-family: var(--font-body); font-weight: 300; color: #8B7355; max-width: 550px; margin: 0 auto;">Real stories from the Wild Roots family.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+        <div style="text-align: center; padding: 2rem; background: #F5F0E8; border-radius: 12px;">
+          <a href="/pages/will" style="display: block; text-decoration: none;">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-son-basketball.jpg" alt="Will, 14-year-old athlete" style="width: 120px; height: 120px; object-fit: cover; object-position: top; border-radius: 50%; margin: 0 auto 1rem; display: block; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)';">
+            <h3 style="font-family: var(--font-serif); color: #2D4A3E; margin: 0;">Will, 14 &amp; Athlete</h3>
+          </a>
+          <p style="font-size: 0.9rem; color: #8B7355; line-height: 1.5; margin-top: 0.75rem;">Takes Daily Roots after football games and basketball tournaments. Also uses it after surf sessions and mountain bike rides. "I am pretty much always on the move. Daily Roots helps me recover so I can keep doing what I love."</p>
+        </div>
+        <div style="text-align: center; padding: 2rem; background: #F5F0E8; border-radius: 12px;">
+          <a href="/pages/nick" style="display: block; text-decoration: none;">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-dad-runner.jpg" alt="Nick" style="width: 120px; height: 120px; object-fit: cover; object-position: top; border-radius: 50%; margin: 0 auto 1rem; display: block; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.03)';this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)';">
+            <h3 style="font-family: var(--font-serif); color: #2D4A3E; margin: 0;">Nick, Dad &amp; Runner</h3>
+          </a>
+          <p style="font-size: 0.9rem; color: #8B7355; line-height: 1.5; margin-top: 0.75rem;">Nick keeps Daily Roots in his gym bag for a quick dropper after his morning runs. "After a 10-mile trail run, Daily Roots is part of my cool-down ritual. It keeps me consistent."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NANO-HEMP DIFFERENCE ===================== -->
+  <section class="nano-difference" id="nano-difference">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          The Nano Advantage
+        </div>
+        <h2 class="section-title">Why Daily Nano-Hemp Outperforms Traditional</h2>
+      </div>
+      <div class="nano-comparison">
+        <div class="nano-card nano fade-up">
+          <div class="nano-card-badge">Daily Roots</div>
+          <h3>Nano-Hemp Daily Approach</h3>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Consistent 10MG daily serving
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              3-8x higher absorption rate
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Effects felt in 15-30 minutes
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Gentle on your system
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Sustained wellness build-up over time
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Every drop counts, near-complete bioavailability
+            </li>
+          </ul>
+        </div>
+        <div class="nano-card traditional fade-up">
+          <div class="nano-card-badge">Traditional</div>
+          <h3>Traditional Hemp Oil</h3>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Sporadic high-dose approach
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Low absorption (much passes unused)
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Effects take 1-2 hours
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Can feel heavy or overwhelming
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Inconsistent results
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Much of the serving is wasted
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="nano-bottom-note fade-up">
+        <p><strong>Consistent low-dose with high absorption beats sporadic high-dose with poor absorption.</strong> Daily Roots gives your body a steady supply of nano-enhanced hemp, so you feel the difference every single day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY NANO MATTERS ===================== -->
+  <section style="padding: 80px 0; background: linear-gradient(135deg, var(--deep-forest) 0%, #1e362d 100%); color: #fff;">
+    <div style="max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; text-align: center;">
+      <h2 style="font-family: var(--font-headline); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; margin-bottom: 1rem; color: #F5F0E8;">Why Nano Matters</h2>
+      <p style="font-size: 1.1rem; max-width: 700px; margin: 0 auto 2rem; opacity: 0.85;">Our proprietary nano fragmentation technology breaks hemp into particles under 100 nanometers. That's roughly 800x smaller than the width of a human hair. The result? 3-8x better absorption than traditional hemp oil.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto;">
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-headline); font-size: 2.5rem; font-weight: 700; color: var(--sage-mist);">3-8x</div>
+          <div style="font-size: 0.85rem; opacity: 0.7;">Better Absorption</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-headline); font-size: 2.5rem; font-weight: 700; color: var(--sage-mist);">15-30</div>
+          <div style="font-size: 0.85rem; opacity: 0.7;">Minute Onset</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-headline); font-size: 2.5rem; font-weight: 700; color: var(--sage-mist);">&lt;100nm</div>
+          <div style="font-size: 0.85rem; opacity: 0.7;">Particle Size</div>
+        </div>
+      </div>
+      <a href="/pages/the-science" style="display: inline-block; margin-top: 2.5rem; padding: 1rem 2.5rem; border: 2px solid var(--sage-mist); color: var(--sage-mist); text-decoration: none; font-weight: 700; border-radius: 8px; transition: all 0.3s;">Learn the Science &rarr;</a>
+    </div>
+  </section>
+
+  <!-- ===================== KEY FEATURES ===================== -->
+  <section class="key-features" id="features">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Why Choose Daily Roots
+        </div>
+        <h2 class="section-title">Your Foundation for Daily Wellness</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-up">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>300MG / 10MG Per Serving</h3>
+          <p>Precisely formulated to deliver gentle, effective support. 30 servings per bottle for a full month of daily wellness.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3a4 4 0 014 4c0 2.5-2 4.5-4 8-2-3.5-4-5.5-4-8a4 4 0 014-4z"/><circle cx="12" cy="7" r="1"/></svg>
+          </div>
+          <h3>Perfect for Beginners</h3>
+          <p>Low, approachable serving size makes Daily Roots the ideal first step into nano-hemp wellness. No guesswork, just results.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>Daily Wellness Ritual</h3>
+          <p>Designed for seamless integration into your morning routine. Add to coffee, smoothies, or take sublingually, same time every day.</p>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>
+          </div>
+          <h3>3-8x Better Absorption</h3>
+          <p>Proprietary nano-fragmentation technology delivers dramatically superior bioavailability compared to traditional tinctures.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INGREDIENTS ===================== -->
+  <section class="ingredients" id="ingredients">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          Simple &amp; Clean
+        </div>
+        <h2 class="section-title">Only What You Need, Nothing You Don't</h2>
+      </div>
+      <div class="ingredients-grid">
+        <div class="ingredient-card fade-up">
+          <div class="ingredient-num">01</div>
+          <h3>Nano-Hemp</h3>
+          <p>Proprietary nano-fragmented hemp extract for maximum absorption and fast-acting support. The foundation of our formula.</p>
+        </div>
+        <div class="ingredient-card fade-up">
+          <div class="ingredient-num">02</div>
+          <h3>Distilled Water</h3>
+          <p>Ultra-purified water ensures a clean, stable base for the nano-emulsion, free from impurities and contaminants.</p>
+        </div>
+        <div class="ingredient-card fade-up">
+          <div class="ingredient-num">03</div>
+          <h3>Vegetable Glycerin</h3>
+          <p>Plant-derived glycerin adds smoothness and a subtle natural sweetness while helping stabilize the nano-particles.</p>
+        </div>
+        <div class="ingredient-card fade-up">
+          <div class="ingredient-num">04</div>
+          <h3>Propylene Glycol</h3>
+          <p>Pharmaceutical-grade carrier that ensures even distribution of nano-hemp particles throughout every dropper.</p>
+        </div>
+      </div>
+      <div class="ingredients-clean fade-up">
+        <p>No artificial flavors. No unnecessary additives. Just four clean ingredients working in harmony.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW TO USE ===================== -->
+  <section class="how-to-use" id="how-to-use">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          Simple Ritual
+        </div>
+        <h2 class="section-title">How to Use Daily Roots</h2>
+      </div>
+      <div class="use-steps">
+        <div class="use-step fade-up">
+          <div class="use-step-num">1</div>
+          <h3>Fill Dropper</h3>
+          <p>Squeeze the rubber bulb and fill the dropper to the 1ml mark for a precise 10MG serving every time.</p>
+        </div>
+        <div class="use-step fade-up">
+          <div class="use-step-num">2</div>
+          <h3>Add or Hold</h3>
+          <p>Add to your morning coffee, smoothie, or tea. Or place under your tongue for 30 seconds, then swallow.</p>
+        </div>
+        <div class="use-step fade-up">
+          <div class="use-step-num">3</div>
+          <h3>Use Daily</h3>
+          <p>Consistency matters. Use at the same time each day to build up lasting wellness support over time.</p>
+        </div>
+      </div>
+      <div class="use-lifestyle fade-up">
+        <div class="use-lifestyle-img" role="img" aria-label="Daily Roots lifestyle - adding nano-hemp tincture to morning coffee"></div>
+        <div class="use-lifestyle-content">
+          <h3>Make It Part of Your Morning</h3>
+          <p>The easiest wellness habit you'll ever build. Daily Roots blends seamlessly into beverages you already enjoy.</p>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Stir into your morning coffee or tea
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Blend into your favorite smoothie
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Take sublingually for fastest absorption
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              No strong taste, no oily residue
+            </li>
+          </ul>
+          <div class="suggested-use-box">
+            <h4>Suggested Use</h4>
+            <p>Squeeze one dropper into the liquid of your choice, stir, and enjoy. OR place desired amount under your tongue for 30 seconds, then swallow. Use daily at the same time for best results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          How It Works
+        </div>
+        <h2 class="section-title">Consistency Is the Key to Wellness</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-card fade-up">
+          <div class="how-card-num">1</div>
+          <div class="how-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3>Nano-Fragmentation</h3>
+          <p>Our proprietary technology breaks hemp particles down to 40-80 nanometers, created in partnership with a powerful West Coast biotech company.</p>
+        </div>
+        <div class="how-card fade-up">
+          <div class="how-card-num">2</div>
+          <div class="how-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Rapid Absorption</h3>
+          <p>Nano-sized particles bypass normal digestive barriers, entering your system quickly for fast-acting support you can feel.</p>
+        </div>
+        <div class="how-card fade-up">
+          <div class="how-card-num">3</div>
+          <div class="how-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <h3>Daily Build-Up</h3>
+          <p>Small, regular doses of nano-hemp accumulate in your system over time, creating a foundation of sustained everyday wellness support.</p>
+        </div>
+      </div>
+      <div class="how-highlight fade-up">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <p><strong>Daily consistency is key.</strong> Nano-particles ensure every drop counts. Unlike traditional tinctures where much of the active compounds pass through unused, nano-fragmentation maximizes what your body receives from each serving.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RELATED PRODUCTS ===================== -->
+  <section class="related-products" id="related">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          Complete Your Routine
+        </div>
+        <h2 class="section-title">You Might Also Love</h2>
+      </div>
+      <div class="related-grid">
+        <a href="/products/deep-roots" class="related-card fade-up">
+          <div class="related-card-img">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-roots-cutout.png" alt="Deep Roots Extra Strength 750MG Nano-Hemp Tincture" loading="lazy">
+            <span class="related-card-badge strength">Extra Strength</span>
+          </div>
+          <div class="related-card-content">
+            <h3>Deep Roots Extra Strength</h3>
+            <p class="related-desc">750MG nano-hemp for those who need deeper, more concentrated daily support.</p>
+            <div class="related-meta">
+              <span class="related-price">$110.00</span>
+              <span class="related-btn">View Product</span>
+            </div>
+          </div>
+        </a>
+        <a href="/products/deep-rest" class="related-card fade-up">
+          <div class="related-card-img">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" alt="Deep Rest Evening 500MG Nano-Hemp + CBN Tincture" loading="lazy">
+            <span class="related-card-badge evening">Evening Formula</span>
+          </div>
+          <div class="related-card-content">
+            <h3>Deep Rest Evening</h3>
+            <p class="related-desc">500MG nano-hemp with CBN isolate for your evening wind-down ritual.</p>
+            <div class="related-meta">
+              <span class="related-price">$70.00</span>
+              <span class="related-btn">View Product</span>
+            </div>
+          </div>
+        </a>
+        <a href="/products/wild-relief" class="related-card fade-up">
+          <div class="related-card-img">
+            <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-mist-cutout.png" alt="Wild Relief Botanical Spray 300MG Nano-Hemp" loading="lazy">
+            <span class="related-card-badge spray">Botanical Spray</span>
+          </div>
+          <div class="related-card-content">
+            <h3>Wild Relief Spray</h3>
+            <p class="related-desc">300MG nano-hemp botanical spray for fast-absorbing relief on the go.</p>
+            <div class="related-meta">
+              <span class="related-price">$70.00</span>
+              <span class="related-btn">View Product</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRODUCT FAQ ===================== -->
+  <section class="product-faq" id="faq">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Questions &amp; Answers
+        </div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item fade-up">
+          <button class="faq-question" aria-expanded="false">
+            <h3>Is this good for beginners?</h3>
+            <div class="faq-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. Daily Roots Standard Strength was specifically designed as the ideal starting point for anyone new to nano-hemp. At 10MG per serving, it offers a gentle introduction that lets you experience the benefits of daily nano-hemp without overwhelming your system. Many of our long-time customers started right here.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-up">
+          <button class="faq-question" aria-expanded="false">
+            <h3>How long until I notice effects?</h3>
+            <div class="faq-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Because Daily Roots uses nano-fragmented hemp particles, many people notice a sense of calm and balance within 15-30 minutes. For sustained wellness support, we recommend using Daily Roots consistently for at least 2-3 weeks, as the benefits of daily nano-hemp build up over time with regular use.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-up">
+          <button class="faq-question" aria-expanded="false">
+            <h3>Can I take more than one serving?</h3>
+            <div class="faq-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Daily Roots is designed for once-daily use at 10MG per serving. If you feel you need a higher serving, we recommend exploring <a href="/products/deep-roots" style="color: var(--color-sage-dark); text-decoration: underline;">Deep Roots Extra Strength</a> (25MG per serving) for a more concentrated option rather than increasing your daily serving amount.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-up">
+          <button class="faq-question" aria-expanded="false">
+            <h3>Should I take it with food?</h3>
+            <div class="faq-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Daily Roots can be taken with or without food. Many customers enjoy adding it to their morning coffee, smoothie, or tea. You can also take it sublingually (under the tongue) for faster absorption. The nano-fragmentation ensures excellent absorption regardless of how you take it.</p>
+          </div>
+        </div>
+      </div>
+      <div class="faq-cta fade-up">
+        <p>Still have questions? We're here to help.</p>
+        <a href="faq-/pages/contact">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Visit Our Full FAQ
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@wild.roots.hemp" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:#F5F0E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v10.5a4.5 4.5 0 1 1-3-4.24"/><path d="M15 4c.5 3 2.3 4.8 5 5"/></svg></a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/wrhemp" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="/products/daily-roots">Daily Roots</a></li>
+            <li><a href="/products/deep-roots">Deep Roots Extra Strength</a></li>
+            <li><a href="/products/deep-rest">Deep Rest Evening</a></li>
+            <li><a href="/products/root-relief">Root Relief Roll-On</a></li>
+            <li><a href="/products/wild-relief">Wild Relief Botanical Spray</a></li>
+            <li><a href="/products/paw-root">Paw &amp; Root Pet Drops</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/our-story">Our Story</a></li>
+            <li><a href="/pages/family">Family</a></li>
+            <li><a href="/pages/the-science">The Science</a></li>
+            <li><a href="/blogs/news">Journal</a></li>
+            <li><a href="faq-/pages/contact">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq-/pages/contact">Contact Us</a></li>
+            <li><a href="faq-/pages/contact">Shipping Info</a></li>
+            <li><a href="faq-/pages/contact">Privacy Policy</a></li>
+            <li><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">
+          <strong>FDA Disclaimer:</strong> These statements have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Consult your physician before use if you are pregnant, nursing, or taking any medications.
+        </p>
+        <p class="footer-copyright">&copy; 2026 Wild Roots Hemp. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+
+// ============================================
+// Mobile Menu Toggle (Firefox Mobile Compatible)
+// ============================================
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-list a');
+
+function toggleMobileMenu() {
+  menuToggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  var isOpen = mobileNav.classList.contains('active');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function handleMenuTouch(e) {
+  e.preventDefault();
+  toggleMobileMenu();
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('touchstart', handleMenuTouch, {passive: false});
+  menuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+mobileNavLinks.forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (mobileNav.classList.contains('active')) toggleMobileMenu();
+  });
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+window.addEventListener('resize', function() {
+  if (window.innerWidth >= 768 && mobileNav && mobileNav.classList.contains('active')) {
+    toggleMobileMenu();
+  }
+});
+
+
+</script>
+<script>
+  // Fade-up animation observer
+  var fadeObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    fadeObserver.observe(el);
+  });
+
+// ============================================
+// FAQ Accordion Toggle
+// ============================================
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    var isOpen = item.classList.contains('active');
+    // Close all other items
+    document.querySelectorAll('.faq-item.active').forEach(function(openItem) {
+      openItem.classList.remove('active');
+      openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Toggle current item
+    if (!isOpen) {
+      item.classList.add('active');
+      this.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// Product Image Gallery - Thumbnail Swap
+function swapMainImage(thumb) {
+  var main = document.getElementById('mainProductImage');
+  if (main && thumb.src) {
+    main.src = thumb.src;
+    main.alt = thumb.alt;
+    document.querySelectorAll('.product-thumbnails .thumb').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    thumb.classList.add('active');
+  }
+}
+</script>
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}
