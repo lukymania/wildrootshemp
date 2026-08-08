@@ -1,0 +1,670 @@
+<style>
+:root {
+  --deep-forest: #2D4A3E;
+  --sage-mist: #9CAF88;
+  --raw-umber: #6B4226;
+  --terra-cotta: #C17A5F;
+  --cream: #F5F0E8;
+  --dark-brown: #3D2B1F;
+  --light-sage: #C5D4B8;
+  --font-headline: 'Playfair Display', serif;
+  --font-body: 'Lato', sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
+  --max-width: 780px;
+  --header-height: 80px;
+      --forest-deep: #0f241c;
+    }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--dark-brown);
+  background-color: var(--cream);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-headline); font-weight: 700; line-height: 1.25; color: var(--deep-forest); }
+h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-top: 2.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+p { margin-bottom: 1.2rem; font-size: 1.05rem; }
+a { color: var(--terra-cotta); text-decoration: underline; text-underline-offset: 3px; transition: all 0.3s ease; }
+a:hover { color: var(--raw-umber); }
+img { max-width: 100%; height: auto; display: block; border-radius: 12px; }
+
+/* Header */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--header-height);
+  background-color: var(--cream); z-index: 1000;
+  border-bottom: 1px solid rgba(45, 74, 62, 0.12);
+}
+.header-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo-img { height: 68px; width: auto; display: block; }
+
+/* Blog Layout */
+.blog-hero {
+  margin-top: var(--header-height);
+  background: linear-gradient(135deg, var(--deep-forest) 0%, #1e362d 100%);
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+}
+.blog-hero-label {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--sage-mist);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.blog-hero h1 {
+  color: #fff;
+  max-width: 700px;
+  margin: 0 auto 1rem;
+}
+.blog-hero-meta {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+}
+.blog-hero-meta span { margin: 0 0.75rem; }
+
+.blog-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* Featured Image */
+.blog-featured-image {
+  margin: -2rem auto 3rem;
+  max-width: 700px;
+  text-align: center;
+}
+.blog-featured-image img {
+  width: 100%;
+  box-shadow: 0 16px 48px rgba(45, 74, 62, 0.15);
+}
+.blog-featured-caption {
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--raw-umber);
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}
+
+/* Lead paragraph */
+.blog-lead {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--terra-cotta);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--light-sage);
+}
+
+/* Blockquote */
+.blog-blockquote {
+  background: linear-gradient(135deg, rgba(156,175,136,0.12), rgba(197,212,184,0.15));
+  border-left: 4px solid var(--sage-mist);
+  padding: 2rem 2rem 2rem 2.5rem;
+  margin: 2rem 0;
+  border-radius: 0 12px 12px 0;
+  position: relative;
+}
+.blog-blockquote::before {
+  content: '"';
+  font-family: var(--font-headline);
+  font-size: 4rem;
+  color: var(--sage-mist);
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  line-height: 1;
+}
+.blog-blockquote p {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--deep-forest);
+  margin-bottom: 0.75rem;
+  padding-top: 1rem;
+}
+.blog-blockquote cite {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--terra-cotta);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Study Citation Box */
+.study-box {
+  background: #fff;
+  border: 1px solid rgba(45,74,62,0.12);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+.study-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: linear-gradient(to bottom, var(--terra-cotta), var(--sage-mist));
+  border-radius: 12px 0 0 12px;
+}
+.study-box-title {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--deep-forest);
+  margin-bottom: 0.5rem;
+}
+.study-box-authors {
+  font-size: 0.9rem;
+  color: rgba(61,43,31,0.7);
+  margin-bottom: 0.5rem;
+}
+.study-box-journal {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--terra-cotta);
+  margin-bottom: 0.75rem;
+}
+.study-box-findings {
+  font-size: 0.95rem;
+  color: var(--dark-brown);
+  margin-bottom: 0.75rem;
+}
+.study-box a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* How it Works visual */
+.mechanism-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.mechanism-step {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(45,74,62,0.08);
+}
+.mechanism-number {
+  width: 40px; height: 40px; min-width: 40px;
+  background: linear-gradient(135deg, var(--sage-mist), var(--deep-forest));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-headline);
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.mechanism-step h4 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--deep-forest);
+  margin-bottom: 0.4rem;
+}
+.mechanism-step p {
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* Lucy's Story Section */
+.lucy-story {
+  background: linear-gradient(135deg, rgba(156,175,136,0.1), rgba(193,122,95,0.08));
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.lucy-story::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(156,175,136,0.15) 0%, transparent 70%);
+}
+.lucy-story-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.lucy-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--sage-mist);
+}
+.lucy-story-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+.lucy-tag {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--terra-cotta);
+}
+
+/* Product CTA */
+.product-cta {
+  background: var(--deep-forest);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.product-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 70%, rgba(156,175,136,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.product-cta h3 {
+  color: #fff;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 2;
+}
+.product-cta p {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+.btn-cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--terra-cotta);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+.btn-cta:hover {
+  background: var(--raw-umber);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* Tags */
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(45,74,62,0.1);
+}
+.blog-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--deep-forest);
+  background: rgba(156,175,136,0.15);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+/* Footer */
+
+.footer p { font-size: 0.85rem; margin-bottom: 0.5rem; }
+.footer a { color: var(--sage-mist); text-decoration: none; }
+
+@media (min-width: 768px) {
+  .mechanism-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--deep-forest);
+      color: rgba(245, 240, 232, 0.7);
+      padding: 72px 0 32px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+        .footer-brand-logo {
+      height: 70px;
+      width: auto;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials { display: flex; gap: 12px; }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover { background: rgba(255,255,255,0.1); border-color: var(--lavender); }
+
+    .footer-socials a svg { width: 16px; height: 16px; stroke: var(--cream); stroke-width: 1.5; fill: none; }
+
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: rgba(245, 240, 232, 0.6);
+      transition: var(--transition);
+    }
+
+    .footer-col ul li a:hover { color: var(--lavender); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.6875rem;
+      color: rgba(245, 240, 232, 0.35);
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, 0.4);
+    }
+
+    @media (min-width: 768px) {
+      .footer-top {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+</style>
+
+
+<!-- ============================================
+HEADER
+============================================ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo.png" alt="Wild Roots Hemp" class="logo-img">
+    </a>
+  </div>
+</header>
+
+<!-- ============================================
+HERO
+============================================ -->
+<section class="blog-hero">
+  <span class="blog-hero-label">Wellness Journal</span>
+  <h1>How a Topical Roll-On Can Help Relieve Tension Headaches: The Science Behind Targeted Relief</h1>
+  <div class="blog-hero-meta">
+    <span>June 11, 2026</span>
+    <span>&middot;</span>
+    <span>8 min read</span>
+    <span>&middot;</span>
+    <span>Science-Backed</span>
+  </div>
+</section>
+
+<!-- ============================================
+MAIN CONTENT
+============================================ -->
+<article class="blog-container">
+
+<!-- Featured Image -->
+<div class="blog-featured-image">
+  <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/blog-lucy-rollon-cartoon.jpg" alt="Illustration of a woman relaxing on the sofa while applying a roll-on to the back of her neck" loading="eager">
+  <p class="blog-featured-caption">Applying a targeted roll-on to the neck and temples can help ease tension headache pain through the science of myofascial release and targeted absorption.</p>
+</div>
+
+<!-- Lead -->
+<p class="blog-lead">
+If you have ever felt that familiar tight band of pressure across your forehead, or the dull ache that starts at the base of your skull and creeps upward, you are not alone. Tension-type headaches affect nearly 80% of adults at some point. What many people do not realize is that the pain often begins in the muscles of the neck and shoulders before it ever reaches your temples. Understanding how these headaches form is the first step toward finding real relief.
+</p>
+
+<!-- Section 1 -->
+<h2>What Causes Tension Headaches</h2>
+
+<p>Tension-type headaches are the most common form of headache worldwide. Unlike migraines, which involve vascular changes deep in the brain, tension headaches typically originate in the musculoskeletal system. The primary culprits are:</p>
+
+<ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+  <li><strong>Pericranial muscle tenderness</strong> - Tightened muscles around the skull, neck, and shoulders create referred pain that radiates to the forehead and temples.</li>
+  <li><strong>Myofascial trigger points</strong> - Knots in the neck and upper back muscles send pain signals along nerve pathways to the head.</li>
+  <li><strong>Sustained posture</strong> - Hours at a desk, looking down at phones, or poor sleeping positions keep neck muscles in a constant state of contraction.</li>
+  <li><strong>Stress-induced muscle tension</strong> - Emotional stress causes involuntary tightening of the trapezius and suboccipital muscles at the base of the skull.</li>
+</ul>
+
+<p>The suboccipital muscles, a group of four small muscles at the base of your skull, are particularly important. When these muscles tighten, they compress the greater occipital nerve, which runs from the spine up through the neck and into the scalp. This compression creates the characteristic pain pattern of tension headaches: starting at the back of the head, radiating forward to the temples and forehead.</p>
+
+<!-- Section 2 -->
+<h2>The Role of Inflammation in Neck and Temple Pain</h2>
+
+<p>When muscles remain contracted for extended periods, the tissue becomes irritated. This irritation triggers an inflammatory response. Your body releases pro-inflammatory signaling molecules that sensitize nearby nerve endings, lowering their pain threshold and making even normal muscle activity feel painful.</p>
+
+<p>The temples are especially sensitive because they contain the temporalis muscle, one of the primary muscles used for chewing, and the superficial temporal artery. When inflammation spreads from the neck muscles forward, the temporalis muscle and surrounding tissues become tender to touch. Many people report that pressing on their temples during a headache produces a distinct soreness. That soreness is inflammation at work.</p>
+
+<p>The key insight is this: tension headaches are fundamentally a peripheral problem. The pain originates in muscles and soft tissues outside the brain. This is exactly why physical treatments applied directly to the neck and temples, such as the mechanical massage action of a roll-on, can be so effective. They address the pain at its source.</p>
+
+<!-- Section 3 -->
+<h2>How a Roll-On Works: Two Mechanisms of Relief</h2>
+
+<p>A roll-on applicator delivers relief through two distinct, scientifically validated mechanisms. Understanding each helps explain why targeted application works so effectively for tension headaches.</p>
+
+<div class="mechanism-grid">
+  <div class="mechanism-step">
+    <span class="mechanism-number">1</span>
+    <div>
+      <h4>Myofascial Release Through Mechanical Massage</h4>
+      <p>The stainless steel roller ball glides across the skin, applying controlled pressure to myofascial trigger points in the neck and suboccipital muscles. This mechanical pressure physically releases tension in taut muscle bands, increases local blood flow, and interrupts the pain signal cycle at its source. Clinical trials have demonstrated that trigger point-focused massage significantly reduces headache frequency and improves pressure-pain thresholds.</p>
+    </div>
+  </div>
+  <div class="mechanism-step">
+    <span class="mechanism-number">2</span>
+    <div>
+      <h4>Nano-Enhanced Skin Penetration</h4>
+      <p>Root Relief contains nano-hemp processed through proprietary fragmentation technology, producing particles under 100 nanometers in size. Propylene glycol, a well-established topical penetration enhancer used in pharmaceutical and cosmetic formulations, facilitates absorption through the skin barrier. At this nano scale, particles can penetrate the stratum corneum more effectively than conventional topical preparations, potentially delivering active compounds to deeper tissue layers where inflammation occurs.</p>
+    </div>
+  </div>
+</div>
+
+<p>The combination of these two effects creates a synergistic approach to relief. The mechanical massage provides immediate physical release of muscle tension and increased local circulation, while the nano-formulated ingredients work at the tissue level where inflammation originates.</p>
+
+<!-- Section 4 -->
+<h2>The Research Behind Mechanical Massage for Headaches</h2>
+
+<p>The effectiveness of trigger point massage for headache relief is well documented in peer-reviewed literature. Here are the key findings:</p>
+
+<!-- Study 1 -->
+<div class="study-box">
+  <div class="study-box-title">Myofascial Trigger Point-Focused Head and Neck Massage for Recurrent Tension-Type Headache</div>
+  <div class="study-box-authors">Moraska AF, Stenerson L, Butryn N, Krutsch JP, Schmiege SJ, Mann JD.</div>
+  <div class="study-box-journal">The Clinical Journal of Pain, 2015;31(2):159-168</div>
+  <div class="study-box-findings">
+    In this randomized, placebo-controlled clinical trial, 56 subjects with tension-type headache received 12 massage sessions over six weeks. Massage focused on myofascial trigger points in the cervical musculature. Results showed a greater reduction in self-reported headache pain for massage versus placebo or wait-list groups (p=0.002). Pressure-pain thresholds improved significantly at all measured muscle sites for massage recipients only, demonstrating sustained physiological benefit.
+  </div>
+  <a href="https://pubmed.ncbi.nlm.nih.gov/25329141/" target="_blank" rel="noopener">View on PubMed &rarr;</a>
+</div>
+
+<!-- Study 2 -->
+<div class="study-box">
+  <div class="study-box-title">Massage Therapy and Frequency of Chronic Tension Headaches</div>
+  <div class="study-box-authors">Quinn C, Chandler C, Moraska A.</div>
+  <div class="study-box-journal">American Journal of Public Health, 2002;92(10):1657-1661</div>
+  <div class="study-box-findings">
+    Chronic tension headache sufferers received structured massage therapy directed toward neck and shoulder muscles. Headache frequency was significantly reduced within the first week of treatment, and the reduction continued throughout the study period (P=0.009). This demonstrated that muscle-specific massage has the potential to be a functional, nonpharmacological intervention for reducing chronic tension headache incidence.
+  </div>
+  <a href="https://pubmed.ncbi.nlm.nih.gov/12406812/" target="_blank" rel="noopener">View on PubMed &rarr;</a>
+</div>
+
+<!-- Study 3 -->
+<div class="study-box">
+  <div class="study-box-title">Manual Therapy Associated with Topical Heat Reduces Pain and Self-Medication in Tension-Type Headache</div>
+  <div class="study-box-authors">Gui-Demase MS, et al.</div>
+  <div class="study-box-journal">Fisioterapia em Movimento, 2021</div>
+  <div class="study-box-findings">
+    In a single-arm trial with 13 female participants, a standardized physical therapy protocol including myofascial trigger point treatment and topical heat reduced tension-type headache episodes from a mean of 8.61 to 1.0 during follow-up (95% CI: 1.484 to 13.29, p=0.0151). A large effect size was found (Hedges g=1.4410), suggesting approximately 93% of treated participants would exceed the mean control value. The study also documented significant reductions in self-medication behavior.
+  </div>
+  <a href="https://www.scielo.br/j/fp/a/7g9n7kSJJtNkyRVmL6LQMtp/" target="_blank" rel="noopener">View on SciELO &rarr;</a>
+</div>
+
+<!-- Study 4 -->
+<div class="study-box">
+  <div class="study-box-title">Short-Term Effects of Manual Therapy on Heart Rate Variability, Mood State, and Pressure Pain Sensitivity in Chronic Tension-Type Headache</div>
+  <div class="study-box-authors">Toro-Velasco C, Arroyo-Morales M, Fernandez-de-Las-Penas C, Cleland JA, Barrero-Hernandez FJ.</div>
+  <div class="study-box-journal">Journal of Manipulative and Physiological Therapeutics, 2009;32(7):527-535</div>
+  <div class="study-box-findings">
+    Eleven patients with chronic tension-type headache received head-neck massage in a crossover design. Results demonstrated immediate improvements in heart rate variability, pressure pain thresholds over both temporalis muscles, and Profile of Mood States scores including reduced tension-anxiety and fatigue. The study confirmed that manual therapy produces measurable physiological changes in headache patients beyond subjective pain reporting.
+  </div>
+  <a href="https://pubmed.ncbi.nlm.nih.gov/19748497/" target="_blank" rel="noopener">View on PubMed &rarr;</a>
+</div>
+
+<!-- Study 5 -->
+<div class="study-box">
+  <div class="study-box-title">Manual Therapies for Primary Chronic Headaches: A Systematic Review of Randomized Controlled Trials</div>
+  <div class="study-box-authors">Chaibi A, Tuchin PJ, Russell MB.</div>
+  <div class="study-box-journal">The Journal of Headache and Pain, 2011;12(2):127-133</div>
+  <div class="study-box-findings">
+    This systematic review evaluated randomized controlled trials of manual therapies for chronic headache disorders. The authors concluded that physiotherapy and massage therapy have demonstrated efficacy in reducing headache frequency, intensity, and duration, with the quality of evidence steadily improving. The review recommended that manual therapy be considered a valid treatment option for tension-type headache management.
+  </div>
+  <a href="https://pubmed.ncbi.nlm.nih.gov/20848130/" target="_blank" rel="noopener">View on PubMed &rarr;</a>
+</div>
+
+<!-- Section 5 -->
+<h2>How to Apply for Best Results</h2>
+
+<p>Based on the scientific literature and clinical evidence, here is the most effective way to use a roll-on for tension headache relief:</p>
+
+<ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+  <li><strong>Start at the base of the skull.</strong> Apply the roll-on in slow, firm strokes along the hairline at the back of your neck, where the suboccipital muscles are located. This is where tension typically originates.</li>
+  <li><strong>Work down the neck.</strong> Continue along the sides of the neck, applying gentle pressure as you roll downward toward the shoulders. This targets the upper trapezius muscles.</li>
+  <li><strong>Apply to the temples.</strong> Use light, circular motions at the temples. The skin here is thinner and more sensitive, so a lighter touch is all that is needed.</li>
+  <li><strong>Repeat as needed.</strong> Clinical studies show sustained relief builds with regular use. Consistent application at the first sign of tension produces the best outcomes.</li>
+</ol>
+
+<p>The roller ball applicator itself provides a gentle massage effect as you apply, which adds the therapeutic benefit of myofascial release. This combination of mechanical massage and targeted nano delivery creates a synergistic effect that addresses both the immediate muscle tension and the underlying inflammatory response.</p>
+
+<!-- Section 6: Lucy's Story -->
+<div class="lucy-story">
+  <div class="lucy-story-header">
+    <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-mom-tennis.jpg" alt="Lucy" class="lucy-avatar">
+    <div>
+      <h3>How Lucy Keeps Headaches at Bay</h3>
+      <span class="lucy-tag">Co-Founder, Mom & Competitive Tennis Player</span>
+    </div>
+  </div>
+  <p>
+    "Headaches have been my unwelcome companion since my competitive adult league days. I would finish a long match, and the pressure would start building at the base of my neck before I even got off the court. At first I thought it was just dehydration, but over time I realized it was muscle tension from hours of holding my neck in that ready position, eyes locked on every serve.
+  </p>
+  <p>
+    The breakthrough came when I started applying Root Relief Roll-On directly to the back of my neck and my temples at the first sign of tightness. Now I keep one in my tennis bag, one in my purse, and one on my nightstand. When I feel that familiar tension creeping in, I roll it along the base of my skull and down the sides of my neck. The roller ball gives a nice massage as it glides across the skin, and I can feel the muscles starting to release. The headache never fully develops.
+  </p>
+  <p>
+    Between running a business, keeping up with three active kids, and still playing competitive matches in my adult league, I cannot afford to be sidelined by headaches. Root Relief has become my first line of defense. Nick jokes that I have a roll-on in every room of the house. He is not entirely wrong."
+  </p>
+</div>
+
+<!-- Product CTA -->
+<div class="product-cta">
+  <h3>Root Relief Roll-On</h3>
+  <p>100MG nano-hemp formula with stainless steel roller ball applicator. Fast-absorbing, mess-free, and pocket-sized for relief wherever tension strikes.</p>
+  <a href="/products/root-relief" class="btn-cta">Shop Root Relief</a>
+</div>
+
+<!-- Tags -->
+<div class="blog-tags">
+  <span class="blog-tag">Tension Headaches</span>
+  <span class="blog-tag">Myofascial Release</span>
+  <span class="blog-tag">Neck Pain</span>
+  <span class="blog-tag">Inflammation</span>
+  <span class="blog-tag">Natural Wellness</span>
+  <span class="blog-tag">Science-Backed</span>
+</div>
+
+</article>
+
+<!-- ============================================
+FOOTER
+============================================ -->
+{% render 'wr-site-footer' %}
+
+
+{% schema %}
+{"name":"Wild Roots page","settings":[]}
+{% endschema %}
