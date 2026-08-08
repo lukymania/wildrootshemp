@@ -1,0 +1,49 @@
+{%- comment -%}
+Server-rendered homepage cleanup. The rendered page content is passed explicitly
+from layout/theme.liquid because Shopify's render tag uses an isolated scope.
+{%- endcomment -%}
+{%- capture wr_home_content -%}{{ page_content }}{%- endcapture -%}
+
+{%- assign wr_home_content = wr_home_content | replace: 'href="faq-/pages/contact"', 'href="/pages/faq"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/policies/shipping-policy">Shipping Info</a>', 'href="/pages/faq">Shipping Info</a>' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/#products"', 'href="#wr-home-products"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="#products"', 'href="#wr-home-products"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/blogs/journal/what-is-nano-hemp"', 'href="/blogs/news"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/blogs/journal/amber-glass-packaging"', 'href="/blogs/news"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/blogs/news#article-9"', 'href="/blogs/news"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/journal.html"', 'href="/blogs/news"' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/journal"', 'href="/blogs/news"' -%}
+
+{%- capture wr_home_js_marker -%}<!-- ============================================
+ JAVASCRIPT{%- endcapture -%}
+{%- assign wr_home_schema_parts = wr_home_content | split: '<script type="application/ld+json">' -%}
+{%- if wr_home_schema_parts.size > 1 -%}
+  {%- assign wr_home_after_schema = wr_home_schema_parts[1] | split: wr_home_js_marker -%}
+  {%- if wr_home_after_schema.size > 1 -%}
+    {%- capture wr_home_content -%}{{ wr_home_schema_parts[0] }}{{ wr_home_js_marker }}{{ wr_home_after_schema[1] }}{%- endcapture -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign wr_home_content = wr_home_content | replace: "if (familyImg && !window.matchMedia", "var familyImg = document.querySelector('.story-image img'); if (familyImg && !window.matchMedia" -%}
+{%- capture wr_duplicate_handler -%}// Close mobile menu on link click
+ mobileNavLinks.forEach{%- endcapture -%}
+{%- capture wr_disabled_handler -%}// Duplicate mobile menu link handler disabled
+ if (false) mobileNavLinks.forEach{%- endcapture -%}
+{%- assign wr_home_content = wr_home_content | replace: wr_duplicate_handler, wr_disabled_handler -%}
+
+{%- assign wr_home_content = wr_home_content | replace: '<button class="cart-btn" id="cartBtn" aria-label="Shopping cart">', '<a class="cart-btn" id="cartBtn" href="/cart" aria-label="Shopping cart">' -%}
+{%- capture wr_cart_button_end -%}<span class="cart-count" id="cartCount" style="display:none;">0</span>
+ </button>{%- endcapture -%}
+{%- capture wr_cart_link_end -%}<span class="cart-count" id="cartCount" style="display:none;">0</span>
+ </a>{%- endcapture -%}
+{%- assign wr_home_content = wr_home_content | replace: wr_cart_button_end, wr_cart_link_end -%}
+
+{%- assign wr_home_content = wr_home_content | replace: '<form class="newsletter-form" onsubmit="event.preventDefault(); window.handleNewsletterSubmit(this);">', '<form method="post" action="/contact#contact_form" accept-charset="UTF-8" class="newsletter-form"><input type="hidden" name="form_type" value="customer"><input type="hidden" name="utf8" value="✓"><input type="hidden" name="contact[tags]" value="newsletter">' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'type="email" class="newsletter-input"', 'type="email" name="contact[email]" class="newsletter-input"' -%}
+
+{%- assign wr_home_content = wr_home_content | replace: '<span itemprop="price">$35.00</span>', '<meta itemprop="price" content="35.00"><span>$35.00</span>' -%}
+{%- assign wr_home_content = wr_home_content | replace: '<span itemprop="price">$65.00</span>', '<meta itemprop="price" content="65.00"><span>$65.00</span>' -%}
+{%- assign wr_home_content = wr_home_content | replace: '<span itemprop="price">$70.00</span>', '<meta itemprop="price" content="70.00"><span>$70.00</span>' -%}
+{%- assign wr_home_content = wr_home_content | replace: '<span itemprop="price">$110.00</span>', '<meta itemprop="price" content="110.00"><span>$110.00</span>' -%}
+
+{{- wr_home_content -}}
