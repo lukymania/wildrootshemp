@@ -1,0 +1,17 @@
+{% comment %}
+  Removes the unnecessary clickable down-arrow from the Science hero only.
+{% endcomment %}
+
+<style>
+  #MainContent .hero-scroll {
+    display: none !important;
+    pointer-events: none !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Remove science arrow",
+  "settings": []
+}
+{% endschema %}
