@@ -1,0 +1,130 @@
+{% render 'wr-site-header' %}
+
+<style>
+  .wr-returns-page {
+    --wr-policy-forest: #2D4A3E;
+    --wr-policy-terra: #C17A5F;
+    --wr-policy-cream: #F5F0E8;
+    --wr-policy-brown: #3D2B1F;
+    --wr-policy-sage: #C5D4B8;
+    min-height: 70vh;
+    padding: calc(80px + 64px) 24px 88px;
+    background: #FAF8F3;
+    color: var(--wr-policy-brown);
+    font-family: 'Lato', sans-serif;
+  }
+  .wr-returns-page * { box-sizing: border-box; }
+  .wr-returns-inner { width: 100%; max-width: 980px; margin: 0 auto; }
+  .wr-returns-kicker {
+    margin: 0 0 14px;
+    color: var(--wr-policy-terra);
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .wr-returns-title {
+    max-width: 780px;
+    margin: 0;
+    color: var(--wr-policy-forest);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.75rem, 6vw, 4.7rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -.035em;
+  }
+  .wr-returns-effective {
+    margin: 18px 0 0;
+    color: rgba(61, 43, 31, .66);
+    font-size: .88rem;
+  }
+  .wr-returns-notice {
+    margin: 42px 0 44px;
+    padding: 28px 30px;
+    border: 1px solid rgba(45, 74, 62, .16);
+    border-left: 5px solid var(--wr-policy-terra);
+    border-radius: 0 14px 14px 0;
+    background: var(--wr-policy-cream);
+    box-shadow: 0 10px 30px rgba(45, 74, 62, .06);
+  }
+  .wr-returns-notice strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--wr-policy-forest);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    line-height: 1.25;
+  }
+  .wr-returns-notice p { margin: 0; }
+  .wr-returns-content {
+    padding: clamp(28px, 5vw, 54px);
+    border: 1px solid rgba(45, 74, 62, .12);
+    border-radius: 18px;
+    background: #FFFFFF;
+    box-shadow: 0 14px 42px rgba(45, 74, 62, .07);
+    font-size: 1.02rem;
+    line-height: 1.78;
+  }
+  .wr-returns-content h2 {
+    margin: 2.65rem 0 .9rem;
+    color: var(--wr-policy-forest);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.65rem, 3vw, 2.15rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.015em;
+  }
+  .wr-returns-content h2:first-child { margin-top: 0; }
+  .wr-returns-content p { margin: 0 0 1.15rem; font-size: inherit; line-height: inherit; }
+  .wr-returns-content ul { margin: 0 0 1.45rem; padding-left: 1.4rem; }
+  .wr-returns-content li { margin: 0 0 .62rem; padding-left: .2rem; }
+  .wr-returns-content strong { color: var(--wr-policy-forest); }
+  .wr-returns-content a {
+    color: var(--wr-policy-forest);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .wr-returns-contact {
+    margin-top: 2.6rem;
+    padding: 24px 26px;
+    border-radius: 14px;
+    background: #EEF3E9;
+  }
+  .wr-returns-contact h2 { margin-top: 0; }
+  .wr-returns-contact p:last-child { margin-bottom: 0; }
+  @media (max-width: 749px) {
+    .wr-returns-page { padding: calc(80px + 42px) 18px 64px; }
+    .wr-returns-title { font-size: clamp(2.45rem, 12vw, 3.35rem); }
+    .wr-returns-notice { margin: 32px 0; padding: 23px 22px; }
+    .wr-returns-content { padding: 28px 22px; border-radius: 14px; }
+    .wr-returns-content h2 { margin-top: 2.2rem; }
+  }
+</style>
+
+<main class="wr-returns-page" aria-labelledby="wrReturnsTitle">
+  <div class="wr-returns-inner">
+    <p class="wr-returns-kicker">Customer Care</p>
+    <h1 class="wr-returns-title" id="wrReturnsTitle">{{ page.title | escape }}</h1>
+    <p class="wr-returns-effective">Effective August 14, 2026</p>
+
+    <div class="wr-returns-notice" role="note" aria-label="Important returns notice">
+      <strong>All sales are final except for products Wild Roots verifies are defective.</strong>
+      <p>Please review the requirements below before contacting us or sending any item back.</p>
+    </div>
+
+    <article class="wr-returns-content">
+      {{ page.content }}
+    </article>
+  </div>
+</main>
+
+{% render 'wr-site-footer' %}
+
+{% schema %}
+{
+  "name": "Wild Roots returns policy",
+  "settings": []
+}
+{% endschema %}
