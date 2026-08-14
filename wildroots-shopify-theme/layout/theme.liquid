@@ -259,7 +259,7 @@
   <a class="skip-to-content-link visually-hidden" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
   {% assign wr_custom_shell = false %}
-  {% if template contains 'wr-' or request.page_type == 'index' or request.page_type == 'cart' or request.page_type == 'policy' %}
+  {% if template contains 'wr-' or request.page_type == 'index' or request.page_type == 'cart' or request.page_type == 'policy' or request.page_type == 'article' %}
     {% assign wr_custom_shell = true %}
   {% endif %}
 
@@ -273,7 +273,7 @@
     {% section 'header' %}
   {% endunless %}
 
-  {% if request.page_type == 'cart' or request.page_type == 'policy' %}{% render 'wr-site-header' %}{% endif %}
+  {% if request.page_type == 'cart' or request.page_type == 'policy' or request.page_type == 'article' %}{% render 'wr-site-header' %}{% endif %}
 
   <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
     {% if request.page_type == 'product' %}
@@ -303,7 +303,11 @@
     {% endif %}
   </main>
 
-  {% if request.page_type == 'cart' or request.page_type == 'collection' or request.page_type == 'policy' %}{% render 'wr-site-footer' %}{% endif %}
+  {% if request.page_type == 'cart' or request.page_type == 'collection' or request.page_type == 'policy' %}
+    {% render 'wr-site-footer' %}
+  {% elsif request.page_type == 'article' %}
+    {% unless template contains 'wr-' %}{% render 'wr-site-footer' %}{% endunless %}
+  {% endif %}
 
   <style>
     #MainContent h1 { font-size: clamp(2.75rem, 5.5vw, 4.75rem); line-height: 1.05; letter-spacing: -0.035em; text-wrap: balance; }
