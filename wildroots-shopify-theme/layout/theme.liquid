@@ -12,7 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- else -%}
+    <link rel="icon" type="image/png" href="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-favicon.png?v=1786901711">
   {%- endif -%}
 
   {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
