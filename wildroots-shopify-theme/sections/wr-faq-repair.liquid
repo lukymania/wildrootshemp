@@ -128,30 +128,6 @@
         }
       }
 
-      document.querySelectorAll('a[href="faq-/pages/contact"]').forEach(function (link) {
-        var label = (link.textContent || '').trim().toLowerCase();
-        if (label === 'faq') {
-          link.setAttribute('href', '/pages/faq');
-        } else if (label === 'contact us') {
-          link.setAttribute('href', '/pages/contact');
-        } else if (label === 'shipping info') {
-          link.setAttribute('href', '/pages/faq#shipping-returns');
-        } else if (label === 'privacy policy') {
-          link.setAttribute('href', '/policies/privacy-policy');
-        } else {
-          link.setAttribute('href', '/pages/faq');
-        }
-      });
-
-      document.querySelectorAll('link[itemprop="item"][href="faq-/pages/contact"]').forEach(function (link) {
-        link.setAttribute('href', '/pages/faq');
-      });
-
-      document.querySelectorAll('a[href^="mailto:hello@wildrootshemp.com"]').forEach(function (link) {
-        link.setAttribute('href', 'mailto:info@wildrootshemp.com');
-        link.textContent = 'info@wildrootshemp.com';
-      });
-
       var shippingHeading = Array.from(document.querySelectorAll('.faq-category-title')).find(function (heading) {
         return heading.textContent.trim() === 'Shipping & Returns';
       });
@@ -159,29 +135,6 @@
         shippingHeading.parentElement.id = 'shipping-returns';
       }
 
-      document.querySelectorAll('script[type="application/ld+json"]').forEach(function (script) {
-        if (!script.textContent || script.textContent.indexOf('faq-contact') === -1) return;
-
-        var updated = script.textContent
-          .replaceAll('/pages/faq-contact', '/pages/faq')
-          .replaceAll('hello@wildrootshemp.com', 'info@wildrootshemp.com');
-
-        try {
-          var data = JSON.parse(updated);
-          var graph = data['@graph'] || [];
-          graph.forEach(function (node) {
-            if (node['@type'] === 'Organization') {
-              node.sameAs = [
-                'https://www.instagram.com/wildrootshemp',
-                'https://www.linkedin.com/company/wrhemp'
-              ];
-            }
-          });
-          script.textContent = JSON.stringify(data);
-        } catch (error) {
-          script.textContent = updated;
-        }
-      });
     }
 
     if (document.readyState === 'loading') {

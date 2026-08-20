@@ -4,8 +4,7 @@ from layout/theme.liquid because Shopify's render tag uses an isolated scope.
 {%- endcomment -%}
 {%- capture wr_home_content -%}{{ page_content }}{%- endcapture -%}
 
-{%- assign wr_home_content = wr_home_content | replace: 'href="faq-/pages/contact"', 'href="/pages/faq"' -%}
-{%- assign wr_home_content = wr_home_content | replace: 'href="/policies/shipping-policy">Shipping Info</a>', 'href="/pages/faq">Shipping Info</a>' -%}
+{%- assign wr_home_content = wr_home_content | replace: 'href="/policies/shipping-policy">Shipping Info</a>', 'href="/pages/faq#shipping-returns">Shipping Info</a>' -%}
 {%- assign wr_home_content = wr_home_content | replace: 'href="/#products"', 'href="#wr-home-products"' -%}
 {%- assign wr_home_content = wr_home_content | replace: 'href="#products"', 'href="#wr-home-products"' -%}
 {%- assign wr_home_content = wr_home_content | replace: 'href="/blogs/journal/what-is-nano-hemp"', 'href="/blogs/news"' -%}

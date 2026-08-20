@@ -4,12 +4,7 @@ explicitly from layout/theme.liquid because Shopify's render tag uses an isolate
 {%- endcomment -%}
 {%- capture wr_clean_product_content -%}{{ page_content }}{%- endcapture -%}
 {%- assign wr_clean_product_content = wr_clean_product_content
-  | replace: 'href="faq-/pages/contact">FAQ</a>', 'href="/pages/faq">FAQ</a>'
-  | replace: 'href="faq-/pages/contact">Contact Us</a>', 'href="/pages/contact">Contact Us</a>'
-  | replace: 'href="faq-/pages/contact">Shipping Info</a>', 'href="/pages/faq">Shipping Info</a>'
-  | replace: 'href="/policies/shipping-policy">Shipping Info</a>', 'href="/pages/faq">Shipping Info</a>'
-  | replace: 'href="faq-/pages/contact">Privacy Policy</a>', 'href="/policies/privacy-policy">Privacy Policy</a>'
-  | replace: 'href="faq-/pages/contact"', 'href="/pages/contact"'
+  | replace: 'href="/policies/shipping-policy">Shipping Info</a>', 'href="/pages/faq#shipping-returns">Shipping Info</a>'
   | replace: ' itemscope itemtype="https://schema.org/Product"', ''
   | replace: ' itemscope itemtype="http://schema.org/Product"', ''
   | replace: ' itemtype="https://schema.org/Product" itemscope', ''

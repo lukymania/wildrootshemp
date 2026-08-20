@@ -1642,8 +1642,8 @@
  HERO SECTION
  ============================================ -->
  <section class="hero" id="hero" aria-label="Hero banner">
- <video class="hero-video-bg" autoplay muted playsinline poster="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/hero-landscape.jpg" aria-hidden="true" id="heroVideo">
- <source src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/videos/hero-video.mp4" type="video/mp4">
+ <video class="hero-video-bg" autoplay muted playsinline preload="metadata" poster="{{ 'hero-landscape.jpg' | asset_url }}" aria-hidden="true" id="heroVideo">
+ <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
  </video>
  <script>
  (function() {
@@ -1697,7 +1697,7 @@
  video.play().then(function(){ requestAnimationFrame(monitor); }).catch(function(){ requestAnimationFrame(monitor); });
  })();
  </script>
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/hero-landscape.jpg" alt="Serene nature landscape representing Wild Roots Hemp's connection to the earth" class="hero-poster">
+ <img src="{{ 'hero-landscape.jpg' | asset_url }}" alt="Serene nature landscape representing Wild Roots Hemp's connection to the earth" class="hero-poster">
  <div class="hero-overlay" aria-hidden="true"></div>
  <div class="hero-content">
  <h1 class="hero-headline reveal">Rooted in Nature. Powered by Science.</h1>
@@ -2238,7 +2238,7 @@
  </h3>
  <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" style="display: block;">
  <div itemprop="text">
- <p style="color: rgba(61,43,31,0.75); font-size: 0.95rem;">Orders ship within 1-2 business days from our heartland facility. We stand behind our products with a 30-day satisfaction guarantee, if you're not happy, we'll make it right.</p>
+ <p style="color: rgba(61,43,31,0.75); font-size: 0.95rem;">Orders ship within 1-2 business days. All sales are final except for products Wild Roots verifies are defective. Review our <a href="/pages/returns-policy">Returns Policy</a> for details.</p>
  </div>
  </div>
  </div>
@@ -2380,7 +2380,7 @@
           "name": "How do you ship and what is your return policy?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Orders ship within 1-2 business days from our heartland facility. We stand behind our products with a 30-day satisfaction guarantee, if you're not happy, we'll make it right."
+            "text": "Orders ship within 1-2 business days. All sales are final except for products Wild Roots verifies are defective. Review the Returns Policy for details."
           }
         },
         {

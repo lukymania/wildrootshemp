@@ -1,0 +1,157 @@
+{% comment %}Mobile-first hero video and navigation repair.{% endcomment %}
+<style>
+  .hero-video-bg,
+  .hero[aria-label="The Science of Nano-Hemp Hero"] .hero-video,
+  .family-hero .family-hero-video {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    background: #17352a;
+  }
+
+  @media (max-width: 767px) {
+    #hero.hero {
+      height: 100svh !important;
+      min-height: 620px !important;
+    }
+
+    .hero[aria-label="The Science of Nano-Hemp Hero"],
+    .family-hero {
+      min-height: 520px !important;
+      overflow: hidden !important;
+    }
+
+    .hero[aria-label="The Science of Nano-Hemp Hero"] .hero-content,
+    .family-hero .container {
+      position: relative !important;
+      z-index: 3 !important;
+    }
+  }
+</style>
+<script>
+(function () {
+  var sources = {
+    home: {{ 'hero-video.mp4' | asset_url | json }},
+    science: {{ 'hero-science-lab.mp4' | asset_url | json }},
+    family: {{ 'family-hero-redwoods.mp4' | asset_url | json }}
+  };
+  var posters = {
+    home: {{ 'hero-landscape.jpg' | asset_url | json }},
+    science: {{ 'science-intro-illustration.jpg' | asset_url | json }},
+    family: {{ 'family-cartoon-group.jpg' | asset_url | json }}
+  };
+
+  function installVideo(selector, sourceUrl, posterUrl) {
+    var video = document.querySelector(selector);
+    if (!video || video.dataset.wrMobileFixed === 'true') return;
+
+    video.dataset.wrMobileFixed = 'true';
+    video.autoplay = true;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.preload = 'metadata';
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('aria-hidden', 'true');
+    if (posterUrl) video.poster = posterUrl;
+
+    var source = video.querySelector('source');
+    if (!source) {
+      source = document.createElement('source');
+      video.appendChild(source);
+    }
+    source.src = sourceUrl;
+    source.type = 'video/mp4';
+    video.load();
+
+    function startPlayback() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        video.pause();
+        return;
+      }
+      video.muted = true;
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(function () {
+          video.setAttribute('data-autoplay-blocked', 'true');
+        });
+      }
+    }
+
+    video.addEventListener('canplay', startPlayback, { once: true });
+    startPlayback();
+  }
+
+  function repairMobileMenu() {
+    var oldButton = document.getElementById('menuToggle');
+    var oldNav = document.getElementById('mobileNav');
+    if (!oldButton || !oldNav || oldButton.dataset.wrMobileFixed === 'true') return;
+
+    var button = oldButton.cloneNode(true);
+    var nav = oldNav.cloneNode(true);
+    button.dataset.wrMobileFixed = 'true';
+    nav.dataset.wrMobileFixed = 'true';
+    oldButton.replaceWith(button);
+    oldNav.replaceWith(nav);
+
+    function closeMenu() {
+      button.classList.remove('active');
+      nav.classList.remove('active');
+      button.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      var opening = !nav.classList.contains('active');
+      button.classList.toggle('active', opening);
+      nav.classList.toggle('active', opening);
+      button.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      document.body.style.overflow = opening ? 'hidden' : '';
+    });
+
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
+
+  function repairAll() {
+    installVideo('.hero-video-bg', sources.home, posters.home);
+    installVideo('.hero[aria-label="The Science of Nano-Hemp Hero"] .hero-video', sources.science, posters.science);
+    installVideo('.family-hero .family-hero-video', sources.family, posters.family);
+    repairMobileMenu();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', repairAll, { once: true });
+  } else {
+    repairAll();
+  }
+
+  window.addEventListener('pageshow', repairAll);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) return;
+    repairAll();
+    document.querySelectorAll('video[data-wr-mobile-fixed="true"]').forEach(function (video) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      video.muted = true;
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(function () {});
+    });
+  });
+})();
+</script>
+{% schema %}
+{"name":"Mobile hero reliability","settings":[]}
+{% endschema %}
