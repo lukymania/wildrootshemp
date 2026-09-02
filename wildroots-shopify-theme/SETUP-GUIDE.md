@@ -103,7 +103,7 @@ In Shopify Admin, go to **Online Store > Navigation**:
 
 ### Main Menu (`main-menu`)
 - Home → /
-- Shop → /collections/all
+- Shop → /collections/shop
 - Our Story → /pages/our-story
 - The Science → /pages/the-science
 - Family → /pages/family
@@ -299,7 +299,7 @@ In the theme editor (**Online Store > Customize**):
 - Heading: "Where Roots Run Deep"
 - Subtitle: "Family-founded nano-hemp wellness"
 - Button text: "Shop Now"
-- Button link: /collections/all
+- Button link: /collections/shop
 
 ### Featured Products Section
 - Collection: All

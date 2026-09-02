@@ -274,7 +274,7 @@
 
     {%- if section.settings.show_shop_all -%}
       <div class="featured-products__footer reveal">
-        <a href="{{ section.settings.shop_all_link | default: '/collections/all' }}" class="btn btn-secondary">
+        <a href="{{ section.settings.shop_all_link | default: '/collections/shop' }}" class="btn btn-secondary">
           {{ section.settings.shop_all_text | default: 'Shop All Products' }}
         </a>
       </div>
@@ -341,8 +341,7 @@
     {
       "type": "url",
       "id": "shop_all_link",
-      "label": "Shop All button link",
-      "default": "/collections/all"
+      "label": "Shop All button link"
     }
   ],
   "presets": [

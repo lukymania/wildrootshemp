@@ -35,7 +35,7 @@ keep these values aligned with genuine customer review totals whenever the on-pa
   {%- capture wr_breadcrumb_schema_id -%}{{ canonical_url }}#breadcrumb{%- endcapture -%}
   {%- assign wr_store_url = canonical_url | split: '/products/' | first -%}
   {%- capture wr_home_url -%}{{ wr_store_url }}/{%- endcapture -%}
-  {%- capture wr_shop_url -%}{{ wr_store_url }}/collections/all{%- endcapture -%}
+  {%- capture wr_shop_url -%}{{ wr_store_url }}/collections/shop{%- endcapture -%}
 
   <script type="application/ld+json">
   {

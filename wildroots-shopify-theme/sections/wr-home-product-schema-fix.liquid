@@ -18,12 +18,12 @@
         {%- assign rendered_products = rendered_products | plus: 1 -%}
         {%- capture fallback_image_url -%}
           {%- case product_handle -%}
-            {%- when 'root-relief' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-rollon-cutout.png
-            {%- when 'wild-relief' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-mist-cutout.png
-            {%- when 'deep-roots' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-roots-cutout.png
-            {%- when 'deep-rest' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png
-            {%- when 'daily-roots' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png
-            {%- when 'paw-root' -%}https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-paw-root-cutout.png
+            {%- when 'root-relief' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-rollon-cutout.png?v=1788382268
+            {%- when 'wild-relief' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-mist-cutout.png?v=1788382255
+            {%- when 'deep-roots' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-deep-roots-cutout.png?v=1788382239
+            {%- when 'deep-rest' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-deep-rest-cutout.png?v=1788382260
+            {%- when 'daily-roots' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-daily-roots-cutout.png?v=1788382235
+            {%- when 'paw-root' -%}https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-paw-root-cutout.png?v=1788382264
           {%- endcase -%}
         {%- endcapture -%}
         {
@@ -54,8 +54,7 @@
             "availability": "https://schema.org/{% if schema_variant.available %}InStock{% else %}OutOfStock{% endif %}",
             "itemCondition": "https://schema.org/NewCondition",
             "seller": {
-              "@type": "Organization",
-              "name": "Wild Roots Hemp"
+              "@id": "https://wildrootshemp.com/#organization"
             }
           }
         }

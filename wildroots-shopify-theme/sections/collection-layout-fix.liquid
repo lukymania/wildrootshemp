@@ -1,9 +1,9 @@
 {% comment %}
-  /collections/all only: mobile Shop page repair.
+  /collections/shop only: mobile Shop page repair.
   This section does not affect any other page type or collection.
 {% endcomment %}
 
-{% if request.path == '/collections/all' or collection.handle == 'all' %}
+{% if collection.handle == 'shop' or collection.handle == 'all' %}
   {% assign wr_first_shop_product = collection.products.first %}
   {% assign wr_first_shop_image = wr_first_shop_product.featured_image %}
   {% assign wr_first_shop_fallback = blank %}

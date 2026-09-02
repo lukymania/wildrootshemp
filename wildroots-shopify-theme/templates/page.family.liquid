@@ -14,7 +14,7 @@
     {% if section.settings.hero_video_url != blank %}
       <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
     {% else %}
-      <source src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/assets/videos/family-hero-redwoods.mp4" type="video/mp4">
+      <source src="{{ 'family-hero-redwoods.mp4' | asset_url }}" type="video/mp4">
     {% endif %}
   </video>
   <div class="family-hero-overlay"></div>
@@ -151,7 +151,7 @@
     <div class="container">
       <h2>Find What Works for Your Family</h2>
       <p>Every family is different. Explore our full product line to find the right nano-hemp wellness solution for your lifestyle.</p>
-      <a href="/collections/all" class="btn-primary">Shop All Products &rarr;</a>
+      <a href="/collections/shop" class="btn-primary">Shop All Products &rarr;</a>
     </div>
   </section>
 

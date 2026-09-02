@@ -20,7 +20,7 @@
     {% if section.settings.hero_video_url != blank %}
       <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
     {% else %}
-      <source src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/assets/videos/hero-science-lab.mp4" type="video/mp4">
+      <source src="{{ 'hero-science-lab.mp4' | asset_url }}" type="video/mp4">
     {% endif %}
   </video>
   <div class="hero-overlay"></div>

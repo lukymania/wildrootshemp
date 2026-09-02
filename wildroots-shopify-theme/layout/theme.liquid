@@ -33,8 +33,8 @@
   {%- elsif request.page_type == 'blog' and blog.handle == 'news' -%}
     {%- assign seo_title = 'The Root Journal | Wild Roots Hemp' -%}
     {%- assign seo_description = 'Explore practical guides on nano-hemp science, product use, family wellness routines, ingredients, testing, and transparency from Wild Roots Hemp.' -%}
-  {%- elsif request.page_type == 'collection' and collection.handle == 'all' -%}
-    {%- assign seo_title = 'Shop All Nano-Hemp Products | Wild Roots Hemp' -%}
+  {%- elsif request.page_type == 'collection' and collection.handle == 'shop' -%}
+    {%- assign seo_title = 'Shop Nano-Hemp Wellness | Wild Roots Hemp' -%}
     {%- assign seo_description = 'Shop the complete Wild Roots Hemp collection, including nano-hemp drops, evening support, topical roll-ons and sprays, and pet wellness products.' -%}
   {%- else -%}
     {%- capture seo_title -%}
@@ -252,8 +252,8 @@
       {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/journal"', 'href="/blogs/news"' %}
       {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/blogs/journal/', 'href="/blogs/news/' %}
       {% if template contains 'wr-' %}
-        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/#products"', 'href="/collections/all"' %}
-        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="#products"', 'href="/collections/all"' %}
+        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="/#products"', 'href="/collections/shop"' %}
+        {% assign wr_rendered_content = wr_rendered_content | replace: 'href="#products"', 'href="/collections/shop"' %}
       {% endif %}
       {% if request.page_type == 'page' and page.handle == 'the-science' %}
         {% assign wr_rendered_content = wr_rendered_content | replace: 'alt="" aria-hidden="true"', 'alt="Decorative hemp root illustration"' %}

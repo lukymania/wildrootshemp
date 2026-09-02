@@ -44,8 +44,7 @@
   "description": {{ page.content | strip_html | truncate: 300 | json }},
   "url": {{ shop.url | append: page.url | json }},
   "publisher": {
-    "@type": "Organization",
-    "name": {{ shop.name | json }}
+    "@id": "{{ shop.url }}/#organization"
   }
 }
 </script>

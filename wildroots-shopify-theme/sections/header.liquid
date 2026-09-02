@@ -29,11 +29,11 @@
       {% if section.settings.logo != blank %}
         {{ section.settings.logo | image_url: width: 300 | image_tag: widths: '140, 200, 300', loading: 'eager', alt: shop.name }}
       {% else %}
-        <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="{{ shop.name | escape }}">
+        <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-logo-nav.png?v=1788381974" alt="{{ shop.name | escape }}">
       {% endif %}
     </a>
     <nav class="wr-global-header__nav" aria-label="Main navigation"><ul>
-      <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
+      <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/shop">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
     </ul></nav>
     <div class="wr-global-header__actions">
       <a class="wr-global-header__cart" href="{{ routes.cart_url }}" aria-label="Shopping cart{% if cart.item_count > 0 %}, {{ cart.item_count }} items{% endif %}">
@@ -45,7 +45,7 @@
   </div>
 </header>
 <nav class="wr-global-header__mobile" id="WrGlobalMobileNav-{{ section.id }}" aria-label="Mobile navigation"><ul>
-  <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/all">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
+  <li><a href="/pages/our-story">Our Story</a></li><li><a href="/collections/shop">Shop</a></li><li><a href="/pages/the-science">The Science</a></li><li><a href="/blogs/news">Journal</a></li><li><a href="/pages/family">Family</a></li><li><a href="/pages/faq">FAQ</a></li><li><a href="/pages/contact">Contact</a></li>
 </ul></nav>
 <script>
 (function(){var script=document.currentScript;var mobile=script.previousElementSibling;var header=mobile.previousElementSibling;if(!header||!mobile)return;var toggle=header.querySelector('.wr-global-header__toggle');if(!toggle)return;toggle.addEventListener('click',function(){var open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));mobile.classList.toggle('is-open',!open);document.documentElement.style.overflow=open?'':'hidden';});mobile.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){toggle.setAttribute('aria-expanded','false');mobile.classList.remove('is-open');document.documentElement.style.overflow='';});});})();

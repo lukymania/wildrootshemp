@@ -11,11 +11,11 @@
  --dark-brown: #3D2B1F;
  --light-sage: #C5D4B8;
  --kraft-brown: #C4A882;
- 
+
  --font-headline: 'Playfair Display', serif;
  --font-body: 'Lato', sans-serif;
  --font-accent: 'Cormorant Garamond', serif;
- 
+
  --max-width: 1200px;
  --header-height: 80px;
  --transition: all 0.3s ease;
@@ -24,7 +24,7 @@
  --shadow-lg: 0 16px 48px rgba(45, 74, 62, 0.16);
       --forest-deep: #0f241c;
     }
- 
+
  /* ============================================
  RESET & BASE
  ============================================ */
@@ -33,12 +33,12 @@
  padding: 0;
  box-sizing: border-box;
  }
- 
+
  html {
  scroll-behavior: smooth;
  font-size: 16px;
  }
- 
+
  body {
  font-family: var(--font-body);
  font-weight: 400;
@@ -49,47 +49,47 @@
  -moz-osx-font-smoothing: grayscale;
  overflow-x: hidden;
  }
- 
+
  h1, h2, h3, h4 {
  font-family: var(--font-headline);
  font-weight: 700;
  line-height: 1.2;
  color: var(--deep-forest);
  }
- 
+
  h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
  h2 { font-size: clamp(2rem, 4vw, 3rem); }
  h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
  h4 { font-size: 1.25rem; }
- 
+
  p {
  margin-bottom: 1rem;
  font-size: 1rem;
  line-height: 1.7;
  }
- 
+
  a {
  color: var(--terra-cotta);
  text-decoration: none;
  transition: var(--transition);
  }
- 
+
  a:hover { color: var(--raw-umber); }
- 
+
  img {
  max-width: 100%;
  height: auto;
  display: block;
  }
- 
+
  .container {
  max-width: var(--max-width);
  margin: 0 auto;
  padding: 0 1.5rem;
  }
- 
+
  .section-padding { padding: 5rem 0; }
- 
+
  /* Skip Link */
  .skip-link {
  position: absolute;
@@ -101,27 +101,27 @@
  z-index: 10000;
  transition: top 0.3s;
  }
- 
+
  .skip-link:focus { top: 0; }
- 
+
  /* Scroll Reveal Animation */
  .reveal {
   opacity: 1;
  transform: translateY(30px);
  transition: opacity 0.8s ease, transform 0.8s ease;
  }
- 
+
  .reveal.active {
  opacity: 1;
  transform: translateY(0);
  }
- 
+
  .reveal-delay-1 { transition-delay: 0.1s; }
  .reveal-delay-2 { transition-delay: 0.2s; }
  .reveal-delay-3 { transition-delay: 0.3s; }
  .reveal-delay-4 { transition-delay: 0.4s; }
  .reveal-delay-5 { transition-delay: 0.5s; }
- 
+
  /* Section Label */
  .section-label {
  font-family: var(--font-accent);
@@ -131,7 +131,7 @@
  margin-bottom: 0.75rem;
  display: block;
  }
- 
+
  /* Buttons */
  .btn {
  display: inline-block;
@@ -146,33 +146,33 @@
  transition: var(--transition);
  text-align: center;
  }
- 
+
  .btn-primary {
  background-color: var(--terra-cotta);
  color: #fff;
  border-radius: 4px;
  }
- 
+
  .btn-primary:hover {
  background-color: var(--raw-umber);
  color: #fff;
  transform: translateY(-2px);
  box-shadow: var(--shadow-md);
  }
- 
+
  .btn-secondary {
  background-color: transparent;
  color: var(--deep-forest);
  border: 2px solid var(--deep-forest);
  border-radius: 4px;
  }
- 
+
  .btn-secondary:hover {
  background-color: var(--deep-forest);
  color: var(--cream);
  transform: translateY(-2px);
  }
- 
+
  /* ============================================
  HEADER
  ============================================ */
@@ -187,7 +187,7 @@
  border-bottom: 1px solid rgba(45, 74, 62, 0.12);
  transition: var(--transition);
  }
- 
+
  .header-inner {
  max-width: var(--max-width);
  margin: 0 auto;
@@ -197,28 +197,28 @@
  align-items: center;
  justify-content: space-between;
  }
- 
+
  .logo {
  display: flex;
  align-items: center;
  gap: 0.75rem;
  text-decoration: none;
  }
- 
+
  .logo-img {
  height: 68px;
  width: auto;
  display: block;
  }
- 
+
  .nav-desktop { display: none; }
- 
+
  .nav-list {
  display: flex;
  list-style: none;
  gap: 2.5rem;
  }
- 
+
  .nav-list a {
  font-family: var(--font-body);
  font-weight: 400;
@@ -229,7 +229,7 @@
  position: relative;
  padding-bottom: 4px;
  }
- 
+
  .nav-list a::after {
  content: '';
  position: absolute;
@@ -240,26 +240,26 @@
  background-color: var(--terra-cotta);
  transition: width 0.3s ease;
  }
- 
+
  .nav-list a:hover::after { width: 100%; }
  .nav-list a:hover { color: var(--terra-cotta); }
- 
+
  .nav-list a.active {
  color: var(--terra-cotta);
  font-weight: 700;
  }
- 
+
  .nav-list a.active::after {
  width: 100%;
  background-color: var(--terra-cotta);
  }
- 
+
  .header-actions {
  display: flex;
  align-items: center;
  gap: 1.5rem;
  }
- 
+
  .cart-btn {
  position: relative;
  background: none;
@@ -267,7 +267,7 @@
  cursor: pointer;
  padding: 0.5rem;
  }
- 
+
  .cart-btn svg {
  width: 24px;
  height: 24px;
@@ -276,9 +276,9 @@
  stroke-width: 2;
  transition: stroke 0.3s ease;
  }
- 
+
  .cart-btn:hover svg { stroke: var(--terra-cotta); }
- 
+
  .cart-count {
  position: absolute;
  top: -2px;
@@ -294,7 +294,7 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  /* Mobile Menu Toggle */
  .menu-toggle {
  display: flex;
@@ -310,7 +310,7 @@
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
  }
- 
+
  .menu-toggle span {
  display: block;
  width: 100%;
@@ -319,11 +319,11 @@
  transition: var(--transition);
  transform-origin: center;
  }
- 
+
  .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
  .menu-toggle.active span:nth-child(2) { opacity: 0; }
  .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
- 
+
  /* Mobile Navigation */
  .mobile-nav {
  position: fixed;
@@ -338,16 +338,16 @@
  transition: transform 0.4s ease;
  overflow-y: auto;
  }
- 
+
  .mobile-nav.active { transform: translate3d(0, 0, 0); }
- 
+
  .mobile-nav-list {
  list-style: none;
  display: flex;
  flex-direction: column;
  gap: 1.5rem;
  }
- 
+
  .mobile-nav-list a {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -357,10 +357,10 @@
  padding: 0.5rem 0;
  border-bottom: 1px solid var(--light-sage);
  }
- 
+
  .mobile-nav-list a:hover,
  .mobile-nav-list a.active { color: var(--terra-cotta); }
- 
+
  /* ============================================
  PAGE HERO
  ============================================ */
@@ -373,7 +373,7 @@
  overflow: hidden;
  margin-top: var(--header-height);
  }
- 
+
  .page-hero-bg {
  position: absolute;
  top: 0;
@@ -383,7 +383,7 @@
  object-fit: cover;
  z-index: 1;
  }
- 
+
  .page-hero-overlay {
  position: absolute;
  top: 0;
@@ -393,7 +393,7 @@
  background: linear-gradient(to top, rgba(45, 74, 62, 0.92) 0%, rgba(45, 74, 62, 0.6) 50%, rgba(45, 74, 62, 0.3) 100%);
  z-index: 2;
  }
- 
+
  .page-hero-content {
  position: relative;
  z-index: 3;
@@ -402,7 +402,7 @@
  margin: 0 auto;
  padding: 0 1.5rem 3.5rem;
  }
- 
+
  .page-hero-label {
  font-family: var(--font-accent);
  font-style: italic;
@@ -411,7 +411,7 @@
  margin-bottom: 0.75rem;
  display: block;
  }
- 
+
  .page-hero h1 {
  font-family: var(--font-headline);
  font-weight: 900;
@@ -421,7 +421,7 @@
  max-width: 700px;
  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
  }
- 
+
  .page-hero p {
  font-family: var(--font-body);
  font-weight: 300;
@@ -431,14 +431,14 @@
  margin-bottom: 0;
  line-height: 1.6;
  }
- 
+
  /* Breadcrumb */
  .breadcrumb {
  padding: 1.25rem 0;
  background-color: var(--cream);
  border-bottom: 1px solid rgba(45, 74, 62, 0.08);
  }
- 
+
  .breadcrumb ol {
  list-style: none;
  display: flex;
@@ -446,26 +446,26 @@
  gap: 0.5rem;
  flex-wrap: wrap;
  }
- 
+
  .breadcrumb li {
  font-size: 0.85rem;
  color: rgba(61, 43, 31, 0.5);
  }
- 
+
  .breadcrumb a {
  color: var(--deep-forest);
  font-weight: 400;
  }
- 
+
  .breadcrumb a:hover { color: var(--terra-cotta); }
- 
+
  .breadcrumb-separator {
  color: rgba(61, 43, 31, 0.3);
  margin: 0 0.25rem;
  }
- 
+
  .breadcrumb-current { color: var(--terra-cotta); font-weight: 700; }
- 
+
  /* ============================================
  FAQ SECTION
  ============================================ */
@@ -473,28 +473,28 @@
  background-color: var(--cream);
  padding: 4rem 0 5rem;
  }
- 
+
  .faq-header {
  text-align: center;
  margin-bottom: 3rem;
  }
- 
+
  .faq-header h2 { margin-bottom: 0.75rem; }
- 
+
  .faq-header p {
  color: rgba(61, 43, 31, 0.7);
  font-size: 1.05rem;
  max-width: 550px;
  margin: 0 auto;
  }
- 
+
  /* FAQ Category */
  .faq-category {
  margin-bottom: 3rem;
  }
- 
+
  .faq-category:last-child { margin-bottom: 0; }
- 
+
  .faq-category-title {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -505,7 +505,7 @@
  border-bottom: 2px solid var(--terra-cotta);
  display: inline-block;
  }
- 
+
  /* Accordion */
  .accordion {
  border: 1px solid rgba(45, 74, 62, 0.12);
@@ -513,13 +513,13 @@
  overflow: hidden;
  background-color: #fff;
  }
- 
+
  .accordion-item {
  border-bottom: 1px solid rgba(45, 74, 62, 0.1);
  }
- 
+
  .accordion-item:last-child { border-bottom: none; }
- 
+
  .accordion-trigger {
  width: 100%;
  display: flex;
@@ -532,14 +532,14 @@
  text-align: left;
  transition: background-color 0.3s ease;
  }
- 
+
  .accordion-trigger:hover { background-color: rgba(245, 240, 232, 0.5); }
- 
+
  .accordion-trigger:focus-visible {
  outline: 3px solid var(--terra-cotta);
  outline-offset: -3px;
  }
- 
+
  .accordion-question {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -548,16 +548,16 @@
  line-height: 1.4;
  padding-right: 1rem;
  }
- 
+
  .accordion-icon {
  width: 24px;
  height: 24px;
  flex-shrink: 0;
  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
  }
- 
+
  .accordion-trigger[aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
- 
+
  .accordion-icon svg {
  width: 100%;
  height: 100%;
@@ -567,60 +567,60 @@
  stroke-linecap: round;
  stroke-linejoin: round;
  }
- 
+
  .accordion-panel {
  max-height: 0;
  overflow: hidden;
  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
  background-color: rgba(245, 240, 232, 0.3);
  }
- 
+
  .accordion-panel.open {
  max-height: 600px;
  padding: 0 1.5rem 1.5rem;
  }
- 
+
  .accordion-answer {
  font-family: var(--font-body);
  font-size: 1rem;
  line-height: 1.75;
  color: var(--dark-brown);
  }
- 
+
  .accordion-answer p {
  margin-bottom: 0.75rem;
  }
- 
+
  .accordion-answer p:last-child { margin-bottom: 0; }
- 
+
  .accordion-answer strong {
  color: var(--deep-forest);
  font-weight: 700;
  }
- 
+
  .accordion-answer ul {
  margin: 0.75rem 0 0.75rem 1.5rem;
  padding-left: 0;
  }
- 
+
  .accordion-answer li {
  margin-bottom: 0.4rem;
  line-height: 1.6;
  }
- 
+
  .accordion-answer .ingredient-list {
  list-style: none;
  margin: 0.75rem 0;
  padding: 0;
  }
- 
+
  .accordion-answer .ingredient-list li {
  display: flex;
  align-items: center;
  gap: 0.75rem;
  margin-bottom: 0.6rem;
  }
- 
+
  .ingredient-dot {
  width: 8px;
  height: 8px;
@@ -628,7 +628,7 @@
  background-color: var(--sage-mist);
  flex-shrink: 0;
  }
- 
+
  /* ============================================
  CONTACT SECTION
  ============================================ */
@@ -638,7 +638,7 @@
  position: relative;
  overflow: hidden;
  }
- 
+
  .contact-section::before {
  content: '';
  position: absolute;
@@ -647,31 +647,31 @@
  width: 100%;
  max-width: 400px;
  height: 100%;
- background: url('https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/root-illustration.jpg') no-repeat center right;
+ background: url('https://cdn.shopify.com/s/files/1/0804/0572/5416/files/root-illustration.jpg?v=1788382297') no-repeat center right;
  background-size: contain;
  opacity: 0.05;
  pointer-events: none;
  }
- 
+
  .contact-header {
  text-align: center;
  margin-bottom: 3rem;
  position: relative;
  z-index: 2;
  }
- 
+
  .contact-header h2 {
  color: #fff;
  margin-bottom: 0.75rem;
  }
- 
+
  .contact-header p {
  color: rgba(255, 255, 255, 0.7);
  font-size: 1.05rem;
  max-width: 500px;
  margin: 0 auto;
  }
- 
+
  .contact-layout {
  display: grid;
  grid-template-columns: 1fr;
@@ -679,7 +679,7 @@
  position: relative;
  z-index: 2;
  }
- 
+
  /* Contact Form */
  .contact-form-wrapper {
  background-color: rgba(255, 255, 255, 0.06);
@@ -688,13 +688,13 @@
  padding: 2.5rem;
  backdrop-filter: blur(10px);
  }
- 
+
  .form-group {
  margin-bottom: 1.5rem;
  }
- 
+
  .form-group:last-of-type { margin-bottom: 0; }
- 
+
  .form-label {
  display: block;
  font-family: var(--font-body);
@@ -705,7 +705,7 @@
  letter-spacing: 1px;
  margin-bottom: 0.5rem;
  }
- 
+
  .form-input,
  .form-textarea,
  .form-select {
@@ -719,7 +719,7 @@
  border-radius: 8px;
  transition: var(--transition);
  }
- 
+
  .form-input:focus,
  .form-textarea:focus,
  .form-select:focus {
@@ -727,12 +727,12 @@
  border-color: var(--sage-mist);
  box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.2);
  }
- 
+
  .form-textarea {
  min-height: 140px;
  resize: vertical;
  }
- 
+
  .form-select {
  cursor: pointer;
  appearance: none;
@@ -741,45 +741,45 @@
  background-position: right 1rem center;
  padding-right: 2.5rem;
  }
- 
+
  .form-select option {
  color: var(--dark-brown);
  }
- 
+
  .form-submit {
  width: 100%;
  margin-top: 0.5rem;
  }
- 
+
  /* Contact Info */
  .contact-info-wrapper {
  display: flex;
  flex-direction: column;
  gap: 2rem;
  }
- 
+
  .contact-info-card {
  background-color: rgba(255, 255, 255, 0.06);
  border: 1px solid rgba(255, 255, 255, 0.1);
  border-radius: 16px;
  padding: 2rem;
  }
- 
+
  .contact-info-card h3 {
  color: #fff;
  font-size: 1.25rem;
  margin-bottom: 1.25rem;
  }
- 
+
  .contact-info-item {
  display: flex;
  align-items: flex-start;
  gap: 1rem;
  margin-bottom: 1.25rem;
  }
- 
+
  .contact-info-item:last-child { margin-bottom: 0; }
- 
+
  .contact-info-icon {
  width: 44px;
  height: 44px;
@@ -790,7 +790,7 @@
  justify-content: center;
  flex-shrink: 0;
  }
- 
+
  .contact-info-icon svg {
  width: 22px;
  height: 22px;
@@ -798,7 +798,7 @@
  fill: none;
  stroke-width: 2;
  }
- 
+
  .contact-info-content h4 {
  color: #fff;
  font-size: 1rem;
@@ -806,21 +806,21 @@
  font-weight: 700;
  margin-bottom: 0.25rem;
  }
- 
+
  .contact-info-content p {
  color: rgba(255, 255, 255, 0.7);
  font-size: 0.95rem;
  line-height: 1.6;
  margin-bottom: 0;
  }
- 
+
  .contact-info-content a {
  color: var(--sage-mist);
  font-weight: 700;
  }
- 
+
  .contact-info-content a:hover { color: #fff; }
- 
+
  /* Family Note */
  .family-note {
  background-color: rgba(193, 122, 95, 0.12);
@@ -829,34 +829,34 @@
  padding: 2rem;
  text-align: center;
  }
- 
+
  .family-note-image {
  max-width: 200px;
  margin: 0 auto 1.25rem;
  }
- 
+
  .family-note-image img {
  border-radius: 12px;
  }
- 
+
  .family-note h3 {
  color: #fff;
  font-size: 1.15rem;
  margin-bottom: 0.75rem;
  }
- 
+
  .family-note p {
  color: rgba(255, 255, 255, 0.75);
  font-size: 0.95rem;
  line-height: 1.7;
  margin-bottom: 0;
  }
- 
+
  .family-note-highlight {
  color: var(--terra-cotta);
  font-weight: 700;
  }
- 
+
  /* ============================================
  TRUST BAR
  ============================================ */
@@ -865,7 +865,7 @@
  border-top: 1px solid rgba(45, 74, 62, 0.08);
  padding: 2.5rem 0;
  }
- 
+
  .trust-bar-grid {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
@@ -880,7 +880,7 @@
  justify-content: center;
  gap: 0.75rem;
  }
- 
+
  .trust-bar-icon {
  width: 40px;
  height: 40px;
@@ -891,7 +891,7 @@
  justify-content: center;
  flex-shrink: 0;
  }
- 
+
  .trust-bar-icon svg {
  width: 20px;
  height: 20px;
@@ -899,35 +899,35 @@
  fill: none;
  stroke-width: 2;
  }
- 
+
  .trust-bar-text {
  font-size: 0.9rem;
  font-weight: 700;
  color: var(--deep-forest);
  line-height: 1.3;
  }
- 
+
  /* ============================================
  FOOTER
  ============================================ */
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  .family-badge {
  display: inline-flex;
  align-items: center;
@@ -937,7 +937,7 @@
  border-radius: 20px;
  margin-top: 0.5rem;
  }
- 
+
  .family-badge svg {
  width: 18px;
  height: 18px;
@@ -945,29 +945,29 @@
  fill: none;
  stroke-width: 1.5;
  }
- 
+
  .family-badge span {
  font-size: 0.8rem;
  color: var(--sage-mist);
  font-weight: 700;
  }
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
  .show-mobile { display: inline; }
- 
+
  .payment-icons {
  display: flex;
  gap: 0.75rem;
  align-items: center;
  }
- 
+
  .payment-icon {
  width: 40px;
  height: 26px;
@@ -977,19 +977,19 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  .payment-icon svg {
  width: 28px;
  height: 18px;
  fill: rgba(255, 255, 255, 0.5);
  }
- 
+
  .social-icons {
  display: flex;
  gap: 1rem;
  align-items: center;
  }
- 
+
  .social-icon {
  width: 36px;
  height: 36px;
@@ -1001,12 +1001,12 @@
  transition: var(--transition);
  color: #fff;
  }
- 
+
  .social-icon:hover {
  background-color: var(--sage-mist);
  transform: translateY(-2px);
  }
- 
+
  .social-icon svg {
  width: 18px;
  height: 18px;
@@ -1014,54 +1014,54 @@
  fill: none;
  stroke-width: 2;
  }
- 
+
  /* ============================================
  FDA DISCLAIMER
  ============================================ */
- 
- 
- 
- 
+
+
+
+
  /* ============================================
  RESPONSIVE STYLES
  ============================================ */
  @media (min-width: 768px) {
  .nav-desktop { display: block; }
  .menu-toggle { display: none; }
- 
+
  .page-hero { min-height: 480px; }
- 
+
  .faq-section { padding: 5rem 0 6rem; }
- 
+
  .accordion-trigger { padding: 1.5rem 2rem; }
  .accordion-question { font-size: 1.15rem; }
  .accordion-panel.open { padding: 0 2rem 2rem; }
- 
+
  .trust-bar-grid {
  grid-template-columns: repeat(2, 1fr);
  }
- 
- 
+
+
  }
- 
+
  @media (min-width: 1024px) {
  .container { padding: 0 2rem; }
  .section-padding { padding: 6rem 0; }
- 
+
  .page-hero-content { padding-bottom: 4rem; }
- 
+
  .contact-layout {
  grid-template-columns: 1.2fr 1fr;
  gap: 3rem;
  }
- 
- 
- 
- 
- 
+
+
+
+
+
  .show-mobile { display: none; }
  }
- 
+
  /* ============================================
  ACCESSIBILITY
  ============================================ */
@@ -1072,13 +1072,13 @@
  transition-duration: 0.01ms !important;
  scroll-behavior: auto !important;
  }
- 
+
  .reveal {
  opacity: 1;
  transform: none;
  }
  }
- 
+
  a:focus-visible,
  button:focus-visible,
  input:focus-visible,
@@ -1087,7 +1087,7 @@
  outline: 3px solid var(--terra-cotta);
  outline-offset: 2px;
  }
- 
+
     /* FOOTER */
     .site-footer {
       background: var(--deep-forest);
@@ -1200,7 +1200,7 @@
  <header class="site-header" id="header">
  <div class="header-inner">
  <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-logo-nav.png?v=1788381974" alt="Wild Roots Hemp" class="logo-img">
  </a>
  <nav class="nav-desktop" aria-label="Main navigation">
  <ul class="nav-list">
@@ -1229,7 +1229,7 @@
  </div>
  </div>
  </header>
- 
+
  <!-- Mobile Navigation -->
  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
  <ul class="mobile-nav-list">
@@ -1247,9 +1247,9 @@
  PAGE HERO
  ============================================ -->
  <section class="page-hero" aria-label="FAQ and Contact page hero">
- <img 
- src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/hero-landscape.jpg" 
- alt="Serene hemp farm landscape at golden hour" 
+ <img
+ src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/hero-landscape.jpg?v=1788382083"
+ alt="Serene hemp farm landscape at golden hour"
  class="page-hero-bg"
  loading="eager"
  >
@@ -1301,12 +1301,12 @@
  <div class="faq-category reveal">
  <h3 class="faq-category-title">About Nano-Hemp</h3>
  <div class="accordion" role="region" aria-label="About Nano-Hemp frequently asked questions">
- 
+
  <!-- FAQ 1 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-1"
  onclick="toggleAccordion(this)"
  >
@@ -1329,12 +1329,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 2 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-2"
  onclick="toggleAccordion(this)"
  >
@@ -1358,12 +1358,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 3 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-3"
  onclick="toggleAccordion(this)"
  >
@@ -1386,12 +1386,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 4 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-4"
  onclick="toggleAccordion(this)"
  >
@@ -1415,12 +1415,12 @@
  <div class="faq-category reveal">
  <h3 class="faq-category-title">Products</h3>
  <div class="accordion" role="region" aria-label="Product frequently asked questions">
- 
+
  <!-- FAQ 5 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-5"
  onclick="toggleAccordion(this)"
  >
@@ -1443,12 +1443,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 6 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-6"
  onclick="toggleAccordion(this)"
  >
@@ -1468,12 +1468,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 7 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-7"
  onclick="toggleAccordion(this)"
  >
@@ -1497,12 +1497,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 8 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-8"
  onclick="toggleAccordion(this)"
  >
@@ -1526,12 +1526,12 @@
  <div class="faq-category reveal">
  <h3 class="faq-category-title">Shipping &amp; Returns</h3>
  <div class="accordion" role="region" aria-label="Shipping and returns frequently asked questions">
- 
+
  <!-- FAQ 9 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-9"
  onclick="toggleAccordion(this)"
  >
@@ -1552,12 +1552,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 10 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-10"
  onclick="toggleAccordion(this)"
  >
@@ -1581,12 +1581,12 @@
  <div class="faq-category reveal">
  <h3 class="faq-category-title">Company</h3>
  <div class="accordion" role="region" aria-label="Company frequently asked questions">
- 
+
  <!-- FAQ 11 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-11"
  onclick="toggleAccordion(this)"
  >
@@ -1603,12 +1603,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- FAQ 12 -->
  <div class="accordion-item">
- <button 
- class="accordion-trigger" 
- aria-expanded="false" 
+ <button
+ class="accordion-trigger"
+ aria-expanded="false"
  aria-controls="faq-panel-12"
  onclick="toggleAccordion(this)"
  >
@@ -1671,37 +1671,37 @@
  <h2 id="contact-heading">Contact Our Family</h2>
  <p>Have a question we didn't answer? Send us a message. We'd love to hear from you.</p>
  </div>
- 
+
  <div class="contact-layout">
  <!-- Contact Form -->
  <div class="contact-form-wrapper reveal">
  <form action="/contact" method="post" accept-charset="UTF-8" novalidate>
  <div class="form-group">
  <label for="contact-name" class="form-label">Your Name</label>
- <input 
- type="text" 
- id="contact-name" 
- name="contact[name]" 
- class="form-input" 
+ <input
+ type="text"
+ id="contact-name"
+ name="contact[name]"
+ class="form-input"
  placeholder="Jane Doe"
  required
  autocomplete="name"
  >
  </div>
- 
+
  <div class="form-group">
  <label for="contact-email" class="form-label">Email Address</label>
- <input 
- type="email" 
- id="contact-email" 
- name="contact[email]" 
- class="form-input" 
+ <input
+ type="email"
+ id="contact-email"
+ name="contact[email]"
+ class="form-input"
  placeholder="jane@example.com"
  required
  autocomplete="email"
  >
  </div>
- 
+
  <div class="form-group">
  <label for="contact-subject" class="form-label">Subject</label>
  <select id="contact-subject" name="contact[subject]" class="form-select" required>
@@ -1712,28 +1712,28 @@
  <option value="General">General</option>
  </select>
  </div>
- 
+
  <div class="form-group">
  <label for="contact-message" class="form-label">Your Message</label>
- <textarea 
- id="contact-message" 
- name="contact[body]" 
- class="form-textarea" 
+ <textarea
+ id="contact-message"
+ name="contact[body]"
+ class="form-textarea"
  placeholder="How can we help you?"
  required
  ></textarea>
  </div>
- 
+
  <button type="submit" class="btn btn-primary form-submit">Send Message</button>
  </form>
  </div>
- 
+
  <!-- Contact Info & Family Note -->
  <div class="contact-info-wrapper">
  <!-- Contact Info Card -->
  <div class="contact-info-card reveal reveal-delay-1">
  <h3>Contact Information</h3>
- 
+
  <div class="contact-info-item">
  <div class="contact-info-icon">
  <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1746,7 +1746,7 @@
  <p><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></p>
  </div>
  </div>
- 
+
  <div class="contact-info-item">
  <div class="contact-info-icon">
  <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1759,7 +1759,7 @@
  <p>Monday - Friday<br>9:00 AM - 5:00 PM CST</p>
  </div>
  </div>
- 
+
  <div class="contact-info-item">
  <div class="contact-info-icon">
  <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1772,7 +1772,7 @@
  <p>Within 24 hours during business days</p>
  </div>
  </div>
- 
+
  <div class="contact-info-item">
  <div class="contact-info-icon">
  <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1788,12 +1788,12 @@
  </div>
  </div>
  </div>
- 
+
  <!-- Family Note -->
  <div class="family-note reveal reveal-delay-2">
  <div class="family-note-image">
- <img 
- src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-cartoon-group.jpg" 
+ <img
+ src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/family-cartoon-group.jpg?v=1788382026"
  alt="Cartoon illustration of the Wild Roots family founders"
  loading="lazy"
  >
@@ -1815,7 +1815,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
-          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <img class="footer-brand-logo" src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-circle-logo.png?v=1788381983" alt="Wild Roots Hemp">
           <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
@@ -1930,14 +1930,14 @@ window.addEventListener('resize', function() {
  document.body.style.overflow = '';
  }
  });
- 
+
  // ============================================
  // Accordion
  // ============================================
  function toggleAccordion(trigger) {
  const panel = document.getElementById(trigger.getAttribute('aria-controls'));
  const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
- 
+
  // Close all other accordions in the same accordion container
  const parentAccordion = trigger.closest('.accordion');
  if (parentAccordion) {
@@ -1949,17 +1949,17 @@ window.addEventListener('resize', function() {
  }
  });
  }
- 
+
  // Toggle current accordion
  trigger.setAttribute('aria-expanded', !isExpanded);
  panel.classList.toggle('open');
  }
- 
+
  // ============================================
  // Scroll Reveal Animation
  // ============================================
  const revealElements = document.querySelectorAll('.reveal');
- 
+
  const revealObserver = new IntersectionObserver(function(entries) {
  entries.forEach(function(entry) {
  if (entry.isIntersecting) {
@@ -1971,17 +1971,17 @@ window.addEventListener('resize', function() {
  threshold: 0.1,
  rootMargin: '0px 0px -50px 0px'
  });
- 
+
  revealElements.forEach(function(el) {
  revealObserver.observe(el);
  });
- 
+
  // ============================================
  // Header scroll behavior
  // ============================================
  const header = document.querySelector('.header');
  let lastScrollY = window.scrollY;
- 
+
  window.addEventListener('scroll', function() {
  if (window.scrollY > 100) {
  header.style.boxShadow = '0 4px 20px rgba(45, 74, 62, 0.15)';

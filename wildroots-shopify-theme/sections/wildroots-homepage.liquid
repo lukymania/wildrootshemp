@@ -8,7 +8,7 @@
  /* ============================================
  WILD ROOTS HEMP, COMPLETE STYLESHEET
  ============================================ */
- 
+
  /* CSS Custom Properties */
  :root {
  --deep-forest: #2D4A3E;
@@ -19,12 +19,12 @@
  --dark-brown: #3D2B1F;
  --light-sage: #C5D4B8;
  --kraft-brown: #C4A882;
- 
+
  --font-headline: 'Playfair Display', serif;
  --font-display: 'Playfair Display', serif;
  --font-body: 'Lato', sans-serif;
  --font-accent: 'Cormorant Garamond', serif;
- 
+
  --max-width: 1200px;
  --header-height: 80px;
  --transition: all 0.3s ease;
@@ -33,19 +33,19 @@
  --shadow-lg: 0 16px 48px rgba(45, 74, 62, 0.16);
       --forest-deep: #0f241c;
     }
- 
+
  /* Reset & Base */
  *, *::before, *::after {
  margin: 0;
  padding: 0;
  box-sizing: border-box;
  }
- 
+
  html {
  scroll-behavior: smooth;
  font-size: 16px;
  }
- 
+
  body {
  font-family: var(--font-body);
  font-weight: 400;
@@ -56,69 +56,69 @@
  -moz-osx-font-smoothing: grayscale;
  overflow-x: hidden;
  }
- 
+
  h1, h2, h3, h4 {
  font-family: var(--font-headline);
  font-weight: 700;
  line-height: 1.2;
  color: var(--forest-deep);
  }
- 
+
  h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
  h2 { font-size: clamp(2rem, 4vw, 3rem); }
  h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
  h4 { font-size: 1.25rem; }
- 
+
  p {
  margin-bottom: 1rem;
  font-size: 1rem;
  line-height: 1.7;
  }
- 
+
  a {
  color: var(--terra-cotta);
  text-decoration: none;
  transition: var(--transition);
  }
- 
+
  a:hover {
  color: var(--raw-umber);
  }
- 
+
  img {
  max-width: 100%;
  height: auto;
  display: block;
  }
- 
+
  .container {
  max-width: var(--max-width);
  margin: 0 auto;
  padding: 0 1.5rem;
  }
- 
+
  .section-padding {
  padding: 5rem 0;
  }
- 
+
  /* Scroll Reveal Animation */
  .reveal {
   opacity: 1;
  transform: translateY(30px);
  transition: opacity 0.8s ease, transform 0.8s ease;
  }
- 
+
  .reveal.active {
  opacity: 1;
  transform: translateY(0);
  }
- 
+
  .reveal-delay-1 { transition-delay: 0.1s; }
  .reveal-delay-2 { transition-delay: 0.2s; }
  .reveal-delay-3 { transition-delay: 0.3s; }
  .reveal-delay-4 { transition-delay: 0.4s; }
  .reveal-delay-5 { transition-delay: 0.5s; }
- 
+
  /* Buttons */
  .btn {
  display: inline-block;
@@ -133,46 +133,46 @@
  transition: var(--transition);
  text-align: center;
  }
- 
+
  .btn-primary {
  background-color: var(--terra-cotta);
  color: #fff;
  border-radius: 4px;
  }
- 
+
  .btn-primary:hover {
  background-color: var(--raw-umber);
  color: #fff;
  transform: translateY(-2px);
  box-shadow: var(--shadow-md);
  }
- 
+
  .btn-secondary {
  background-color: transparent;
  color: var(--forest-deep);
  border: 2px solid var(--forest-deep);
  border-radius: 4px;
  }
- 
+
  .btn-secondary:hover {
  background-color: var(--forest-deep);
  color: var(--cream);
  transform: translateY(-2px);
  }
- 
+
  .btn-ghost {
  background-color: transparent;
  color: var(--terra-cotta);
  border: 2px solid var(--terra-cotta);
  border-radius: 4px;
  }
- 
+
  .btn-ghost:hover {
  background-color: var(--terra-cotta);
  color: #fff;
  transform: translateY(-2px);
  }
- 
+
  /* Section Label */
  .section-label {
  font-family: var(--font-accent);
@@ -182,7 +182,7 @@
  margin-bottom: 0.75rem;
  display: block;
  }
- 
+
  /* ============================================
  HEADER
  ============================================ */
@@ -197,7 +197,7 @@
  border-bottom: 1px solid rgba(45, 74, 62, 0.12);
  transition: var(--transition);
  }
- 
+
  .header-inner {
  max-width: var(--max-width);
  margin: 0 auto;
@@ -207,30 +207,30 @@
  align-items: center;
  justify-content: space-between;
  }
- 
+
  .logo {
  display: flex;
  align-items: center;
  gap: 0.75rem;
  text-decoration: none;
  }
- 
+
  .logo-img {
  height: 68px;
  width: auto;
  display: block;
 }
- 
+
  .nav-desktop {
  display: none;
  }
- 
+
  .nav-list {
  display: flex;
  list-style: none;
  gap: 2.5rem;
  }
- 
+
  .nav-list a {
  font-family: var(--font-body);
  font-weight: 400;
@@ -241,7 +241,7 @@
  position: relative;
  padding-bottom: 4px;
  }
- 
+
  .nav-list a::after {
  content: '';
  position: absolute;
@@ -252,21 +252,21 @@
  background-color: var(--terra-cotta);
  transition: width 0.3s ease;
  }
- 
+
  .nav-list a:hover::after {
  width: 100%;
  }
- 
+
  .nav-list a:hover {
  color: var(--terra-cotta);
  }
- 
+
  .header-actions {
  display: flex;
  align-items: center;
  gap: 1.5rem;
  }
- 
+
  .cart-btn {
  position: relative;
  background: none;
@@ -274,18 +274,18 @@
  cursor: pointer;
  padding: 0.5rem;
  }
- 
+
  .cart-btn svg {
  width: 24px;
  height: 24px;
  stroke: var(--forest-deep);
  transition: stroke 0.3s ease;
  }
- 
+
  .cart-btn:hover svg {
  stroke: var(--terra-cotta);
  }
- 
+
  .cart-count {
  position: absolute;
  top: -2px;
@@ -301,7 +301,7 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  /* Mobile Menu Toggle */
  .menu-toggle {
  display: flex;
@@ -317,7 +317,7 @@
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
  }
- 
+
  .menu-toggle span {
  display: block;
  width: 100%;
@@ -326,19 +326,19 @@
  transition: var(--transition);
  transform-origin: center;
  }
- 
+
  .menu-toggle.active span:nth-child(1) {
  transform: translateY(9px) rotate(45deg);
  }
- 
+
  .menu-toggle.active span:nth-child(2) {
  opacity: 0;
  }
- 
+
  .menu-toggle.active span:nth-child(3) {
  transform: translateY(-9px) rotate(-45deg);
  }
- 
+
  /* Mobile Navigation */
  .mobile-nav {
  position: fixed;
@@ -353,18 +353,18 @@
  transition: transform 0.4s ease;
  overflow-y: auto;
  }
- 
+
  .mobile-nav.active {
  transform: translate3d(0, 0, 0);
  }
- 
+
  .mobile-nav-list {
  list-style: none;
  display: flex;
  flex-direction: column;
  gap: 1.5rem;
  }
- 
+
  .mobile-nav-list a {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -374,11 +374,11 @@
  padding: 0.5rem 0;
  border-bottom: 1px solid var(--light-sage);
  }
- 
+
  .mobile-nav-list a:hover {
  color: var(--terra-cotta);
  }
- 
+
  /* ============================================
  HERO SECTION
  ============================================ */
@@ -392,7 +392,7 @@
  overflow: hidden;
  margin-top: 0;
  }
- 
+
  .hero-video-bg {
  position: absolute;
  top: 0;
@@ -402,7 +402,7 @@
  object-fit: cover;
  z-index: 1;
  }
- 
+
  .hero-poster {
  position: absolute;
  top: 0;
@@ -412,11 +412,11 @@
  object-fit: cover;
  z-index: 2;
  }
- 
+
  .hero-video-bg ~ .hero-poster {
  display: none;
  }
- 
+
  .hero-overlay {
  position: absolute;
  top: 0;
@@ -426,7 +426,7 @@
  background: linear-gradient(to top, rgba(45, 74, 62, 0.88) 0%, rgba(45, 74, 62, 0.4) 50%, rgba(45, 74, 62, 0.15) 100%);
  z-index: 3;
  }
- 
+
  .hero-content {
  position: relative;
  z-index: 4;
@@ -435,7 +435,7 @@
  margin: 0 auto;
  padding: 0 1.5rem 4rem;
  }
- 
+
  .hero-headline {
  font-family: var(--font-headline);
  font-weight: 900;
@@ -445,7 +445,7 @@
  max-width: 700px;
  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
  }
- 
+
  .hero-subhead {
  font-family: var(--font-body);
  font-weight: 300;
@@ -455,11 +455,11 @@
  margin-bottom: 2rem;
  line-height: 1.6;
  }
- 
+
  .hero-cta {
  margin-bottom: 2.5rem;
  }
- 
+
  /* Trust Badges */
  .trust-badges {
  display: flex;
@@ -467,7 +467,7 @@
  gap: 1.5rem;
  align-items: center;
  }
- 
+
  .trust-badge {
  display: flex;
  align-items: center;
@@ -478,7 +478,7 @@
  text-transform: uppercase;
  letter-spacing: 1px;
  }
- 
+
  .trust-badge svg {
  width: 20px;
  height: 20px;
@@ -486,7 +486,7 @@
  fill: none;
  stroke-width: 2;
  }
- 
+
  /* ============================================
  FAMILY STORY TEASER
  ============================================ */
@@ -494,40 +494,40 @@
  background-color: var(--cream);
  padding: 5rem 0;
  }
- 
+
  .story-inner {
  display: flex;
  flex-direction: column;
  align-items: center;
  gap: 2.5rem;
  }
- 
+
  .story-image {
  max-width: 320px;
  width: 100%;
  }
- 
+
  .story-image img {
  border-radius: 12px;
  box-shadow: var(--shadow-md);
  }
- 
+
  .story-content {
  text-align: center;
  max-width: 600px;
  }
- 
+
  .story-content h2 {
  margin-bottom: 1.25rem;
  }
- 
+
  .story-content p {
  font-size: 1.05rem;
  line-height: 1.8;
  color: var(--dark-brown);
  margin-bottom: 1.5rem;
  }
- 
+
  .story-link {
  font-family: var(--font-body);
  font-weight: 700;
@@ -539,11 +539,11 @@
  align-items: center;
  gap: 0.5rem;
  }
- 
+
  .story-link:hover {
  gap: 0.75rem;
  }
- 
+
  /* ============================================
  THE SCIENCE SECTION
  ============================================ */
@@ -553,28 +553,28 @@
  position: relative;
  overflow: hidden;
  }
- 
 
- 
+
+
  .science-header {
  text-align: center;
  margin-bottom: 3rem;
  position: relative;
  z-index: 2;
  }
- 
+
  .science-header h2 {
  color: #fff;
  margin-bottom: 1rem;
  }
- 
+
  .science-header p {
  color: rgba(255, 255, 255, 0.75);
  max-width: 600px;
  margin: 0 auto;
  font-size: 1.05rem;
  }
- 
+
  .science-comparison {
  display: grid;
  grid-template-columns: 1fr;
@@ -583,7 +583,7 @@
  position: relative;
  z-index: 2;
  }
- 
+
  .science-card {
  background-color: rgba(45, 74, 62, 0.85);
  border: 1px solid rgba(156, 175, 136, 0.25);
@@ -604,7 +604,7 @@
  border-color: var(--terra-cotta);
  box-shadow: 0 0 30px rgba(193, 122, 95, 0.15);
  }
- 
+
  .science-card-icon {
  width: 64px;
  height: 64px;
@@ -615,7 +615,7 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  .science-card-icon svg {
  width: 32px;
  height: 32px;
@@ -623,25 +623,25 @@
  fill: none;
  stroke-width: 1.5;
  }
- 
+
  .science-card h3 {
  color: #fff;
  font-size: 1.35rem;
  margin-bottom: 0.75rem;
  }
- 
+
  .science-card p {
  color: rgba(255, 255, 255, 0.7);
  font-size: 0.95rem;
  line-height: 1.7;
  }
- 
+
  .science-arrow {
  display: none;
  align-items: center;
  justify-content: center;
  }
- 
+
  .science-arrow svg {
  width: 32px;
  height: 32px;
@@ -649,7 +649,7 @@
  fill: none;
  stroke-width: 2;
  }
- 
+
  /* Science Stats */
  .science-stats {
  display: grid;
@@ -659,7 +659,7 @@
  position: relative;
  z-index: 2;
  }
- 
+
  .stat-card {
  background-color: rgba(45, 74, 62, 0.8);
  border: 1px solid rgba(156, 175, 136, 0.2);
@@ -667,7 +667,7 @@
  padding: 1.5rem;
  text-align: center;
  }
- 
+
  .stat-number {
  font-family: var(--font-headline);
  font-weight: 900;
@@ -676,20 +676,20 @@
  display: block;
  margin-bottom: 0.25rem;
  }
- 
+
  .stat-label {
  color: rgba(255, 255, 255, 0.7);
  font-size: 0.9rem;
  text-transform: uppercase;
  letter-spacing: 1px;
  }
- 
+
  .science-cta {
  text-align: center;
  position: relative;
  z-index: 2;
  }
- 
+
  /* ============================================
  PRODUCT SHOWCASE
  ============================================ */
@@ -698,29 +698,29 @@
  background-color: var(--cream);
  padding: 5rem 0;
  }
- 
+
  .products-header {
  text-align: center;
  margin-bottom: 3rem;
  }
- 
+
  .products-header h2 {
  margin-bottom: 0.75rem;
  }
- 
+
  .products-header p {
  color: rgba(61, 43, 31, 0.7);
  font-size: 1.05rem;
  max-width: 500px;
  margin: 0 auto;
  }
- 
+
  .products-grid {
  display: grid;
  grid-template-columns: 1fr;
  gap: 2rem;
  }
- 
+
  .product-card {
  background-color: #fff;
  border-radius: 12px;
@@ -733,12 +733,12 @@
  height: 100%;
  position: relative;
  }
- 
+
  .product-card:hover {
  transform: translateY(-8px);
  box-shadow: var(--shadow-lg);
  }
- 
+
  .product-image {
  position: relative;
  width: 100%;
@@ -746,18 +746,18 @@
  overflow: hidden;
  background-color: var(--light-sage);
  }
- 
+
  .product-image img {
  width: 100%;
  height: 100%;
  object-fit: cover;
  transition: transform 0.5s ease;
  }
- 
+
  .product-card:hover .product-image img {
  transform: scale(1.05);
  }
- 
+
  .product-badge {
  position: absolute;
  top: 1rem;
@@ -777,14 +777,14 @@
  .product-badge.badge-evening { background-color: #7B6BA8; }
  .product-badge.badge-daily { background-color: #C8913A; }
  .product-badge.badge-pet { background-color: #A67C52; }
- 
+
  .product-info {
  padding: 1.5rem;
  display: flex;
  flex-direction: column;
  flex-grow: 1;
  }
- 
+
  .product-name {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -792,42 +792,42 @@
  color: var(--forest-deep);
  margin-bottom: 0.5rem;
  }
- 
+
  .product-description {
  font-size: 0.9rem;
  color: rgba(61, 43, 31, 0.75);
  line-height: 1.6;
  margin-bottom: 0.75rem;
  }
- 
+
  .product-meta {
  display: flex;
  justify-content: space-between;
  align-items: center;
  margin-bottom: 1rem;
  }
- 
+
  .product-strength {
  font-family: var(--font-accent);
  font-style: italic;
  font-size: 1rem;
  color: var(--sage-mist);
  }
- 
+
  .product-price {
  font-family: var(--font-headline);
  font-weight: 900;
  font-size: 1.5rem;
  color: var(--raw-umber);
  }
- 
+
  .product-btn {
  width: 100%;
  padding: 0.85rem;
  font-size: 0.8rem;
  margin-top: auto;
  }
- 
+
  /* ============================================
  TRUST & CERTIFICATIONS
  ============================================ */
@@ -837,23 +837,23 @@
  border-top: 1px solid rgba(196, 168, 130, 0.2);
  border-bottom: 1px solid rgba(196, 168, 130, 0.2);
  }
- 
+
  .trust-header {
  text-align: center;
  margin-bottom: 3rem;
  }
- 
+
  .trust-header h2 {
  margin-bottom: 0.75rem;
  }
- 
+
  .trust-grid {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
  gap: 1.5rem;
  margin-bottom: 3rem;
  }
- 
+
  .trust-item {
  text-align: center;
  padding: 1.5rem 1rem;
@@ -861,12 +861,12 @@
  border-radius: 10px;
  transition: var(--transition);
  }
- 
+
  .trust-item:hover {
  transform: translateY(-4px);
  box-shadow: var(--shadow-sm);
  }
- 
+
  .trust-icon {
  width: 56px;
  height: 56px;
@@ -877,7 +877,7 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  .trust-icon svg {
  width: 28px;
  height: 28px;
@@ -885,26 +885,26 @@
  fill: none;
  stroke-width: 1.5;
  }
- 
+
  .trust-item h4 {
  font-size: 1rem;
  color: var(--forest-deep);
  margin-bottom: 0.5rem;
  }
- 
+
  .trust-item p {
  font-size: 0.8rem;
  color: rgba(61, 43, 31, 0.65);
  line-height: 1.5;
  margin-bottom: 0;
  }
- 
+
  .trust-extra {
  display: grid;
  grid-template-columns: 1fr;
  gap: 1.5rem;
  }
- 
+
  .trust-extra-item {
  display: flex;
  align-items: center;
@@ -914,7 +914,7 @@
  border-radius: 10px;
  border-left: 4px solid var(--terra-cotta);
  }
- 
+
  .trust-extra-icon {
  flex-shrink: 0;
  width: 44px;
@@ -925,7 +925,7 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  .trust-extra-icon svg {
  width: 22px;
  height: 22px;
@@ -933,18 +933,18 @@
  fill: none;
  stroke-width: 1.5;
  }
- 
+
  .trust-extra-text h4 {
  font-size: 1rem;
  margin-bottom: 0.25rem;
  }
- 
+
  .trust-extra-text p {
  font-size: 0.85rem;
  color: rgba(61, 43, 31, 0.65);
  margin-bottom: 0;
  }
- 
+
  /* ============================================
  TESTIMONIALS
  ============================================ */
@@ -952,18 +952,18 @@
  background: linear-gradient(180deg, var(--cream) 0%, #ede8df 100%);
  padding: 5rem 0;
  }
- 
+
  .testimonials-header {
  text-align: center;
  margin-bottom: 3rem;
  }
- 
+
  .testimonials-grid {
  display: grid;
  grid-template-columns: 1fr;
  gap: 2rem;
  }
- 
+
  .testimonial-card {
  background-color: #fff;
  border-radius: 12px;
@@ -973,7 +973,7 @@
  transition: var(--transition);
  position: relative;
  }
- 
+
  .testimonial-card::before {
  content: '"';
  font-family: var(--font-headline);
@@ -986,25 +986,25 @@
  line-height: 1;
  opacity: 0.5;
  }
- 
+
  .testimonial-card:hover {
  transform: translateY(-4px);
  box-shadow: var(--shadow-md);
  }
- 
+
  .testimonial-stars {
  display: flex;
  gap: 0.25rem;
  margin-bottom: 1rem;
  }
- 
+
  .testimonial-stars svg {
  width: 18px;
  height: 18px;
  fill: var(--kraft-brown);
  stroke: none;
  }
- 
+
  .testimonial-quote {
  font-family: var(--font-accent);
  font-style: italic;
@@ -1015,7 +1015,7 @@
  position: relative;
  z-index: 1;
  }
- 
+
  .testimonial-author {
  font-family: var(--font-body);
  font-weight: 700;
@@ -1024,7 +1024,7 @@
  text-transform: uppercase;
  letter-spacing: 1px;
  }
- 
+
  .testimonial-location {
  font-size: 0.8rem;
  color: rgba(61, 43, 31, 0.5);
@@ -1032,7 +1032,7 @@
  text-transform: none;
  letter-spacing: 0;
  }
- 
+
  /* ============================================
  JOURNAL PREVIEW
  ============================================ */
@@ -1040,18 +1040,18 @@
  background-color: #fff;
  padding: 5rem 0;
  }
- 
+
  .journal-header {
  text-align: center;
  margin-bottom: 3rem;
  }
- 
+
  .journal-grid {
  display: grid;
  grid-template-columns: 1fr;
  gap: 2rem;
  }
- 
+
  .journal-card {
  border-radius: 12px;
  overflow: hidden;
@@ -1059,12 +1059,12 @@
  border: 1px solid rgba(196, 168, 130, 0.2);
  transition: var(--transition);
  }
- 
+
  .journal-card:hover {
  transform: translateY(-6px);
  box-shadow: var(--shadow-md);
  }
- 
+
  .journal-image {
  width: 100%;
  aspect-ratio: 16 / 9;
@@ -1072,22 +1072,22 @@
  position: relative;
  overflow: hidden;
  }
- 
+
  .journal-image img {
  width: 100%;
  height: 100%;
  object-fit: cover;
  transition: transform 0.5s ease;
  }
- 
+
  .journal-card:hover .journal-image img {
  transform: scale(1.05);
  }
- 
+
  .journal-content {
  padding: 1.5rem;
  }
- 
+
  .journal-date {
  font-size: 0.8rem;
  color: var(--terra-cotta);
@@ -1096,7 +1096,7 @@
  margin-bottom: 0.5rem;
  display: block;
  }
- 
+
  .journal-title {
  font-family: var(--font-headline);
  font-weight: 700;
@@ -1105,14 +1105,14 @@
  line-height: 1.4;
  margin-bottom: 0.75rem;
  }
- 
+
  .journal-excerpt {
  font-size: 0.9rem;
  color: rgba(61, 43, 31, 0.7);
  line-height: 1.6;
  margin-bottom: 1rem;
  }
- 
+
  .journal-link {
  font-family: var(--font-body);
  font-weight: 700;
@@ -1124,11 +1124,11 @@
  align-items: center;
  gap: 0.4rem;
  }
- 
+
  .journal-link:hover {
  gap: 0.65rem;
  }
- 
+
  /* ============================================
  NEWSLETTER / CTA
  ============================================ */
@@ -1138,7 +1138,7 @@
  position: relative;
  overflow: hidden;
  }
- 
+
  .newsletter-section::before {
  content: '';
  position: absolute;
@@ -1147,12 +1147,12 @@
  width: 100%;
  max-width: 400px;
  height: 100%;
- background: url('https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/root-illustration.jpg') no-repeat bottom left;
+ background: url('https://cdn.shopify.com/s/files/1/0804/0572/5416/files/root-illustration.jpg?v=1788382297') no-repeat bottom left;
  background-size: contain;
  opacity: 0.06;
  pointer-events: none;
  }
- 
+
  .newsletter-content {
  position: relative;
  z-index: 2;
@@ -1160,25 +1160,25 @@
  max-width: 600px;
  margin: 0 auto;
  }
- 
+
  .newsletter-content h2 {
  color: #fff;
  margin-bottom: 0.75rem;
  }
- 
+
  .newsletter-content > p {
  color: rgba(255, 255, 255, 0.85);
  font-size: 1.1rem;
  margin-bottom: 2rem;
  }
- 
+
  .newsletter-form {
  display: flex;
  flex-direction: column;
  gap: 1rem;
  margin-bottom: 1rem;
  }
- 
+
  .newsletter-input {
  padding: 1rem 1.5rem;
  border: 2px solid rgba(255, 255, 255, 0.3);
@@ -1191,16 +1191,16 @@
  transition: var(--transition);
  backdrop-filter: blur(10px);
  }
- 
+
  .newsletter-input::placeholder {
  color: rgba(255, 255, 255, 0.6);
  }
- 
+
  .newsletter-input:focus {
  border-color: rgba(255, 255, 255, 0.6);
  background-color: rgba(255, 255, 255, 0.15);
  }
- 
+
  .newsletter-btn {
  background-color: var(--terra-cotta);
  color: #fff;
@@ -1215,19 +1215,19 @@
  cursor: pointer;
  transition: var(--transition);
  }
- 
+
  .newsletter-btn:hover {
  background-color: var(--raw-umber);
  transform: translateY(-2px);
  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
  }
- 
+
  .newsletter-disclaimer {
  color: rgba(255, 255, 255, 0.5);
  font-size: 0.75rem;
  margin-bottom: 0;
  }
- 
+
  /* ============================================
  FOOTER
  ============================================ */
@@ -1302,7 +1302,7 @@
  }
 
  .footer-col ul li a:hover { color: var(--sage-mist); padding-left: 4px; }
- 
+
  .family-badge {
  display: inline-flex;
  align-items: center;
@@ -1312,7 +1312,7 @@
  border-radius: 20px;
  margin-top: 0.5rem;
  }
- 
+
  .family-badge svg {
  width: 18px;
  height: 18px;
@@ -1320,13 +1320,13 @@
  fill: none;
  stroke-width: 1.5;
  }
- 
+
  .family-badge span {
  font-size: 0.8rem;
  color: var(--sage-mist);
  font-weight: 700;
  }
- 
+
  .footer-bottom {
  padding-top: 28px;
  display: flex;
@@ -1347,13 +1347,13 @@
  font-size: 0.75rem;
  color: rgba(245, 240, 232, 0.4);
  }
- 
+
  .payment-icons {
  display: flex;
  gap: 0.75rem;
  align-items: center;
  }
- 
+
  .payment-icon {
  width: 40px;
  height: 26px;
@@ -1363,19 +1363,19 @@
  align-items: center;
  justify-content: center;
  }
- 
+
  .payment-icon svg {
  width: 28px;
  height: 18px;
  fill: rgba(255, 255, 255, 0.5);
  }
- 
+
  .social-icons {
  display: flex;
  gap: 1rem;
  align-items: center;
  }
- 
+
  .social-icon {
  width: 36px;
  height: 36px;
@@ -1386,29 +1386,29 @@
  justify-content: center;
  transition: var(--transition);
  }
- 
+
  .social-icon:hover {
  background-color: var(--sage-mist);
  transform: translateY(-2px);
  }
- 
+
  .social-icon svg {
  width: 16px;
  height: 16px;
  fill: rgba(255, 255, 255, 0.7);
  }
- 
+
  .social-icon:hover svg {
  fill: var(--dark-brown);
  }
- 
+
  /* ============================================
  FDA DISCLAIMER
  ============================================ */
- 
- 
- 
- 
+
+
+
+
  /* ============================================
  MEDIA QUERIES
  ============================================ */
@@ -1416,115 +1416,115 @@
  .products-grid {
  grid-template-columns: repeat(2, 1fr);
  }
- 
+
  .journal-grid {
  grid-template-columns: repeat(2, 1fr);
  }
- 
+
  .trust-grid {
  grid-template-columns: repeat(4, 1fr);
  }
- 
+
  .testimonials-grid {
  grid-template-columns: repeat(2, 1fr);
  }
- 
+
  .testimonial-card:last-child {
  grid-column: span 2;
  max-width: 50%;
  margin: 0 auto;
  }
  }
- 
+
  @media (min-width: 768px) {
  .menu-toggle {
  display: none;
  }
- 
+
  .nav-desktop {
  display: block;
  }
- 
+
  .story-inner {
  flex-direction: row;
  text-align: left;
  gap: 4rem;
  }
- 
+
  .story-content {
  text-align: left;
  }
- 
+
  .science-comparison {
  grid-template-columns: 1fr auto 1fr;
  align-items: center;
  }
- 
+
  .science-card {
  padding: 2.5rem 2rem;
  }
- 
+
  .science-arrow {
  display: flex;
  }
- 
+
  .science-stats {
  grid-template-columns: repeat(3, 1fr);
  }
- 
+
  .stat-number {
  font-size: 3rem;
  }
- 
+
  .newsletter-form {
  flex-direction: row;
  }
- 
+
  .newsletter-input {
  flex: 1;
  }
- 
+
  .footer-top {
  grid-template-columns: repeat(2, 1fr);
  }
  }
- 
+
  @media (min-width: 1024px) {
  .container {
  padding: 0 2rem;
  }
- 
+
  .section-padding {
  padding: 6rem 0;
  }
- 
+
  .hero-content {
  padding-bottom: 5rem;
  }
- 
+
  .products-grid {
  grid-template-columns: repeat(3, 1fr);
  gap: 2.5rem;
  }
- 
+
  .journal-grid {
  grid-template-columns: repeat(3, 1fr);
  }
- 
+
  .testimonials-grid {
  grid-template-columns: repeat(3, 1fr);
  }
- 
+
  .testimonial-card:last-child {
  grid-column: auto;
  max-width: none;
  margin: 0;
  }
- 
+
  .trust-extra {
  grid-template-columns: repeat(2, 1fr);
  }
- 
+
  .footer-top {
  grid-template-columns: 2fr 1fr 1fr 1fr;
  gap: 3rem;
@@ -1535,10 +1535,10 @@
  justify-content: space-between;
  }
  }
- 
+
  @media (min-width: 1200px) {
  }
- 
+
  /* ============================================
  ACCESSIBILITY
  ============================================ */
@@ -1549,13 +1549,13 @@
  transition-duration: 0.01ms !important;
  scroll-behavior: auto !important;
  }
- 
+
  .reveal {
  opacity: 1;
  transform: none;
  }
  }
- 
+
  /* Focus styles */
  a:focus-visible,
  button:focus-visible,
@@ -1563,7 +1563,7 @@
  outline: 3px solid var(--terra-cotta);
  outline-offset: 2px;
  }
- 
+
  /* Skip to content */
  .skip-link {
  position: absolute;
@@ -1575,7 +1575,7 @@
  z-index: 10000;
  transition: top 0.3s;
  }
- 
+
  .skip-link:focus {
  top: 0;
  }
@@ -1590,12 +1590,12 @@
  <header class="site-header" id="header" role="banner">
  <div class="header-inner">
  <a href="/" class="logo" aria-label="Wild Roots Hemp Home">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/logo-nav.png" alt="Wild Roots Hemp" class="logo-img">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-logo-nav.png?v=1788381974" alt="Wild Roots Hemp" class="logo-img">
  </a>
  <nav class="nav-desktop" aria-label="Main navigation">
  <ul class="nav-list">
  <li><a href="/pages/our-story">Our Story</a></li>
- <li><a href="/collections/all">Shop</a></li>
+ <li><a href="/collections/shop">Shop</a></li>
  <li><a href="/pages/the-science">The Science</a></li>
  <li><a href="/blogs/news">Journal</a></li>
  <li><a href="/pages/family">Family</a></li>
@@ -1624,7 +1624,7 @@
  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
  <ul class="mobile-nav-list">
  <li><a href="/pages/our-story">Our Story</a></li>
- <li><a href="/collections/all">Shop</a></li>
+ <li><a href="/collections/shop">Shop</a></li>
  <li><a href="/pages/the-science">The Science</a></li>
  <li><a href="/blogs/news">Journal</a></li>
  <li><a href="/pages/family">Family</a></li>
@@ -1737,7 +1737,7 @@
  <div class="container">
  <div class="story-inner reveal">
  <div class="story-image">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-cartoon-group.jpg" alt="The Wild Roots Hemp founder family illustration - husband, wife, three kids, and their dog" loading="lazy">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/family-cartoon-group.jpg?v=1788382026" alt="The Wild Roots Hemp founder family illustration - husband, wife, three kids, and their dog" loading="lazy">
  </div>
  <div class="story-content">
  <span class="section-label">Our Story</span>
@@ -1762,7 +1762,7 @@
 
  <!-- Nano-Fragmentation Process Illustration -->
  <div class="science-process-image reveal" style="margin: 2.5rem auto; text-align: center;">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nano-fragmentation-process.jpg" alt="The nano-fragmentation process: initial particle dispersion in solvent, ultrasonic energy fragmentation, and stable nano-particle product formation" loading="lazy" style="max-width: 900px; width: 95%; border-radius: 12px; display: block; margin: 0 auto; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/nano-fragmentation-process.jpg?v=1788382220" alt="The nano-fragmentation process: initial particle dispersion in solvent, ultrasonic energy fragmentation, and stable nano-particle product formation" loading="lazy" style="max-width: 900px; width: 95%; border-radius: 12px; display: block; margin: 0 auto; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
  </div>
 
  <div class="science-comparison">
@@ -1804,7 +1804,7 @@
 
  <!-- Skin Barrier Visual -->
  <div class="science-visual reveal" style="margin: 3rem auto 0; max-width: 900px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.25); border: 1px solid rgba(156,175,136,0.2);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/science-skin-barrier-v2.jpg" alt="Traditional hemp particles blocked by skin barrier versus nano-hemp particles that pass through" loading="lazy" style="width: 100%; display: block;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/science-skin-barrier-v2.jpg?v=1788382289" alt="Traditional hemp particles blocked by skin barrier versus nano-hemp particles that pass through" loading="lazy" style="width: 100%; display: block;">
  </div>
  <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 0.75rem; font-style: italic;">Traditional hemp particles (~2,000nm) are blocked. Nano-hemp (&lt;100nm) passes through.</p>
 
@@ -1832,7 +1832,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-ROLLON-100">
  <div class="product-image" style="background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D4 100%);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-rollon-cutout.png" alt="Root Relief Roll-On - 100MG nano-hemp roll-on for targeted relief" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-rollon-cutout.png?v=1788382268" alt="Root Relief Roll-On - 100MG nano-hemp roll-on for targeted relief" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Root Relief Roll-On</h3>
@@ -1855,7 +1855,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-SPRAY-300">
  <div class="product-image" style="background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D4 100%);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-mist-cutout.png" alt="Wild Relief Botanical Spray - 300MG nano-hemp oil-based spray" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-mist-cutout.png?v=1788382255" alt="Wild Relief Botanical Spray - 300MG nano-hemp oil-based spray" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Wild Relief Botanical Spray</h3>
@@ -1878,7 +1878,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-DEEP-600">
  <div class="product-image" style="background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D4 100%);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-roots-cutout.png" alt="Deep Roots Extra Strength - 600MG maximum-strength nano-hemp formula" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-deep-roots-cutout.png?v=1788382239" alt="Deep Roots Extra Strength - 600MG maximum-strength nano-hemp formula" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Deep Roots Extra Strength</h3>
@@ -1901,7 +1901,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-REST-300">
  <div class="product-image" style="background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D4 100%);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-deep-rest-cutout.png" alt="Deep Rest Evening Formula - 150MG CBN + 150MG Nano-Hemp for restful nights" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-deep-rest-cutout.png?v=1788382260" alt="Deep Rest Evening Formula - 150MG CBN + 150MG Nano-Hemp for restful nights" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Deep Rest Evening Formula</h3>
@@ -1924,7 +1924,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-DAILY-300">
  <div class="product-image" style="background: linear-gradient(135deg, #F5F0E8 0%, #E8E0D4 100%);">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-daily-roots-cutout.png" alt="Daily Roots Standard Strength - 300MG nano-hemp daily wellness tincture" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-daily-roots-cutout.png?v=1788382235" alt="Daily Roots Standard Strength - 300MG nano-hemp daily wellness tincture" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Daily Roots Standard Strength</h3>
@@ -1947,7 +1947,7 @@
  <meta itemprop="brand" content="Wild Roots Hemp">
  <meta itemprop="sku" content="WR-PET-300">
  <div class="product-image">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-paw-root-cutout.png" alt="Paw & Root Pet Drops - 300MG nano-hemp wellness for pets" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-paw-root-cutout.png?v=1788382264" alt="Paw & Root Pet Drops - 300MG nano-hemp wellness for pets" loading="lazy" itemprop="image" style="object-fit: contain; padding: 1rem;">
  </div>
  <div class="product-info">
  <h3 class="product-name" itemprop="name">Paw &amp; Root Pet Drops</h3>
@@ -2108,7 +2108,7 @@
  <article class="journal-card reveal reveal-delay-1" itemscope itemtype="https://schema.org/Article">
  <meta itemprop="author" content="Wild Roots Hemp Editorial Team">
  <div class="journal-image">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nano-science-illustration.jpg" alt="Illustration of nano-technology and hemp particles" loading="lazy" itemprop="image">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/nano-science-illustration.jpg?v=1788382243" alt="Illustration of nano-technology and hemp particles" loading="lazy" itemprop="image">
  </div>
  <div class="journal-content">
  <time class="journal-date" itemprop="datePublished" datetime="2026-01-10">January 10, 2026</time>
@@ -2121,7 +2121,7 @@
  <article class="journal-card reveal reveal-delay-2" itemscope itemtype="https://schema.org/Article">
  <meta itemprop="author" content="Wild Roots Hemp Editorial Team">
  <div class="journal-image">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-collection-flatlay.jpg" alt="Wild Roots Hemp products in amber glass bottles" loading="lazy" itemprop="image">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-collection-flatlay.jpg?v=1788382246" alt="Wild Roots Hemp products in amber glass bottles" loading="lazy" itemprop="image">
  </div>
  <div class="journal-content">
  <time class="journal-date" itemprop="datePublished" datetime="2026-01-05">January 5, 2026</time>
@@ -2134,7 +2134,7 @@
  <article class="journal-card reveal reveal-delay-3" itemscope itemtype="https://schema.org/Article">
  <meta itemprop="author" content="Wild Roots Hemp Editorial Team">
  <div class="journal-image">
- <img src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/science-nanometer-scale.jpg" alt="Nanometer scale showing nano-hemp particles relative to human hair and skin pores" loading="lazy" itemprop="image">
+ <img src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/science-nanometer-scale.jpg?v=1788382280" alt="Nanometer scale showing nano-hemp particles relative to human hair and skin pores" loading="lazy" itemprop="image">
  </div>
  <div class="journal-content">
  <time class="journal-date" itemprop="datePublished" datetime="2026-06-10">June 10, 2026</time>
@@ -2266,7 +2266,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
-          <img class="footer-brand-logo" src="https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/wild-roots-circle-logo.png" alt="Wild Roots Hemp">
+          <img class="footer-brand-logo" src="https://cdn.shopify.com/s/files/1/0804/0572/5416/files/wild-roots-circle-logo.png?v=1788381983" alt="Wild Roots Hemp">
           <p class="footer-brand-desc">Wild Roots Hemp is a family-founded science-backed nano-hemp wellness company with Midwest roots and West Coast wild. We craft premium, nano-enhanced hemp products using proprietary fragmentation and encapsulation technology from a powerful West Coast biotech.</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/wildrootshemp" aria-label="Instagram">
@@ -2306,7 +2306,7 @@
           <h4>Support</h4>
           <ul>
             <li><a href="/pages/contact">Contact Us</a></li>
-            <li><a href="/policies/shipping-policy">Shipping Info</a></li>
+            <li><a href="/pages/faq#shipping-returns">Shipping Info</a></li>
             <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
             <li><a href="mailto:info@wildrootshemp.com">info@wildrootshemp.com</a></li>
           </ul>
@@ -2397,10 +2397,9 @@
       "@type": "Article",
       "headline": "What Is Nano-Hemp? Understanding the Science Behind Smaller Particles",
       "description": "Discover how our proprietary nano fragmentation and encapsulation technology transforms traditional hemp into stable nano-particles for maximum absorption.",
-      "image": "https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/nano-science-illustration.jpg",
+      "image": "https://cdn.shopify.com/s/files/1/0804/0572/5416/files/nano-science-illustration.jpg?v=1788382243",
       "author": {
-        "@type": "Organization",
-        "name": "Wild Roots Hemp Editorial Team"
+        "@id": "https://wildrootshemp.com/#organization"
       },
       "publisher": {
         "@id": "https://wildrootshemp.com/#organization"
@@ -2412,10 +2411,9 @@
       "@type": "Article",
       "headline": "Why We Chose Amber Glass: The Story Behind Our Packaging",
       "description": "Every detail matters when it comes to preserving the integrity of nano-enhanced hemp. Here's why amber glass is essential.",
-      "image": "https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/product-collection-flatlay.jpg",
+      "image": "https://cdn.shopify.com/s/files/1/0804/0572/5416/files/product-collection-flatlay.jpg?v=1788382246",
       "author": {
-        "@type": "Organization",
-        "name": "Wild Roots Hemp Editorial Team"
+        "@id": "https://wildrootshemp.com/#organization"
       },
       "publisher": {
         "@id": "https://wildrootshemp.com/#organization"
@@ -2427,10 +2425,9 @@
       "@type": "Article",
       "headline": "A Day in the Life: How Our Family Uses Nano-Hemp Daily",
       "description": "From morning routines to evening wind-down, here's how we incorporate nano-hemp wellness into our family's everyday life.",
-      "image": "https://raw.githubusercontent.com/lukymania/wildrootshemp/main/wildroots-site/assets/images/family-cartoon-group.jpg",
+      "image": "https://cdn.shopify.com/s/files/1/0804/0572/5416/files/family-cartoon-group.jpg?v=1788382026",
       "author": {
-        "@type": "Organization",
-        "name": "Wild Roots Hemp Editorial Team"
+        "@id": "https://wildrootshemp.com/#organization"
       },
       "publisher": {
         "@id": "https://wildrootshemp.com/#organization"
@@ -2546,13 +2543,13 @@ window.addEventListener('resize', function() {
  anchor.addEventListener('click', function(e) {
  var targetId = this.getAttribute('href');
  if (targetId === '#') return;
- 
+
  var targetElement = document.querySelector(targetId);
  if (targetElement) {
  e.preventDefault();
  var headerHeight = document.getElementById('header').offsetHeight;
  var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
- 
+
  window.scrollTo({
  top: targetPosition,
  behavior: 'smooth'
@@ -2570,7 +2567,7 @@ window.addEventListener('resize', function() {
 
  function updateHeader() {
  var scrollY = window.pageYOffset;
- 
+
  // Add shadow and reduce height when scrolled
  if (scrollY > 20) {
  header.style.boxShadow = '0 2px 20px rgba(45, 74, 62, 0.12)';
@@ -2592,7 +2589,7 @@ window.addEventListener('resize', function() {
  // ============================================
  // SHOPIFY-COMPATIBLE CART FUNCTIONS
  // ============================================
- 
+
  // Cart state
  var cart = {
  items: [],
@@ -2613,7 +2610,7 @@ window.addEventListener('resize', function() {
  // Add to cart function
  window.addToCart = function(variantId, quantity) {
  quantity = quantity || 1;
- 
+
  // Check if item already in cart
  var existingItem = cart.items.find(function(item) {
  return item.variantId === variantId;
@@ -2626,7 +2623,7 @@ window.addEventListener('resize', function() {
  var productCard = document.querySelector('[onclick*="' + variantId + '"]');
  var productName = '';
  var productPrice = '';
- 
+
  if (productCard) {
  var card = productCard.closest('.product-card');
  if (card) {
@@ -2658,7 +2655,7 @@ window.addEventListener('resize', function() {
  }
 
  updateCartUI();
- 
+
  // Show feedback (could be enhanced with a toast notification)
  var cartBtn = document.getElementById('cart-btn');
  if (cartBtn) {
@@ -2685,7 +2682,7 @@ window.addEventListener('resize', function() {
  // In a real Shopify implementation, this would open the cart drawer
  // or navigate to /cart
  console.log('Opening Shopify cart...');
- 
+
  // Placeholder: Show alert with cart contents
  if (cart.itemCount === 0) {
  // Navigate to cart page (Shopify default)
@@ -2706,19 +2703,19 @@ window.addEventListener('resize', function() {
  window.handleNewsletterSubmit = function(form) {
  var emailInput = form.querySelector('input[type="email"]');
  var email = emailInput ? emailInput.value : '';
- 
+
  if (email) {
  // In a Shopify implementation, this would submit to Shopify Email
  // or Klaviyo/Mailchimp integration
  console.log('Newsletter signup:', email);
- 
+
  // Show success feedback
  var btn = form.querySelector('.newsletter-btn');
  if (btn) {
  var originalText = btn.textContent;
  btn.textContent = 'Welcome to the Family!';
  btn.style.backgroundColor = '#2D4A3E';
- 
+
  setTimeout(function() {
  btn.textContent = originalText;
  btn.style.backgroundColor = '';
@@ -2742,15 +2739,15 @@ window.addEventListener('resize', function() {
  // ============================================
  // PARALLAX EFFECT FOR HERO FAMILY IMAGE
  // ============================================
- 
- 
+
+
  if (familyImg && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
  window.addEventListener('scroll', function() {
  if (!ticking) {
  requestAnimationFrame(function() {
  var scrollY = window.pageYOffset;
  var heroHeight = document.querySelector('.hero').offsetHeight;
- 
+
  if (scrollY < heroHeight) {
  var translateY = scrollY * 0.15;
  familyImg.style.transform = 'translateY(' + translateY + 'px)';
@@ -2765,7 +2762,7 @@ window.addEventListener('resize', function() {
  // ============================================
  // INITIALIZE
  // ============================================
- 
+
  // Trigger reveals for elements already in viewport on load
  window.addEventListener('load', function() {
  revealElements.forEach(function(el) {

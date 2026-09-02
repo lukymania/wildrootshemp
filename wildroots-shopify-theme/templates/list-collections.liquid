@@ -117,7 +117,7 @@
   <div class="shop-all-inner">
     <h2 class="shop-all-title">Looking for something specific?</h2>
     <p class="shop-all-desc">Browse all our nano-enhanced hemp products in one place.</p>
-    <a href="/collections/all" class="btn-shop-all">
+    <a href="/collections/shop" class="btn-shop-all">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
         <line x1="3" y1="6" x2="21" y2="6"/>
@@ -137,8 +137,7 @@
   "description": "Browse all Wild Roots Hemp product collections featuring nano-enhanced hemp wellness products.",
   "url": {{ shop.url | append: '/collections' | json }},
   "publisher": {
-    "@type": "Organization",
-    "name": {{ shop.name | json }}
+    "@id": "{{ shop.url }}/#organization"
   },
   "hasPart": [
     {% for collection in collections %}
