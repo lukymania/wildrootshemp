@@ -1,0 +1,286 @@
+{% comment %}
+  /collections/all only: mobile Shop page repair.
+  This section does not affect any other page type or collection.
+{% endcomment %}
+
+{% if request.path == '/collections/all' or collection.handle == 'all' %}
+  {% assign wr_first_shop_product = collection.products.first %}
+  {% assign wr_first_shop_image = wr_first_shop_product.featured_image %}
+  {% assign wr_first_shop_fallback = blank %}
+  {% case wr_first_shop_product.handle %}
+    {% when 'root-relief' %}{% assign wr_first_shop_fallback = 'product-rollon-cutout.png' %}
+    {% when 'wild-relief' %}{% assign wr_first_shop_fallback = 'product-mist-cutout.png' %}
+    {% when 'deep-roots' %}{% assign wr_first_shop_fallback = 'product-deep-roots-cutout.png' %}
+    {% when 'deep-rest' %}{% assign wr_first_shop_fallback = 'product-deep-rest-cutout.png' %}
+    {% when 'daily-roots' %}{% assign wr_first_shop_fallback = 'product-daily-roots-cutout.png' %}
+    {% when 'paw-root' %}{% assign wr_first_shop_fallback = 'product-paw-root-cutout.png' %}
+  {% endcase %}
+
+  <style>
+    /* Visually hide the accessibility link until it receives keyboard focus. */
+    body.template-collection .skip-to-content-link {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    body.template-collection .skip-to-content-link:focus,
+    body.template-collection .skip-to-content-link:focus-visible {
+      position: fixed !important;
+      top: 8px !important;
+      left: 8px !important;
+      width: auto !important;
+      height: auto !important;
+      padding: 12px 16px !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      clip: auto !important;
+      clip-path: none !important;
+      white-space: normal !important;
+      z-index: 99999 !important;
+      background: #ffffff !important;
+      color: #17352a !important;
+      border: 2px solid #17352a !important;
+      border-radius: 6px !important;
+    }
+
+    /* Keep the announcement treatment that was already used on Shop. */
+    [id*="header_announcements"],
+    .announcement-bar-section,
+    #shopify-section-announcement-bar {
+      display: none !important;
+    }
+
+    /* Shop hero, scoped to this collection only. */
+    .collection-hero {
+      position: relative !important;
+      min-height: 420px !important;
+      padding: 0 !important;
+      background-image: url({{ 'hero-landscape.jpg' | asset_url | json }}) !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
+      background-size: cover !important;
+      border-bottom: 0 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    .collection-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(13, 35, 28, .82), rgba(13, 35, 28, .56) 58%, rgba(13, 35, 28, .24));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .collection-hero-inner {
+      position: relative !important;
+      z-index: 1 !important;
+      width: 100% !important;
+      max-width: 1280px !important;
+      min-height: 420px !important;
+      margin: 0 auto !important;
+      padding: 68px 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      text-align: left !important;
+    }
+
+    .collection-hero-content {
+      max-width: 680px !important;
+    }
+
+    .collection-hero-image {
+      display: none !important;
+    }
+
+    .collection-title,
+    .collection-description,
+    .collection-description p,
+    .collection-product-count,
+    .breadcrumb,
+    .breadcrumb a,
+    .breadcrumb-current {
+      color: #ffffff !important;
+    }
+
+    .collection-title {
+      font-size: clamp(3rem, 6vw, 5rem) !important;
+      margin-bottom: 16px !important;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, .22);
+    }
+
+    .collection-description {
+      max-width: 620px !important;
+      font-size: 1.125rem !important;
+      line-height: 1.65 !important;
+      margin-bottom: 16px !important;
+    }
+
+    .collection-product-count {
+      opacity: .9;
+    }
+
+    /* Stop the sort/view toolbar from floating while the customer scrolls. */
+    .collection-toolbar {
+      position: static !important;
+      top: auto !important;
+      z-index: auto !important;
+    }
+
+    @media (hover: hover) and (pointer: fine) and (min-width: 769px) {
+      .product-card-img .product-card-image-hover {
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: none !important;
+        object-fit: cover !important;
+        opacity: 0 !important;
+        transform: scale(1) !important;
+      }
+
+      .product-card:hover .product-card-image-primary {
+        opacity: 0 !important;
+        transform: scale(1.025) !important;
+      }
+
+      .product-card:hover .product-card-image-hover {
+        opacity: 1 !important;
+        transform: scale(1.025) !important;
+      }
+
+      .product-card[data-product-handle="root-relief"] .product-card-image-hover {
+        box-sizing: border-box;
+        padding: 28px;
+        background: var(--cream, #f5f0e8);
+        object-fit: contain !important;
+      }
+    }
+
+    /* On touch devices, never hide the primary product image for a hover swap. */
+    @media (hover: none), (pointer: coarse), (max-width: 768px) {
+      .product-card-image-primary,
+      .product-card:hover .product-card-image-primary {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .product-card-image-hover,
+      .product-card:hover .product-card-image-hover {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+
+      .product-card:hover .product-card-img img {
+        transform: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .collection-hero,
+      .collection-hero-inner {
+        min-height: 360px !important;
+      }
+
+      .collection-hero-inner {
+        padding: 48px 20px !important;
+        text-align: left !important;
+      }
+
+      .collection-title {
+        font-size: clamp(2.5rem, 12vw, 3.75rem) !important;
+      }
+
+      .collection-description {
+        font-size: 1rem !important;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      function patchShopPage() {
+        var hero = document.querySelector('.collection-hero');
+        if (!hero) return false;
+
+        var title = hero.querySelector('.collection-title');
+        if (title) title.textContent = 'The Wild Roots Collection';
+
+        var breadcrumb = hero.querySelector('.breadcrumb-current');
+        if (breadcrumb) breadcrumb.textContent = 'Shop';
+
+        var description = hero.querySelector('.collection-description');
+        var count = hero.querySelector('.collection-product-count');
+        if (!description) {
+          description = document.createElement('div');
+          description.className = 'collection-description';
+          if (count && count.parentNode) {
+            count.parentNode.insertBefore(description, count);
+          } else {
+            var content = hero.querySelector('.collection-hero-content');
+            if (content) content.appendChild(description);
+          }
+        }
+        if (description) {
+          description.innerHTML = '<p>Premium nano-enhanced hemp wellness, crafted for your entire family—including the four-legged members.</p>';
+        }
+
+        var firstCard = document.querySelector('.product-grid .product-card:first-child');
+        var firstImage = firstCard ? firstCard.querySelector('.product-card-image-primary') : null;
+        {% if wr_first_shop_image != blank %}
+          var firstImageUrl = {{ wr_first_shop_image | image_url: width: 900 | json }};
+        {% elsif wr_first_shop_fallback != blank %}
+          var firstImageUrl = {{ wr_first_shop_fallback | asset_url | json }};
+        {% else %}
+          var firstImageUrl = null;
+        {% endif %}
+
+        if (firstImage && firstImageUrl) {
+          firstImage.src = firstImageUrl;
+          firstImage.removeAttribute('srcset');
+          firstImage.loading = 'eager';
+          firstImage.alt = {{ wr_first_shop_product.title | default: 'Wild Roots Hemp product' | json }};
+          firstImage.style.display = 'block';
+          firstImage.style.visibility = 'visible';
+          firstImage.style.removeProperty('opacity');
+        }
+
+        document.body.classList.add('wr-shop-page-patched');
+        return true;
+      }
+
+      function installPatch() {
+        if (patchShopPage()) return;
+        var main = document.getElementById('MainContent') || document.documentElement;
+        var observer = new MutationObserver(function () {
+          if (patchShopPage()) observer.disconnect();
+        });
+        observer.observe(main, { childList: true, subtree: true });
+        window.setTimeout(function () { observer.disconnect(); }, 5000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', installPatch, { once: true });
+      } else {
+        installPatch();
+      }
+      window.addEventListener('pageshow', patchShopPage);
+    })();
+  </script>
+{% endif %}
+
+{% schema %}
+{"name":"Shop page repair","settings":[]}
+{% endschema %}
