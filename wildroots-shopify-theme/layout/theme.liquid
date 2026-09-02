@@ -2,6 +2,10 @@
 <html class="no-js" lang="{{ request.locale.iso_code }}">
 <head>
   <meta charset="utf-8">
+  {%- if request.path == '/index.html' -%}
+    <meta http-equiv="refresh" content="0;url={{ routes.root_url }}">
+    <script>window.location.replace('{{ routes.root_url }}');</script>
+  {%- endif -%}
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#2D4A3E">
