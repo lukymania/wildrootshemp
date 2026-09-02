@@ -65,7 +65,7 @@
       {% if collection.products.size > 0 %}
         <div class="product-grid" id="productGrid">
           {% for product in collection.products %}
-            <div class="product-card" data-product-handle="{{ product.handle }}">
+            <div class="product-card{% if product.images[1] != blank %} product-card--has-hover{% endif %}" data-product-handle="{{ product.handle }}">
               <a href="{{ product.url }}" class="product-card-link">
                 <!-- Card Image -->
                 <div class="product-card-img">
@@ -418,15 +418,15 @@
     opacity: 0;
   }
 
-  .product-card:hover .product-card-image-primary {
+  .product-card.product-card--has-hover:hover .product-card-image-primary {
     opacity: 0;
   }
 
-  .product-card:hover .product-card-image-hover {
+  .product-card.product-card--has-hover:hover .product-card-image-hover {
     opacity: 1;
   }
 
-  .product-card:hover .product-card-img img {
+  .product-card.product-card--has-hover:hover .product-card-img img {
     transform: scale(1.05);
   }
 
