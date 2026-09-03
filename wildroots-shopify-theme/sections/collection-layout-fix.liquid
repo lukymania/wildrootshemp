@@ -216,6 +216,18 @@
 
   <script>
     (function () {
+      var wrShopHoverImages = {
+        {% for product in collection.products %}
+          {{ product.handle | json }}:
+          {% if product.images.size > 1 %}
+            {{ product.images[1] | image_url: width: 900 | json }}
+          {% else %}
+            null
+          {% endif %}
+          {% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      };
+
       function patchShopPage() {
         var hero = document.querySelector('.collection-hero');
         if (!hero) return false;
@@ -262,6 +274,15 @@
           firstImage.style.visibility = 'visible';
           firstImage.style.removeProperty('opacity');
         }
+
+        document.querySelectorAll('.product-grid .product-card').forEach(function (card) {
+          var handle = card.getAttribute('data-product-handle');
+          var hoverImage = card.querySelector('.product-card-image-hover');
+          var hoverImageUrl = wrShopHoverImages[handle];
+          if (!hoverImage || !hoverImageUrl) return;
+          hoverImage.removeAttribute('srcset');
+          hoverImage.src = hoverImageUrl;
+        });
 
         document.body.classList.add('wr-shop-page-patched');
         return true;
