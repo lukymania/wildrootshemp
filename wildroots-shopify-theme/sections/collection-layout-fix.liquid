@@ -130,6 +130,11 @@
       opacity: .9;
     }
 
+    .collection-hero .breadcrumb,
+    .collection-hero .collection-product-count {
+      display: none !important;
+    }
+
     /* Stop the sort/view toolbar from floating while the customer scrolls. */
     .collection-toolbar {
       position: static !important;
@@ -218,8 +223,8 @@
         var title = hero.querySelector('.collection-title');
         if (title) title.textContent = 'The Wild Roots Collection';
 
-        var breadcrumb = hero.querySelector('.breadcrumb-current');
-        if (breadcrumb) breadcrumb.textContent = 'Shop';
+        var breadcrumb = hero.querySelector('.breadcrumb');
+        if (breadcrumb) breadcrumb.remove();
 
         var description = hero.querySelector('.collection-description');
         var count = hero.querySelector('.collection-product-count');
@@ -236,6 +241,7 @@
         if (description) {
           description.innerHTML = '<p>Premium nano-enhanced hemp wellness, crafted for your entire family—including the four-legged members.</p>';
         }
+        if (count) count.remove();
 
         var firstCard = document.querySelector('.product-grid .product-card:first-child');
         var firstImage = firstCard ? firstCard.querySelector('.product-card-image-primary') : null;
