@@ -82,6 +82,115 @@
       "welcome": "Welcome back, {{ first_name }}!"
     }
   },
+  "wr_nano_hemp_guide": {
+    "hero": {
+      "eyebrow": "Evidence-based buyer education",
+      "title": "Nano-Hemp Buyer’s Guide: How to Evaluate Particle Size, Testing, Ingredients and Value",
+      "lede": "A practical framework for comparing nano-hemp products using disclosed methods, batch-specific evidence, current ingredients and cost per labeled use.",
+      "author": "Written by",
+      "reviewer": "Scientific review by",
+      "last_reviewed": "Last reviewed"
+    },
+    "toc": {
+      "label": "Guide contents",
+      "title": "On this page",
+      "definition": "Definition",
+      "measurement": "Particle size",
+      "reports": "Reports and COAs",
+      "products": "Wild Roots specifications",
+      "research": "Research citations"
+    },
+    "definition": {
+      "title": "What does nano-hemp mean?",
+      "body": "Nano-hemp is a hemp formulation in which hemp-containing droplets or particles are engineered at nanometer scale for dispersion in a finished product. One nanometer is one billionth of a meter. The word nano describes measured size, not a guaranteed result. Buyers should look for a method, a distribution and a batch or sample identifier rather than relying on the term alone.",
+      "key_title": "The useful question is not simply: Is it nano?",
+      "key_body": "Ask what was measured, by which method, under what conditions, and whether the tested sample represents the product being sold."
+    },
+    "measurement": {
+      "title": "How particle size is measured",
+      "intro": "Dynamic light scattering, commonly shortened to DLS, is widely used to estimate the hydrodynamic size of particles or droplets suspended in a liquid. The result depends on the sample, the instrument settings, temperature, viscosity, dilution and the way the data are reported.",
+      "dls_title": "Z-average size",
+      "dls_body": "DLS commonly reports an intensity-weighted Z-average hydrodynamic diameter in nanometers. It is a useful summary value for suitable samples, but it does not describe every particle individually.",
+      "pdi_title": "Polydispersity index",
+      "pdi_body": "The polydispersity index, or PDI, describes how broad or narrow the measured size distribution is. A mean size without PDI provides an incomplete picture.",
+      "distribution_title": "Distribution basis",
+      "distribution_body": "Intensity, volume and number distributions are not interchangeable. A report should identify which distribution is shown and should not present a converted number distribution as though it were a direct count."
+    },
+    "reports": {
+      "title": "What a valid particle-size report should contain",
+      "intro": "A useful report should let a qualified reader understand exactly what was tested and how the result was produced.",
+      "item_1": "Laboratory name, report date and a unique report or sample identifier.",
+      "item_2": "Product name, lot or batch number, and whether the sample was an ingredient, intermediate or finished product.",
+      "item_3": "Measurement method and instrument model, including the analysis basis used.",
+      "item_4": "Sample preparation, dilution medium, temperature, viscosity assumptions and number of replicate measurements.",
+      "item_5": "Z-average or other defined central value in nanometers, PDI, distribution graph and quality indicators.",
+      "item_6": "Results from more than one time point when shelf-life stability is being claimed."
+    },
+    "coa": {
+      "proves_title": "What a COA can show",
+      "proves_body": "A certificate of analysis can document the identity or potency and the contaminants actually tested for the identified sample or batch. Its value depends on the laboratory, methods, detection limits, sample identity and date.",
+      "not_proves_title": "What a COA does not prove",
+      "not_proves_body": "A standard potency or contaminant COA does not establish particle size, long-term stability, absorption, onset time, clinical benefit or superiority. Those questions require separate methods and evidence."
+    },
+    "products": {
+      "title": "Wild Roots product specifications and value",
+      "intro": "The table uses current product-page specifications and live Shopify prices. Cost per serving uses the labeled 30-serving count for drops. Topical cost uses the labeled amount per application or spray, so real-world use may vary.",
+      "product": "Product",
+      "specification": "Current specification",
+      "ingredients": "Current ingredients",
+      "value": "Price and cost per use",
+      "testing": "Batch testing",
+      "daily_name": "Daily Roots Standard Strength",
+      "deep_name": "Deep Roots Extra Strength",
+      "rest_name": "Deep Rest Evening Formula",
+      "roll_name": "Root Relief Roll-On",
+      "spray_name": "Wild Relief Botanical Spray",
+      "pet_name": "Paw & Root Pet Drops",
+      "daily_spec": "300 mg nano-hemp per 30 mL bottle; 10 mg per labeled serving; 30 labeled servings.",
+      "deep_spec": "600 mg nano-hemp per 30 mL bottle; 20 mg per labeled serving; 30 labeled servings.",
+      "rest_spec": "150 mg nano-hemp plus 150 mg CBN isolate per 30 mL bottle; 10 mg combined amount per labeled serving; 30 labeled servings.",
+      "roll_spec": "100 mg nano-hemp per 10 mL roll-on; product page lists 10 mg per labeled application.",
+      "spray_spec": "300 mg nano-hemp per 30 mL bottle; product page lists 10 mg per labeled spray.",
+      "pet_spec": "300 mg nano-hemp per 30 mL bottle; 10 mg per labeled serving; 30 labeled servings.",
+      "core_ingredients": "Nano-Hemp, Distilled Water, Vegetable Glycerin, Propylene Glycol.",
+      "deep_ingredients": "Nano-Hemp, Natural Flavors, Vegetable Glycerin, Propylene Glycol.",
+      "rest_ingredients": "CBN Isolate, Nano-Hemp, Distilled Water, Vegetable Glycerin, Propylene Glycol.",
+      "per_serving": "per labeled serving",
+      "per_labeled_application": "per labeled application",
+      "per_labeled_spray": "per labeled spray",
+      "request_report": "Request current batch report",
+      "price_unavailable": "See product page for current price",
+      "cost_note": "Prices and formulas can change. Confirm the product label before purchase. Cost figures exclude discounts, tax and shipping.",
+      "testing_note": "Public batch-report files are not currently linked on the storefront. Until product-specific report URLs are added, each testing link opens the contact page so a buyer can request the current report."
+    },
+    "value": {
+      "title": "How to compare value",
+      "body": "Compare products using the same unit. Start with cost per labeled serving or application, then consider the amount per use, bottle size, ingredient list, testing scope and whether the evidence applies to the finished product. A lower bottle price is not automatically a lower cost per use.",
+      "formula": "Cost per labeled use = current product price ÷ labeled number of uses"
+    },
+    "research": {
+      "title": "Research citations",
+      "scope_title": "How these citations should be read",
+      "scope_body": "The first two sources explain DLS measurement and interpretation. The third evaluates one specific self-emulsifying formulation in a small human study. It does not test Wild Roots products and should not be used to infer that every nano-sized formulation has the same absorption or performance."
+    },
+    "schema": {
+      "name": "Nano-hemp buyer’s guide",
+      "editorial": "Editorial details",
+      "author_name": "Author name",
+      "author_role": "Author role",
+      "reviewer_name": "Scientific reviewer name",
+      "reviewer_credentials": "Scientific reviewer credentials",
+      "last_reviewed": "Visible last reviewed date",
+      "last_reviewed_iso": "Machine-readable review date",
+      "batch_links": "Product batch-report links",
+      "daily_test_url": "Daily Roots report URL",
+      "deep_test_url": "Deep Roots report URL",
+      "rest_test_url": "Deep Rest report URL",
+      "roll_test_url": "Root Relief report URL",
+      "spray_test_url": "Wild Relief report URL",
+      "pet_test_url": "Paw & Root report URL"
+    }
+  },
   "accessibility": {
     "skip_to_text": "Skip to content",
     "close": "Close",
