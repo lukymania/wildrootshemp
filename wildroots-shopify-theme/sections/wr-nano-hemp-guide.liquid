@@ -1,0 +1,292 @@
+{% liquid
+  assign daily_roots = all_products['daily-roots']
+  assign deep_roots = all_products['deep-roots']
+  assign deep_rest = all_products['deep-rest']
+  assign root_relief = all_products['root-relief']
+  assign wild_relief = all_products['wild-relief']
+  assign paw_root = all_products['paw-root']
+
+  assign daily_cost = daily_roots.price | times: 1.0 | divided_by: 30 | round
+  assign deep_cost = deep_roots.price | times: 1.0 | divided_by: 30 | round
+  assign rest_cost = deep_rest.price | times: 1.0 | divided_by: 30 | round
+  assign roll_on_cost = root_relief.price | times: 1.0 | divided_by: 10 | round
+  assign spray_cost = wild_relief.price | times: 1.0 | divided_by: 30 | round
+  assign pet_cost = paw_root.price | times: 1.0 | divided_by: 30 | round
+%}
+
+<article class="wr-guide" itemscope itemtype="https://schema.org/TechArticle">
+  <header class="wr-guide__hero">
+    <div class="wr-guide__wrap wr-guide__hero-inner">
+      <p class="wr-guide__eyebrow">{{ 'wr_nano_hemp_guide.hero.eyebrow' | t }}</p>
+      <h1 itemprop="headline">{{ 'wr_nano_hemp_guide.hero.title' | t }}</h1>
+      <p class="wr-guide__lede">{{ 'wr_nano_hemp_guide.hero.lede' | t }}</p>
+      <dl class="wr-guide__review">
+        <div>
+          <dt>{{ 'wr_nano_hemp_guide.hero.author' | t }}</dt>
+          <dd><span itemprop="author">{{ section.settings.author_name | escape }}</span>, {{ section.settings.author_role | escape }}</dd>
+        </div>
+        {% if section.settings.reviewer_name != blank and section.settings.reviewer_credentials != blank %}
+          <div>
+            <dt>{{ 'wr_nano_hemp_guide.hero.reviewer' | t }}</dt>
+            <dd><span itemprop="reviewedBy">{{ section.settings.reviewer_name | escape }}</span>, {{ section.settings.reviewer_credentials | escape }}</dd>
+          </div>
+        {% endif %}
+        <div>
+          <dt>{{ 'wr_nano_hemp_guide.hero.last_reviewed' | t }}</dt>
+          <dd><time datetime="{{ section.settings.last_reviewed_iso | escape }}" itemprop="dateModified">{{ section.settings.last_reviewed | escape }}</time></dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+
+  <nav class="wr-guide__toc" aria-label="{{ 'wr_nano_hemp_guide.toc.label' | t }}">
+    <div class="wr-guide__wrap">
+      <strong>{{ 'wr_nano_hemp_guide.toc.title' | t }}</strong>
+      <a href="#definition">{{ 'wr_nano_hemp_guide.toc.definition' | t }}</a>
+      <a href="#measurement">{{ 'wr_nano_hemp_guide.toc.measurement' | t }}</a>
+      <a href="#reports">{{ 'wr_nano_hemp_guide.toc.reports' | t }}</a>
+      <a href="#products">{{ 'wr_nano_hemp_guide.toc.products' | t }}</a>
+      <a href="#research">{{ 'wr_nano_hemp_guide.toc.research' | t }}</a>
+    </div>
+  </nav>
+
+  <div class="wr-guide__wrap wr-guide__content" itemprop="articleBody">
+    <section id="definition" class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.definition.title' | t }}</h2>
+      <p>{{ 'wr_nano_hemp_guide.definition.body' | t }}</p>
+      <div class="wr-guide__callout">
+        <strong>{{ 'wr_nano_hemp_guide.definition.key_title' | t }}</strong>
+        <p>{{ 'wr_nano_hemp_guide.definition.key_body' | t }}</p>
+      </div>
+    </section>
+
+    <section id="measurement" class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.measurement.title' | t }}</h2>
+      <p>{{ 'wr_nano_hemp_guide.measurement.intro' | t }}</p>
+      <div class="wr-guide__grid">
+        <div class="wr-guide__card">
+          <h3>{{ 'wr_nano_hemp_guide.measurement.dls_title' | t }}</h3>
+          <p>{{ 'wr_nano_hemp_guide.measurement.dls_body' | t }}</p>
+        </div>
+        <div class="wr-guide__card">
+          <h3>{{ 'wr_nano_hemp_guide.measurement.pdi_title' | t }}</h3>
+          <p>{{ 'wr_nano_hemp_guide.measurement.pdi_body' | t }}</p>
+        </div>
+        <div class="wr-guide__card">
+          <h3>{{ 'wr_nano_hemp_guide.measurement.distribution_title' | t }}</h3>
+          <p>{{ 'wr_nano_hemp_guide.measurement.distribution_body' | t }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reports" class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.reports.title' | t }}</h2>
+      <p>{{ 'wr_nano_hemp_guide.reports.intro' | t }}</p>
+      <ul class="wr-guide__checklist">
+        <li>{{ 'wr_nano_hemp_guide.reports.item_1' | t }}</li>
+        <li>{{ 'wr_nano_hemp_guide.reports.item_2' | t }}</li>
+        <li>{{ 'wr_nano_hemp_guide.reports.item_3' | t }}</li>
+        <li>{{ 'wr_nano_hemp_guide.reports.item_4' | t }}</li>
+        <li>{{ 'wr_nano_hemp_guide.reports.item_5' | t }}</li>
+        <li>{{ 'wr_nano_hemp_guide.reports.item_6' | t }}</li>
+      </ul>
+      <div class="wr-guide__split">
+        <div>
+          <h3>{{ 'wr_nano_hemp_guide.coa.proves_title' | t }}</h3>
+          <p>{{ 'wr_nano_hemp_guide.coa.proves_body' | t }}</p>
+        </div>
+        <div>
+          <h3>{{ 'wr_nano_hemp_guide.coa.not_proves_title' | t }}</h3>
+          <p>{{ 'wr_nano_hemp_guide.coa.not_proves_body' | t }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.products.title' | t }}</h2>
+      <p>{{ 'wr_nano_hemp_guide.products.intro' | t }}</p>
+      <div class="wr-guide__table-wrap">
+        <table class="wr-guide__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'wr_nano_hemp_guide.products.product' | t }}</th>
+              <th scope="col">{{ 'wr_nano_hemp_guide.products.specification' | t }}</th>
+              <th scope="col">{{ 'wr_nano_hemp_guide.products.ingredients' | t }}</th>
+              <th scope="col">{{ 'wr_nano_hemp_guide.products.value' | t }}</th>
+              <th scope="col">{{ 'wr_nano_hemp_guide.products.testing' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><a href="{{ daily_roots.url | default: '/products/daily-roots' }}">{% if daily_roots != blank %}{{ daily_roots.title }}{% else %}{{ 'wr_nano_hemp_guide.products.daily_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.daily_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.core_ingredients' | t }}</td>
+              <td>{% if daily_roots != blank %}{{ daily_roots.price | money }}; {{ daily_cost | money }} {{ 'wr_nano_hemp_guide.products.per_serving' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.daily_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="{{ deep_roots.url | default: '/products/deep-roots' }}">{% if deep_roots != blank %}{{ deep_roots.title }}{% else %}{{ 'wr_nano_hemp_guide.products.deep_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.deep_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.deep_ingredients' | t }}</td>
+              <td>{% if deep_roots != blank %}{{ deep_roots.price | money }}; {{ deep_cost | money }} {{ 'wr_nano_hemp_guide.products.per_serving' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.deep_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="{{ deep_rest.url | default: '/products/deep-rest' }}">{% if deep_rest != blank %}{{ deep_rest.title }}{% else %}{{ 'wr_nano_hemp_guide.products.rest_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.rest_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.rest_ingredients' | t }}</td>
+              <td>{% if deep_rest != blank %}{{ deep_rest.price | money }}; {{ rest_cost | money }} {{ 'wr_nano_hemp_guide.products.per_serving' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.rest_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="{{ root_relief.url | default: '/products/root-relief' }}">{% if root_relief != blank %}{{ root_relief.title }}{% else %}{{ 'wr_nano_hemp_guide.products.roll_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.roll_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.core_ingredients' | t }}</td>
+              <td>{% if root_relief != blank %}{{ root_relief.price | money }}; {{ roll_on_cost | money }} {{ 'wr_nano_hemp_guide.products.per_labeled_application' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.roll_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="{{ wild_relief.url | default: '/products/wild-relief' }}">{% if wild_relief != blank %}{{ wild_relief.title }}{% else %}{{ 'wr_nano_hemp_guide.products.spray_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.spray_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.core_ingredients' | t }}</td>
+              <td>{% if wild_relief != blank %}{{ wild_relief.price | money }}; {{ spray_cost | money }} {{ 'wr_nano_hemp_guide.products.per_labeled_spray' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.spray_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="{{ paw_root.url | default: '/products/paw-root' }}">{% if paw_root != blank %}{{ paw_root.title }}{% else %}{{ 'wr_nano_hemp_guide.products.pet_name' | t }}{% endif %}</a></th>
+              <td>{{ 'wr_nano_hemp_guide.products.pet_spec' | t }}</td>
+              <td>{{ 'wr_nano_hemp_guide.products.core_ingredients' | t }}</td>
+              <td>{% if paw_root != blank %}{{ paw_root.price | money }}; {{ pet_cost | money }} {{ 'wr_nano_hemp_guide.products.per_serving' | t }}{% else %}{{ 'wr_nano_hemp_guide.products.price_unavailable' | t }}{% endif %}</td>
+              <td><a href="{{ section.settings.pet_test_url | default: '/pages/contact' }}">{{ 'wr_nano_hemp_guide.products.request_report' | t }}</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="wr-guide__fine-print">{{ 'wr_nano_hemp_guide.products.cost_note' | t }}</p>
+      <p class="wr-guide__fine-print">{{ 'wr_nano_hemp_guide.products.testing_note' | t }}</p>
+    </section>
+
+    <section class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.value.title' | t }}</h2>
+      <p>{{ 'wr_nano_hemp_guide.value.body' | t }}</p>
+      <p class="wr-guide__formula">{{ 'wr_nano_hemp_guide.value.formula' | t }}</p>
+    </section>
+
+    <section id="research" class="wr-guide__section">
+      <h2>{{ 'wr_nano_hemp_guide.research.title' | t }}</h2>
+      <ol class="wr-guide__references">
+        <li>Stetefeld J, McKenna SA, Patel TR. Dynamic light scattering: a practical guide and applications in biomedical sciences. <em>Biophysical Reviews.</em> 2016;8(4):409-427. <a href="https://doi.org/10.1007/s12551-016-0218-6" rel="external noopener">https://doi.org/10.1007/s12551-016-0218-6</a></li>
+        <li>Bhattacharjee S. DLS and zeta potential: What they are and what they are not? <em>Journal of Controlled Release.</em> 2016;235:337-351. <a href="https://doi.org/10.1016/j.jconrel.2016.06.017" rel="external noopener">https://doi.org/10.1016/j.jconrel.2016.06.017</a></li>
+        <li>Knaub K, Sartorius T, Dharsono T, Wacker R, Wilhelm M, Schön C. A Novel Self-Emulsifying Drug Delivery System (SEDDS) Based on VESIsorb Formulation Technology Improving the Oral Bioavailability of Cannabidiol in Healthy Subjects. <em>Molecules.</em> 2019;24(16):2967. <a href="https://doi.org/10.3390/molecules24162967" rel="external noopener">https://doi.org/10.3390/molecules24162967</a></li>
+      </ol>
+      <div class="wr-guide__callout">
+        <strong>{{ 'wr_nano_hemp_guide.research.scope_title' | t }}</strong>
+        <p>{{ 'wr_nano_hemp_guide.research.scope_body' | t }}</p>
+      </div>
+    </section>
+  </div>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ 'wr_nano_hemp_guide.hero.title' | t | json }},
+  "description": {{ 'wr_nano_hemp_guide.hero.lede' | t | json }},
+  "dateModified": {{ section.settings.last_reviewed_iso | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ section.settings.author_name | json }},
+    "jobTitle": {{ section.settings.author_role | json }}
+  },
+  {% if section.settings.reviewer_name != blank and section.settings.reviewer_credentials != blank %}
+    "reviewedBy": {
+      "@type": "Person",
+      "name": {{ section.settings.reviewer_name | json }},
+      "jobTitle": {{ section.settings.reviewer_credentials | json }}
+    },
+  {% endif %}
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+  },
+  "mainEntityOfPage": {{ canonical_url | json }},
+  "about": ["nano-hemp", "dynamic light scattering", "certificate of analysis", "particle-size testing"]
+}
+</script>
+
+{% stylesheet %}
+  .wr-guide { background: #fdfcf9; color: #18372d; font-family: var(--font-body-family, Arial, sans-serif); line-height: 1.65; }
+  .wr-guide *, .wr-guide *::before, .wr-guide *::after { box-sizing: border-box; }
+  .wr-guide__wrap { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+  .wr-guide__hero { padding: clamp(64px, 9vw, 112px) 0; background: linear-gradient(135deg, #143b2f 0%, #285744 100%); color: #fff; }
+  .wr-guide__hero-inner { max-width: 980px; margin-inline: auto; }
+  .wr-guide__eyebrow { margin: 0 0 12px; color: #e0c099; font-size: .85rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .wr-guide h1 { max-width: 950px; margin: 0; color: #fff; font-family: var(--font-heading-family, Georgia, serif); font-size: clamp(2.35rem, 6vw, 5rem); line-height: 1.03; }
+  .wr-guide__lede { max-width: 800px; margin: 24px 0 0; font-size: clamp(1.05rem, 2vw, 1.3rem); }
+  .wr-guide__review { display: flex; flex-wrap: wrap; gap: 18px 38px; margin: 34px 0 0; }
+  .wr-guide__review div { min-width: 180px; }
+  .wr-guide__review dt { color: #e0c099; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .wr-guide__review dd { margin: 3px 0 0; }
+  .wr-guide__toc { position: sticky; z-index: 3; top: 0; border-bottom: 1px solid #d9ddda; background: rgba(253, 252, 249, .97); }
+  .wr-guide__toc .wr-guide__wrap { display: flex; gap: 18px; align-items: center; overflow-x: auto; padding-block: 15px; white-space: nowrap; }
+  .wr-guide__toc a { color: #285744; text-underline-offset: 4px; }
+  .wr-guide__content { max-width: 1000px; padding-block: 36px 88px; }
+  .wr-guide__section { scroll-margin-top: 80px; padding: 44px 0; border-bottom: 1px solid #d9ddda; }
+  .wr-guide__section:last-child { border-bottom: 0; }
+  .wr-guide h2 { margin: 0 0 16px; color: #18372d; font-family: var(--font-heading-family, Georgia, serif); font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.15; }
+  .wr-guide h3 { margin: 0 0 8px; color: #18372d; font-size: 1.1rem; }
+  .wr-guide p { max-width: 78ch; }
+  .wr-guide a { color: #9b513d; font-weight: 650; }
+  .wr-guide__callout { margin-top: 26px; padding: 22px 24px; border-left: 4px solid #c17a5f; background: #f4eee7; }
+  .wr-guide__callout p { margin: 6px 0 0; }
+  .wr-guide__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 26px; }
+  .wr-guide__card { padding: 22px; border: 1px solid #d9ddda; border-radius: 12px; background: #fff; }
+  .wr-guide__card p { margin-bottom: 0; }
+  .wr-guide__checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 28px; padding-left: 22px; }
+  .wr-guide__split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 28px; }
+  .wr-guide__split > div { padding: 24px; border-radius: 12px; background: #edf2ee; }
+  .wr-guide__split p { margin-bottom: 0; }
+  .wr-guide__table-wrap { margin-top: 26px; overflow-x: auto; border: 1px solid #cfd7d2; border-radius: 12px; background: #fff; }
+  .wr-guide__table { width: 100%; min-width: 1000px; border-collapse: collapse; font-size: .92rem; }
+  .wr-guide__table th, .wr-guide__table td { padding: 16px; border-bottom: 1px solid #dfe4e1; text-align: left; vertical-align: top; }
+  .wr-guide__table thead th { background: #18372d; color: #fff; font-size: .78rem; letter-spacing: .05em; text-transform: uppercase; }
+  .wr-guide__table tbody tr:last-child th, .wr-guide__table tbody tr:last-child td { border-bottom: 0; }
+  .wr-guide__fine-print { margin: 12px 0 0; color: #53645e; font-size: .88rem; }
+  .wr-guide__formula { display: inline-block; padding: 14px 18px; border-radius: 8px; background: #18372d; color: #fff; font-weight: 700; }
+  .wr-guide__references { padding-left: 24px; }
+  .wr-guide__references li + li { margin-top: 16px; }
+  @media (max-width: 760px) {
+    .wr-guide__wrap { width: min(100% - 28px, 1180px); }
+    .wr-guide__grid, .wr-guide__checklist, .wr-guide__split { grid-template-columns: 1fr; }
+    .wr-guide__section { padding: 34px 0; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nano-hemp buyer’s guide",
+  "tag": "section",
+  "class": "section-wr-nano-hemp-guide",
+  "settings": [
+    { "type": "header", "content": "Editorial details" },
+    { "type": "text", "id": "author_name", "label": "Author name", "default": "Nick and Lucy" },
+    { "type": "text", "id": "author_role", "label": "Author role", "default": "Founders, Wild Roots Hemp" },
+    { "type": "text", "id": "reviewer_name", "label": "Scientific reviewer name" },
+    { "type": "text", "id": "reviewer_credentials", "label": "Scientific reviewer credentials" },
+    { "type": "text", "id": "last_reviewed", "label": "Visible last reviewed date", "default": "September 22, 2026" },
+    { "type": "text", "id": "last_reviewed_iso", "label": "Machine-readable review date", "default": "2026-09-22" },
+    { "type": "header", "content": "Product batch-report links" },
+    { "type": "url", "id": "daily_test_url", "label": "Daily Roots report URL" },
+    { "type": "url", "id": "deep_test_url", "label": "Deep Roots report URL" },
+    { "type": "url", "id": "rest_test_url", "label": "Deep Rest report URL" },
+    { "type": "url", "id": "roll_test_url", "label": "Root Relief report URL" },
+    { "type": "url", "id": "spray_test_url", "label": "Wild Relief report URL" },
+    { "type": "url", "id": "pet_test_url", "label": "Paw & Root report URL" }
+  ],
+  "presets": [
+    { "name": "Nano-hemp buyer’s guide" }
+  ]
+}
+{% endschema %}
