@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "wr-nano-hemp-guide",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
